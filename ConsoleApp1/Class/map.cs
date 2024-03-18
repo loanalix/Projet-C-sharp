@@ -5,7 +5,7 @@ using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Main
+namespace Main.Class
 {
     public class map
     {
@@ -13,7 +13,7 @@ namespace Main
 
         public string Map()
         {
-            
+
             loadMap += "------------------------------------";
             return loadMap;
         }
@@ -26,12 +26,13 @@ namespace Main
             {
                 char[] characters = line.ToCharArray();
 
-                for(int i = 0; i < characters.Length - 1; i++) {
+                for (int i = 0; i < characters.Length - 1; i++)
+                {
                     char currentChar = characters[i];
                     char nextChar = characters[i + 1];
-                    
-                    
-                    if(currentChar == ' ' && nextChar == 'b')
+
+
+                    if (currentChar == ' ' && nextChar == 'b')
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.Write(currentChar);
