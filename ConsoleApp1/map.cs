@@ -31,25 +31,44 @@ namespace Main
                     char nextChar = characters[i + 1];
                     
                     
-                    if(currentChar == ' ' && nextChar == 'b')
+                    if(currentChar == ' ' && nextChar == 'v')
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+
+                    else if (currentChar == ' ' && nextChar == 'g')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == ' ' && nextChar == 'p')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == ' ' && nextChar == 'h')
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == ' ' && nextChar == 'w')
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == ' ' && nextChar == 'b')
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.Write(currentChar);
                         i++;
                     }
-                    else if (currentChar == ' ' || nextChar == ' ')
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(currentChar);
-
-                    }
-                    else if (currentChar == '-' && nextChar == 'v')
-                    {
-                        Console.ResetColor();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(currentChar);
-                        i++;
-                    }
+                   
                     else
                     {
                         Console.ResetColor();
