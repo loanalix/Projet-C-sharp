@@ -25,6 +25,13 @@ namespace Main.Class
         private int m_iLevel;
         private Types m_cTypes;
 
+        //private string m_sAttackName;
+        //private Types m_cAttackType;
+        //private float m_fAttackDamage;
+        //private int m_iAttackMana;
+
+        private static List<Attack> m_lAttack = new List<Attack>();
+
         #endregion
 
         #region Property
@@ -126,21 +133,28 @@ namespace Main.Class
             m_iFinalSpeed = m_iSpeed + m_iIVSpeed;
         }
 
-        public static void CalculateWhoIsStarting(Heroes h1, Heroes h2)
+        public void GetAttackProperties(string sAttackName) 
         {
-            int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
 
-            double dAttackProbabilityH1 = (double)iSpeedDiff / 100;
-            double dAttackProbabilityH2 = 1 - dAttackProbabilityH1;
+            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            if (attack != null)
+            {
+                Console.WriteLine("Attack Name: " + attack.GetAttackName);
+                Console.WriteLine("Attack Type: " + attack.GetAttackType);
+                Console.WriteLine("Attack Damage: " + attack.GetAttackDamage);
+                Console.WriteLine("Attack Mana: " + attack.GetAttackMana);
+            }
+            else { return; }
 
-            Random random = new Random();
-            double dAttackerProbability = random.NextDouble();
+        }
 
-            Console.WriteLine(" ");
-            Console.WriteLine("dAttackerProbability => " + dAttackerProbability);
-            Console.WriteLine("h1 => " + dAttackProbabilityH1);
-            Console.WriteLine("h2 => " + dAttackProbabilityH2);
-            Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
+        public void AddAttacks(string sAttackName)
+        {
+            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            if(attack != null)
+            {
+                m_lAttack.Add(attack);
+            } else { return; }
         }
 
         #endregion

@@ -24,13 +24,17 @@ namespace MyApp // Note: actual namespace depends on the project name.
             //Console.WriteLine("Precision de " + hTest.Name + ": " + hTest.Precision);
             //Console.WriteLine("Type de " + hTest.Name + ": " + hTest.GetType);
 
-            hTest.GenerateIVSpeed();
-            hTest2.GenerateIVSpeed();
+            //hTest.GenerateIVSpeed();
+            //hTest2.GenerateIVSpeed();
 
             //Console.WriteLine("IVSpeed Poke0: " + hTest.IVSpeed);
             //Console.WriteLine("IVSpeed Poke1: " + hTest2.IVSpeed);
 
-            Heroes.CalculateWhoIsStarting(hTest, hTest2);
+            //FightManager.CalculateWhoIsStarting(hTest, hTest2);
+
+            Attack attack = new Attack("APAGNAN", Types.Dragon, 10000f, 1);
+            hTest.AddAttacks("APAGNAN");
+            hTest.GetAttackProperties("APAGNAN");
 
             test.LoadMap();
 
