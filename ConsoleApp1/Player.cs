@@ -1,3 +1,4 @@
+using main.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +24,21 @@ namespace Main.Class
 
             m_sName = "player0";
             PosX = 10; 
-            PosY = 10;
+            PosY = 12;
 
         }
         public int ConvertTo1Dim(int x, int y, int width)
         {
             return y * width + x;
         }
-
+        public bool CheckCollid(Draw oDraw)
+        {
+            if (oDraw.GetMap[ConvertTo1Dim(PosX, PosY, 73)] != 'p')
+            {
+                return false;
+            }
+            return true;
+        }
         public void MoveUp()
         {
             PosY --;

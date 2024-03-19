@@ -1,4 +1,6 @@
-﻿namespace Main.Class
+﻿using main.Class;
+
+namespace Main.Class
 {
     public class InputManager
     {
@@ -6,24 +8,39 @@
         
         public ConsoleKeyInfo Input { get => input; }
 
-        public void GetInput(player m_oPlayer)
+        public void GetInput(player m_oPlayer, Draw oDraw)
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                m_oPlayer.MoveUp();
+                if (m_oPlayer.CheckCollid(oDraw))
+                {
+                    m_oPlayer.MoveUp();
+                }
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-                m_oPlayer.MoveDown();
+                if (m_oPlayer.CheckCollid(oDraw))
+                {
+                    m_oPlayer.MoveDown();
+
+                }
             }
             else if (input.Key == ConsoleKey.RightArrow)
             {
-                m_oPlayer.MoveRight();
+                if (m_oPlayer.CheckCollid(oDraw))
+                {
+                    m_oPlayer.MoveRight();
+
+                }
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-                m_oPlayer.MoveLeft();
+                if (m_oPlayer.CheckCollid(oDraw))
+                {
+                    m_oPlayer.MoveLeft();
+
+                }
             }
 
         }

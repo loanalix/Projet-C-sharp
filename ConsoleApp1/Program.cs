@@ -27,7 +27,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             while (isRunning)
             {
                 Console.SetCursorPosition(0, 0);
-                m_oInputManager.GetInput(m_oPlayer);
+                m_oInputManager.GetInput(m_oPlayer, m_oDraw);
                 m_oDraw.DrawMap(m_oPlayer);
 
             }
