@@ -11,7 +11,7 @@ vggh         hgwpppppwwwwwwwwwwwwwwwwwwwwwwpppppwwwwwwwwwwwwwwwwwwwwwwwv/
 vgghhhhhhhhhhhgwpppppwggggggggggggggggggggwpppppwggggggggggggggggggggggv/
 vggggggggggggggwpppppwggghhhhhhhhhhhhgggggwpppppwghhhhhhhhhhhhhhhhhhhggv/
 vwwwwwwwwwwwwwwwpppppwgggh          hgggggwpppppwgh                 hggv/
-vp*ppppppppppppppppppwgggh          hgggggwpppppwghhhhhhhhhhhhhhhhhhhggv/
+vppppppppppppppppppppwgggh          hgggggwpppppwghhhhhhhhhhhhhhhhhhhggv/
 vppppppppppppppppppppwgggh          hgggggwpppppwwwwwwwwwwwhppphwwwwwwwv/
 vwwwwwwwwwwwwwwwpppppwggghhhhhhhhhhhhgggggwppppppppppppppppppppppppppppv/
 vggggggggggggggwpppppwgggggggghppphgggggggwppppppppppppppppppppppppppppv/

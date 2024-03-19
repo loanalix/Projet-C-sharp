@@ -1,4 +1,6 @@
-﻿using Main;
+﻿using main.Class;
+using Main;
+using Main.Class;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -6,41 +8,27 @@ using System.Security.Cryptography.X509Certificates;
 namespace MyApp // Note: actual namespace depends on the project name.
 {
     internal class Program 
-    { 
-        static void Main(string[] args)
+    {
+      
+        public static void Main(string[] args)
         {
+            
+            Map m_oMap = new Map();
+            player m_oPlayer = new player();
+            Draw m_oDraw = new Draw();  
+            InputManager m_oInputManager = new InputManager();
+            m_oDraw.LoadMap();
+            m_oDraw.DrawMap(m_oPlayer);
 
-            map test = new map();
-            test.LoadMap();
-            test.DrawMap();
-
+            Console.CursorVisible = false;
             bool isRunning = true;
 
-            ConsoleKeyInfo input;
-            
 
             while (isRunning)
             {
-
-                input = Console.ReadKey(true);
-                if (input.Key == ConsoleKey.UpArrow)
-                {
-                    test.Move("up");
-                }
-                else if (input.Key == ConsoleKey.DownArrow)
-                {
-                    test.Move("down");
-                }
-                else if (input.Key == ConsoleKey.RightArrow)
-                {
-                    test.Move("right");
-
-                }
-                else if (input.Key == ConsoleKey.LeftArrow)
-                {
-                    test.Move("left");
-                }
-                test.DrawMap();
+                Console.SetCursorPosition(0, 0);
+                m_oInputManager.GetInput(m_oPlayer);
+                m_oDraw.DrawMap(m_oPlayer);
 
             }
 
