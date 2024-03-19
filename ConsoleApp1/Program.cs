@@ -32,11 +32,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             //FightManager.CalculateWhoIsStarting(hTest, hTest2);
 
-            Attack attack = new Attack("APAGNAN", Types.Dragon, 10000f, 1);
-            hTest.AddAttacks("APAGNAN");
-            hTest.GetAttackProperties("APAGNAN");
+            Attack attack = new Attack("test", Types.Fire, 50f, 20);
+            hTest.AddAttacks("test");
+            //hTest.GetAttackProperties("test");
+            hTest.PerformAttackTo(hTest2, "test");
 
-            test.LoadMap();
+            //test.LoadMap();
 
 
         }

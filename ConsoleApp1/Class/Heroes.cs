@@ -13,7 +13,7 @@ namespace Main.Class
         #region Fields
 
         private string m_sName = "";
-        private int m_iHp;
+        private float m_iHp;
         private int m_iMana;
         private float m_fDamage;
         private float m_fResistance;
@@ -24,11 +24,12 @@ namespace Main.Class
         private float m_fExp;
         private int m_iLevel;
         private Types m_cTypes;
+        private FightManager fightManager;
 
-        //private string m_sAttackName;
-        //private Types m_cAttackType;
-        //private float m_fAttackDamage;
-        //private int m_iAttackMana;
+        private string m_sAttackName;
+        private Types m_cAttackType;
+        private float m_fAttackDamage;
+        private int m_iAttackMana;
 
         private static List<Attack> m_lAttack = new List<Attack>();
 
@@ -37,7 +38,7 @@ namespace Main.Class
         #region Property
 
         public string Name { get => m_sName; set => m_sName = value; }
-        public int HP { get => m_iHp; set => m_iHp = value; }
+        public float HP { get => m_iHp; set => m_iHp = value; }
         public int Mana { get => m_iMana; set => m_iMana = value; }
         public float Damage { get => m_fDamage; set => m_fDamage = value; }
         public float Resistance { get => m_fResistance; set => m_fResistance = value; }
@@ -48,6 +49,10 @@ namespace Main.Class
         public float Exp { get => m_fExp; set => m_fExp = value; }
         public int Level { get => m_iLevel; set => m_iLevel = value; }
         public Types GetType { get => m_cTypes; }
+        public string GetHeroAttackName { get => m_sAttackName; }
+        public Types GetHeroAttackType { get => m_cAttackType; }
+        public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
+        public int GetHeroAttackMana { get => m_iAttackMana; }
 
         #endregion
 
@@ -80,6 +85,7 @@ namespace Main.Class
             m_fExp = 0;
             m_iLevel = 0;
             m_cTypes = cType;
+            fightManager = new FightManager();
 
         }
 
@@ -136,7 +142,7 @@ namespace Main.Class
         public void GetAttackProperties(string sAttackName) 
         {
 
-            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            Attack attack = GetAttack(sAttackName);
             if (attack != null)
             {
                 Console.WriteLine("Attack Name: " + attack.GetAttackName);
@@ -145,16 +151,31 @@ namespace Main.Class
                 Console.WriteLine("Attack Mana: " + attack.GetAttackMana);
             }
             else { return; }
-
         }
 
         public void AddAttacks(string sAttackName)
         {
-            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            Attack attack = GetAttack(sAttackName);
             if(attack != null)
             {
                 m_lAttack.Add(attack);
             } else { return; }
+        }
+
+        private Attack GetAttack(string sAttackName)
+        {
+            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            return attack;
+        }
+
+        public void PerformAttackTo(Heroes op, string sAttackName)
+        {
+            Attack attack = GetAttack(sAttackName);
+            m_sAttackName = attack.GetAttackName;
+            m_cAttackType = attack.GetAttackType;
+            m_fAttackDamage = attack.GetAttackDamage;
+            m_iAttackMana = attack.GetAttackMana;
+            fightManager.AttackOpponent(this, op);
         }
 
         #endregion

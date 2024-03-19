@@ -11,60 +11,53 @@ namespace Main.Class
     {
         private static float m_fMultiplier = 1f;
 
-        private static void Multiplier(Heroes h1, Heroes h2)
+        public float AttackDamage(Heroes h1, Heroes h2)
         {
-            if(h1.GetType == h2.GetType)
+
+            if(h1.GetHeroAttackType == h2.GetType)
             {
-                h1.Damage = h1.Damage * m_fMultiplier;
+                return h1.HeroAttackDamage *=  m_fMultiplier;
             } 
-            else if(h1.GetType == Types.Fire && h2.GetType == Types.Grass)
+            else if(h1.GetHeroAttackType == Types.Fire && h2.GetType == Types.Grass)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 2f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 2f);
             }
-            else if(h1.GetType == Types.Fire && h2.GetType == Types.Water)
+            else if(h1.GetHeroAttackType == Types.Fire && h2.GetType == Types.Water)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 0.5f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 0.5f);
             }
-            else if(h1.GetType == Types.Grass && h2.GetType == Types.Fire)
+            else if(h1.GetHeroAttackType == Types.Grass && h2.GetType == Types.Fire)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 0.5f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 0.5f);
             }            
-            else if(h1.GetType == Types.Grass && h2.GetType == Types.Water)
+            else if(h1.GetHeroAttackType == Types.Grass && h2.GetType == Types.Water)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 2f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 2f);
             }
-            else if(h1.GetType == Types.Grass && h2.GetType == Types.Flying)
+            else if(h1.GetHeroAttackType == Types.Grass && h2.GetType == Types.Flying)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 0.5f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 0.5f);
             }
-            else if(h1.GetType == Types.Water && h2.GetType == Types.Fire)
+            else if(h1.GetHeroAttackType == Types.Water && h2.GetType == Types.Fire)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 2f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 2f);
             }
-            else if(h1.GetType == Types.Water && h2.GetType == Types.Grass)
+            else if(h1.GetHeroAttackType == Types.Water && h2.GetType == Types.Grass)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 0.5f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 0.5f);
             }
-            else if(h1.GetType == Types.Flying && h2.GetType == Types.Grass)
+            else if(h1.GetHeroAttackType == Types.Flying && h2.GetType == Types.Grass)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 2f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 2f);
             }
-            else if(h1.GetType == Types.Dragon)
+            else if(h1.GetHeroAttackType == Types.Dragon)
             {
-                h1.Damage = h1.Damage * (m_fMultiplier * 2f);
+                return h1.HeroAttackDamage *= (m_fMultiplier * 2f);
             }
             else
             {
-                h1.Damage = h1.Damage * m_fMultiplier;
+                return h1.HeroAttackDamage = h1.HeroAttackDamage * m_fMultiplier;
             }
-        }
-
-        public static void Weaknesses(Heroes h1, Heroes h2)
-        {
-
-            Multiplier(h1, h2);
-            Multiplier(h2, h1);
-
         }
 
     }

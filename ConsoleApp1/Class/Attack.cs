@@ -32,5 +32,10 @@ namespace Main.Class
             Attacks.Add(this);
         }
 
+        public List<Attack> AttackList()
+        {
+            return Attacks;
+        }
+
     }
 }
