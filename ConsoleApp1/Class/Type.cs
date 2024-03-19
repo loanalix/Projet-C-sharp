@@ -9,7 +9,13 @@ namespace Main.Class
 {
     public class Type
     {
-        private static float m_fMultiplier = 1f;
+        #region Fields
+
+        private float m_fMultiplier = 1f;
+
+        #endregion
+
+        #region Methode
 
         public float AttackDamage(Heroes h1, Heroes h2)
         {
@@ -59,6 +65,8 @@ namespace Main.Class
                 return h1.HeroAttackDamage = h1.HeroAttackDamage * m_fMultiplier;
             }
         }
+
+        #endregion
 
     }
 }

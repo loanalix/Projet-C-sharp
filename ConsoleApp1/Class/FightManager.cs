@@ -10,12 +10,87 @@ namespace Main.Class
     public class FightManager
     {
 
+        #region Field
+
         private Type type;
+
+        #endregion
+
+        #region Methode
 
         public FightManager()
         {
             type = new Type();
         }
+
+        public void StartFight()
+        {
+            StreamReader reader = File.OpenText("../../../txt/choseHero.txt");
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                char[] characters = line.ToCharArray();
+
+                for (int i = 0; i < characters.Length - 1; i++)
+                {
+                    char currentChar = characters[i];
+                    char nextChar = characters[i + 1];
+
+                    if (currentChar == ' ' && nextChar == 'X')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == 'X' && nextChar == 'X')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == 'X' && nextChar == ' ')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else if (currentChar == ' ' && nextChar == ' ')
+                    {
+                        Console.ResetColor();
+                        Console.Write(currentChar);
+                        i++;
+                    }
+                    else
+                    {
+                        Console.ResetColor();
+                        Console.Write(currentChar);
+                    }
+                }
+
+                // Afficher le dernier caractère de la ligne
+                char lastChar = characters[characters.Length - 1];
+                if (lastChar == 'X')
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.BackgroundColor = ConsoleColor.Green;
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+                Console.Write(lastChar);
+
+                // Réinitialiser la couleur après chaque ligne
+                Console.ResetColor();
+                Console.WriteLine();
+
+                // appeler l'handle input pour tester la suite des bails
+            }
+        }
+
+
 
         public static void CalculateWhoIsStarting(Heroes h1, Heroes h2)
         {
@@ -50,6 +125,8 @@ namespace Main.Class
             Console.WriteLine("Your Hero's Mana: " + h1.Mana);
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        #endregion
 
     }
 }
