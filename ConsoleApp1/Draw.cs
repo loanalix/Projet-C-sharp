@@ -10,14 +10,15 @@ namespace main.Class
         public Map m_oMap = new Map();
         private List<char> m_lMap = new List<char>();
         public List<char> GetMap { get => m_lMap; }
-        private int iSizeLine;
+
+        private int iWidth;
         
 
         public void LoadMap()
         {
             StreamReader reader = File.OpenText("../../../map.txt");
             string sizeLine = reader.ReadLine();
-            iSizeLine = sizeLine.Length;
+            iWidth = sizeLine.Length;
             string line;
 
             while ((line = reader.ReadLine()) != null)

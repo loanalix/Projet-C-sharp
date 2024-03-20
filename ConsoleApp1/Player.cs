@@ -31,9 +31,9 @@ namespace Main.Class
         {
             return y * width + x;
         }
-        public bool CheckCollid(Draw oDraw)
+        public bool CheckCollid(Draw oDraw, int iNextPosX, int iNextPosY)
         {
-            if (oDraw.GetMap[ConvertTo1Dim(PosX, PosY, 73)] != 'p')
+            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, 73)] == 'w')
             {
                 return false;
             }

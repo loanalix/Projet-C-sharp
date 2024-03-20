@@ -13,14 +13,14 @@ namespace Main.Class
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw))
+                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY-1 ))
                 {
                     m_oPlayer.MoveUp();
                 }
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw))
+                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY + 1))
                 {
                     m_oPlayer.MoveDown();
 
@@ -28,7 +28,7 @@ namespace Main.Class
             }
             else if (input.Key == ConsoleKey.RightArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw))
+                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX + 1, m_oPlayer.PosY))
                 {
                     m_oPlayer.MoveRight();
 
@@ -36,7 +36,7 @@ namespace Main.Class
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw))
+                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX - 1, m_oPlayer.PosY))
                 {
                     m_oPlayer.MoveLeft();
 
