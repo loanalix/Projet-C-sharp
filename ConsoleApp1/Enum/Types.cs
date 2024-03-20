@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Main.Enum
+namespace Game.Enum
 {
     public enum Types
     {

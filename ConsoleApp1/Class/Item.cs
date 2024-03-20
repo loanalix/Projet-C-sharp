@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Object;
 
-namespace Main.Class
+namespace Game.UsableItem
 {
-    public class UsableItem : GameObject
+    public class Item : GameObject
     {
-        public UsableItem(string name) : base(name)
+        public Item(string name) : base(name)
         {
 
         }

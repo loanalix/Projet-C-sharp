@@ -1,18 +1,20 @@
-﻿using Main.Enum;
-using System;
+﻿using Game.Enum;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Entity;
+using Game.Element;
 
-namespace Main.Class
+namespace Game.FightController
 {
     public class FightManager
     {
 
         #region Field
 
-        private Type type;
+        private Game.Element.Type type;
 
         #endregion
 
@@ -20,7 +22,7 @@ namespace Main.Class
 
         public FightManager()
         {
-            type = new Type();
+            type = new Game.Element.Type();
         }
 
         public void StartFight()
@@ -92,7 +94,7 @@ namespace Main.Class
 
 
 
-        public static void CalculateWhoIsStarting(Heroes h1, Heroes h2)
+        public static void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
             int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
 
@@ -109,7 +111,7 @@ namespace Main.Class
             Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
         }
 
-        public void AttackOpponent(Heroes h1, Heroes h2)
+        public void AttackOpponent(Mob h1, Mob h2)
         {
             float fDamage = type.AttackDamage(h1, h2);
 

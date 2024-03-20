@@ -1,11 +1,12 @@
-﻿using Main.Enum;
+﻿using Game.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Entity;
 
-namespace Main.Class
+namespace Game.Element
 {
     public class Type
     {
@@ -17,7 +18,7 @@ namespace Main.Class
 
         #region Methode
 
-        public float AttackDamage(Heroes h1, Heroes h2)
+        public float AttackDamage(Mob h1, Mob h2)
         {
 
             if(h1.GetHeroAttackType == h2.GetType)

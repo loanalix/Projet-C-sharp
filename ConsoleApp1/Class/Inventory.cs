@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Object;
+using Game.UsableItem;
 
-namespace Main.Class
+namespace Game.Inventory
 {
     public  class Inventory
     {
@@ -25,7 +27,7 @@ namespace Main.Class
         {
             if (index >= 0 && index < items.Count)
             {
-                if (items[index] is UsableItem usableItem)
+                if (items[index] is Item usableItem)
                 {
                     usableItem.Use();
                     items.RemoveAt(index);

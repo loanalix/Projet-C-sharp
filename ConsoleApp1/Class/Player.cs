@@ -1,11 +1,11 @@
-using Main.Class;
+using Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Main.Class
+namespace Game.Character
 {
     public class Player
     {
@@ -16,7 +16,6 @@ namespace Main.Class
 
         public int PosX {  get => m_iPosX; private set => m_iPosX = value; }
         public int PosY { get => m_iPosY; private set => m_iPosY = value; }
-
         public string Name { get => m_sName; set => m_sName = value; }
 
         public Player()
