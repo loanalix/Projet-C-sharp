@@ -49,7 +49,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             Heroes.CalculateWhoIsStarting(hTest, hTest2);
 
-            test.LoadMap();
+
 
 
         }

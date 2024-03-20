@@ -1,4 +1,4 @@
-using main.Class;
+using Main.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;

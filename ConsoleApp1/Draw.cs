@@ -3,7 +3,7 @@ using Main.Class;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 
-namespace main.Class 
+namespace Main.Class 
 {
     public class Draw
     {

@@ -1,4 +1,4 @@
-﻿using main.Class;
+﻿using Main.Class;
 
 namespace Main.Class
 {
