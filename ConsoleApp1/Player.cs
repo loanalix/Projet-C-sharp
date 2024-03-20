@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class player
+    public class Player
     {
 
         string m_sName = "";
@@ -19,7 +19,7 @@ namespace Main.Class
 
         public string Name { get => m_sName; set => m_sName = value; }
 
-        public player()
+        public Player()
         {
 
             m_sName = "player0";

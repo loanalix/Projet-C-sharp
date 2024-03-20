@@ -9,12 +9,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
 {
     internal class Program 
     {
-      
         public static void Main(string[] args)
         {
-            
+
             Map m_oMap = new Map();
-            player m_oPlayer = new player();
+            Player m_oPlayer = new Player();
             Draw m_oDraw = new Draw();  
             InputManager m_oInputManager = new InputManager();
             m_oDraw.LoadMap("../../../map.txt");

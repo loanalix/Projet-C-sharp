@@ -30,7 +30,7 @@ namespace main.Class
                 }
             }
         }
-        public void DrawMap(player oPlayer)
+        public void DrawMap(Player oPlayer)
         {
             for (int i = 0; i < m_lMap.Count; i++)
             {

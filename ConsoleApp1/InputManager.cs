@@ -8,7 +8,7 @@ namespace Main.Class
         
         public ConsoleKeyInfo Input { get => input; }
 
-        public void GetInput(player m_oPlayer, Draw oDraw)
+        public void GetInput(Player m_oPlayer, Draw oDraw)
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
