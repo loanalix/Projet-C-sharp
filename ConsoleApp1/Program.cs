@@ -13,9 +13,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
             map test = new map();
             FightManager fightManager = new FightManager();
 
-            Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, 1.0f, Types.Fire);
-            Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, 2.0f, Types.Water);
-            Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, 2.0f, Types.Dragon);
+            Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
+            Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
+            Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
 
             //Console.WriteLine("Nom du héro: " + hTest.Name);
             //Console.WriteLine("Hp de " + hTest.Name + ": " + hTest.HP);

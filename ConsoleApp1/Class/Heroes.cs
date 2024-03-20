@@ -53,7 +53,6 @@ namespace Main.Class
         public Types GetHeroAttackType { get => m_cAttackType; }
         public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
         public int GetHeroAttackMana { get => m_iAttackMana; }
-
         #endregion
 
         #region Events
@@ -71,7 +70,7 @@ namespace Main.Class
 
         #region Methods
 
-        public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, float fPrecision, Types cType)
+        public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
         {
 
             m_sName = sName;
@@ -81,8 +80,8 @@ namespace Main.Class
             m_fResistance = fResistance;
             m_iSpeed = iSpeed;
             m_iFinalSpeed = iSpeed + m_iIVSpeed;
-            m_fPrecision = fPrecision;
-            m_fExp = 0;
+            m_fPrecision = 100f;
+            m_fExp = 0f;
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();

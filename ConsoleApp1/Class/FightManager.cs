@@ -117,7 +117,7 @@ namespace Main.Class
             Console.WriteLine("Opponent Health before Attack: " + h2.HP);
             Console.WriteLine("Your Hero's Mana before Attack: " + h1.Mana + "\n");
 
-            h2.HP -= fDamage;
+            h2.HP -= (2 * fDamage - h2.Resistance) * 0.5f;
             h1.Mana -= h1.GetHeroAttackMana;
 
             Console.ForegroundColor = ConsoleColor.Green;
