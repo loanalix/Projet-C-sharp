@@ -15,7 +15,7 @@ namespace Main.Class
             HealingAmount = healingAmount;
         }
 
-        public override void Use(Heroes h)
+        public override void Use()
         {
             Console.WriteLine($"L'objet {Name} a été utilisée pour guérir de {HealingAmount} points de vie.");
         }

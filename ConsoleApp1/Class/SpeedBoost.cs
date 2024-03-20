@@ -15,7 +15,7 @@ namespace Main.Class
             SpeedIncress = speedIncress; 
         }
 
-        public override void Use(Heroes h)
+        public override void Use()
         {
             Console.WriteLine($"L'objet {Name} a été utilisée pour boosté de {SpeedIncress} points de vitesse.");
         }

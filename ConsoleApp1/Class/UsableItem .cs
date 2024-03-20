@@ -14,7 +14,7 @@ namespace Main.Class
         }
 
 
-        public virtual void Use(Heroes h) 
+        public virtual void Use() 
         {
             Console.WriteLine($"L'objet {Name} a été utilisé.");
         }
