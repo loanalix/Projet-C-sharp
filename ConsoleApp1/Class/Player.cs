@@ -43,12 +43,6 @@ namespace Game.Character
             }
             return true;
         }
-
-        public bool ChangeMap(Draw oDraw, int iNextPosX, int iNextPosY)
-        {
-            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'a') return true;
-            return false;
-        }
         public void MoveUp()
         {
             PosY --;

@@ -9,8 +9,9 @@ namespace Drawing
     public class Draw
     {
         public Map m_oMap = new Map();
-        private List<char> m_lMap = new List<char>();
         public List<char> GetMap { get => m_lMap; }
+
+        public Dictionary<string, List<char>> m_dMap = new Dictionary<string, List<char>>();
 
         private int m_iWidth;
         public int GetWidth { get => m_iWidth; }
@@ -20,6 +21,7 @@ namespace Drawing
         public List<char> LoadMap(string sFileName)
         {
             
+            List<char> map = new List<char>(); 
             StreamReader reader = File.OpenText(sFileName);
             string sizeLine = reader.ReadLine();
             m_iWidth = sizeLine.Length;
@@ -31,10 +33,11 @@ namespace Drawing
                 for (int i = 0; i < cChar.Length; i++)
                 {
                     m_lMap.Add(cChar[i]);
+                    map.Add(cChar[i]);
                 }
                 m_iHeight++;
             }
-            return m_lMap;
+            return map;
         }
         public void ClearMap()
         {

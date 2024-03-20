@@ -21,7 +21,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static FightManager m_oFightManager;
         static private List<char> m_lfirstMap;
         static private List<char> m_lSecondMap;
-
+        static private List<char> m_lCurrentMap;
         public static void Main(string[] args)
         {
 
@@ -31,8 +31,10 @@ namespace MyApp // Note: actual namespace depends on the project name.
             
             m_oInputManager = new InputManager();
 
+            //m_lSecondMap = m_oDraw.LoadMap("../../../txt/rootBeginer.txt");
             m_lfirstMap = m_oDraw.LoadMap("../../../txt/map.txt");
-            m_lSecondMap = m_oDraw.LoadMap("../../../txt/rootBeginer.txt");
+
+            m_lCurrentMap = m_lfirstMap;
 
             m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
 
@@ -57,7 +59,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
             {
                 Console.SetCursorPosition(0, 0);
                 m_oInputManager.GetInput(m_oPlayer, m_oDraw);
-                m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
+                if (m_oDraw.GetMap[m_oPlayer.ConvertTo1Dim(m_oPlayer.PosX, m_oPlayer.PosY, m_oDraw.GetWidth)] == 'a')
+                {
+                    m_lCurrentMap = m_lSecondMap;
+
+                }
+
+                
+                m_oDraw.DrawMap(m_oPlayer, m_lCurrentMap);
             }
 
 
