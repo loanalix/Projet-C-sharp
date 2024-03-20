@@ -14,24 +14,24 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Player m_oPlayer = new Player();
             Draw m_oDraw = new Draw();  
             InputManager m_oInputManager = new InputManager();
-            m_oDraw.LoadMap("../../../map.txt");
+            m_oDraw.LoadMap("../../../txt/map.txt");
             m_oDraw.DrawMap(m_oPlayer);
 
             Console.CursorVisible = false;
             bool isRunning = true;
 
+            FightManager fightManager = new FightManager();
+
+            Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
+            Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
+            Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
 
             while (isRunning)
             {
                 Console.SetCursorPosition(0, 0);
                 m_oInputManager.GetInput(m_oPlayer, m_oDraw);
                 m_oDraw.DrawMap(m_oPlayer);
-            FightManager fightManager = new FightManager();
             }
-
-            Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
-            Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
-            Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
 
             //Console.WriteLine("Nom du héro: " + hTest.Name);
             //Console.WriteLine("Hp de " + hTest.Name + ": " + hTest.HP);
