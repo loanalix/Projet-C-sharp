@@ -1,71 +1,61 @@
-﻿using System;
+﻿using Main.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class map
+    public class Map
     {
-        static string loadMap = "";
 
-        public string Map()
-        {
+        private List<int> m_lSpawnable = new List<int>();
 
-            loadMap += "------------------------------------";
-            return loadMap;
-        }
+        
+         
+        //private void UpdateMap(int iIndice, string sMove)
+        //{
+            
+        //    int move = m_lMap.FindIndex(chara => chara == '*');
+        //    int iMovement;
 
-        public string LoadMap()
-        {
-            StreamReader reader = File.OpenText("../../../map.txt");
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                char[] characters = line.ToCharArray();
+        //    if (sMove == "down" || sMove == "right")
+        //    {
+        //        iMovement = move + iIndice;
+        //    }
+        //    else
+        //    {
+        //        iMovement = move - iIndice;
+        //    }
 
-                for (int i = 0; i < characters.Length - 1; i++)
-                {
-                    char currentChar = characters[i];
-                    char nextChar = characters[i + 1];
+        //    m_lMap.RemoveAt(move);
+        //    m_lMap.Insert(move, ' ');
+        //    m_lMap.RemoveAt(iMovement);
+        //    m_lMap.Insert(iMovement, '*');
 
+        //}
+        //public void Move(string sCharPressed)
+        //{
 
-                    if (currentChar == ' ' && nextChar == 'b')
-                    {
-                        Console.BackgroundColor = ConsoleColor.Blue;
-                        Console.Write(currentChar);
-                        i++;
-                    }
-                    else if (currentChar == ' ' || nextChar == ' ')
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(currentChar);
-
-                    }
-                    else if (currentChar == '-' && nextChar == 'v')
-                    {
-                        Console.ResetColor();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(currentChar);
-                        i++;
-                    }
-                    else
-                    {
-                        Console.ResetColor();
-                        Console.Write(currentChar);
-                    }
-                }
-
-                Console.ResetColor();
-
-                Console.Write(characters[characters.Length - 1]);
-
-                Console.WriteLine();
-            }
-            return loadMap;
-        }
-
+        //    Console.SetCursorPosition(0, 0);
+        //    switch (sCharPressed)
+        //    {
+        //        case "up":
+        //            UpdateMap(iSizeLine, "up");
+        //            break;                    
+        //        case "down":
+        //            UpdateMap(iSizeLine, "down");
+        //            break;
+        //        case "left":
+        //            UpdateMap(1, "left");
+        //            break;
+        //        case "right":
+        //            UpdateMap(1, "right");
+        //            break;
+        //    }
+        //}
     }
 }
