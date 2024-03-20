@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Game.Entity;
+using Game.Character;
 using Game.Element;
 
 namespace Game.FightController
@@ -15,6 +16,8 @@ namespace Game.FightController
         #region Field
 
         private Game.Element.Type type;
+        private int m_iPosX = 5;
+        private int m_iPosY = 1;
 
         #endregion
 
@@ -64,6 +67,11 @@ namespace Game.FightController
                         Console.Write(currentChar);
                         i++;
                     }
+                    else if(i == Tools.Utils.ConvertTo1Dim(m_iPosX, m_iPosY, 20))
+                    {
+                        Console.BackgroundColor= ConsoleColor.Green;
+                        Console.Write('*');
+                    }
                     else
                     {
                         Console.ResetColor();
@@ -88,7 +96,7 @@ namespace Game.FightController
                 Console.ResetColor();
                 Console.WriteLine();
 
-                // appeler l'handle input pour tester la suite des bails
+                // appeler l'handle input pour tester la suite des bails 20
             }
         }
 

@@ -26,6 +26,7 @@ namespace Game.Entity
         private int m_iLevel;
         private Types m_cTypes;
         private FightManager fightManager;
+        private bool m_bIsHero;
 
         private string m_sAttackName;
         private Types m_cAttackType;
@@ -71,7 +72,7 @@ namespace Game.Entity
 
         #region Methods
 
-        public Mob(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
+        public Mob(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType, bool isHero)
         {
 
             m_sName = sName;
@@ -86,7 +87,7 @@ namespace Game.Entity
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();
-
+            m_bIsHero = isHero;
         }
 
         public void TakeDamage(float fDamage)

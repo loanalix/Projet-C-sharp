@@ -1,9 +1,4 @@
 using Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Character
 {
@@ -14,8 +9,8 @@ namespace Game.Character
         private int m_iPosX;
         private int m_iPosY;
 
-        public int PosX {  get => m_iPosX; private set => m_iPosX = value; }
-        public int PosY { get => m_iPosY; private set => m_iPosY = value; }
+        public int PosX {  get => m_iPosX; set => m_iPosX = value; }
+        public int PosY { get => m_iPosY; set => m_iPosY = value; }
         public string Name { get => m_sName; set => m_sName = value; }
 
         public Player()
@@ -26,13 +21,10 @@ namespace Game.Character
             PosY = 12;
 
         }
-        public int ConvertTo1Dim(int x, int y, int width)
-        {
-            return y * width + x;
-        }
+
         public bool CheckCollid(Draw oDraw, int iNextPosX, int iNextPosY)
         {
-            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, 73)] == 'w')
+            if (oDraw.GetMap[Tools.Utils.ConvertTo1Dim(iNextPosX, iNextPosY, 73)] == 'w')
             {
                 return false;
             }

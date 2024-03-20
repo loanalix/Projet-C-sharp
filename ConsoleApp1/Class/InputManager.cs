@@ -16,14 +16,16 @@ namespace Game.InputController
             {
                 if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY-1 ))
                 {
-                    m_oPlayer.MoveUp();
+                    //m_oPlayer.MoveUp();
+                    m_oPlayer.PosY += Tools.Utils.MoveUpOrLeft();
                 }
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
                 if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY + 1))
                 {
-                    m_oPlayer.MoveDown();
+                    //m_oPlayer.MoveDown();
+                    m_oPlayer.PosY += Tools.Utils.MoveDownOrRight();
 
                 }
             }
@@ -31,7 +33,8 @@ namespace Game.InputController
             {
                 if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX + 1, m_oPlayer.PosY))
                 {
-                    m_oPlayer.MoveRight();
+                    //m_oPlayer.MoveRight();
+                    m_oPlayer.PosX += Tools.Utils.MoveDownOrRight();
 
                 }
             }
@@ -39,7 +42,8 @@ namespace Game.InputController
             {
                 if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX - 1, m_oPlayer.PosY))
                 {
-                    m_oPlayer.MoveLeft();
+                    //m_oPlayer.MoveLeft();
+                    m_oPlayer.PosX += Tools.Utils.MoveUpOrLeft();
 
                 }
             }

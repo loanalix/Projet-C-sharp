@@ -36,9 +36,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             m_oFightManager = new FightManager();
 
-            Mob hTest = new Mob("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
-            Mob hTest2 = new Mob("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
-            Mob hTest3 = new Mob("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
+            Mob hTest = new Mob("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire, true);
+            Mob hTest2 = new Mob("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water, true);
+            Mob hTest3 = new Mob("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon, true);
 
             m_oFightManager.StartFight();
 
@@ -54,12 +54,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 m_oInputManager.GetInput(m_oPlayer, m_oDraw);
                 m_oDraw.DrawMap(m_oPlayer);
             }
-
-
-
-
-
-
         }
     }
 }

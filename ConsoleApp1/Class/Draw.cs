@@ -64,7 +64,7 @@ namespace Drawing
                         break;
                 
                 }
-                if (i == oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
+                if (i == Tools.Utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write('P');
