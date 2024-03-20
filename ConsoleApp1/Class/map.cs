@@ -29,6 +29,11 @@ namespace Game.Map
                     return "map";
                     break;
                 case "map1":
+                    if(oPlayer.PosY > oDraw.GetHeight - 5)
+                    {
+                        oPlayer.PosY = 0;
+                        return "map";
+                    }
                     return "map1";
                     break;
 
