@@ -14,9 +14,9 @@ namespace main.Class
         private int iWidth;
         
 
-        public void LoadMap()
+        public void LoadMap(string sFileName)
         {
-            StreamReader reader = File.OpenText("../../../map.txt");
+            StreamReader reader = File.OpenText(sFileName);
             string sizeLine = reader.ReadLine();
             iWidth = sizeLine.Length;
             string line;
@@ -66,7 +66,7 @@ namespace main.Class
                 if (i == oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write('*');
+                    Console.Write('P');
                 }
                 else
                 {

@@ -17,7 +17,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             player m_oPlayer = new player();
             Draw m_oDraw = new Draw();  
             InputManager m_oInputManager = new InputManager();
-            m_oDraw.LoadMap();
+            m_oDraw.LoadMap("../../../map.txt");
             m_oDraw.DrawMap(m_oPlayer);
 
             Console.CursorVisible = false;
