@@ -57,6 +57,16 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             fightManager.StartFight();
 
+            //Heroes.CalculateWhoIsStarting(hTest, hTest2);
+
+            //test.LoadMap();
+
+
+            Potion healthPotion = new Potion("Potion de santé", 50);
+            Inventory inventory = new Inventory();
+            inventory.AddItem(healthPotion);
+            inventory.UseItem(0);
+
 
 
 
