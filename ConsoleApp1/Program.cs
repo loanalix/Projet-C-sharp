@@ -19,9 +19,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static Draw m_oDraw;
         static InputManager m_oInputManager;
         static FightManager m_oFightManager;
-        static private List<char> m_lfirstMap;
-        static private List<char> m_lSecondMap;
-        static private List<char> m_lCurrentMap;
+       
+
+        static string sCurrentMap;
         public static void Main(string[] args)
         {
 
@@ -31,12 +31,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
             
             m_oInputManager = new InputManager();
 
-            //m_lSecondMap = m_oDraw.LoadMap("../../../txt/rootBeginer.txt");
-            m_lfirstMap = m_oDraw.LoadMap("../../../txt/map.txt");
+            m_oDraw.LoadMap("../../../txt/map.txt", "map");
+            m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
 
-            m_lCurrentMap = m_lfirstMap;
-
-            m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
+            sCurrentMap = "map";
+            
+            m_oDraw.DrawMap(m_oPlayer, m_oDraw.GetMap[sCurrentMap]);
 
             Console.CursorVisible = false;
             bool isRunning = true;
@@ -58,15 +58,18 @@ namespace MyApp // Note: actual namespace depends on the project name.
             while (isRunning)
             {
                 Console.SetCursorPosition(0, 0);
-                m_oInputManager.GetInput(m_oPlayer, m_oDraw);
-                if (m_oDraw.GetMap[m_oPlayer.ConvertTo1Dim(m_oPlayer.PosX, m_oPlayer.PosY, m_oDraw.GetWidth)] == 'a')
+                if (m_oPlayer.PosY<0)
                 {
-                    m_lCurrentMap = m_lSecondMap;
+                    sCurrentMap = "map1";
+                    m_oPlayer.PosY = m_oDraw.GetHeight;
+                }
+                else
+                {
+                    m_oInputManager.GetInput(m_oPlayer, m_oDraw, sCurrentMap);
 
                 }
 
-                
-                m_oDraw.DrawMap(m_oPlayer, m_lCurrentMap);
+                m_oDraw.DrawMap(m_oPlayer, m_oDraw.GetMap[sCurrentMap]);
             }
 
 

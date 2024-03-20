@@ -14,8 +14,8 @@ namespace Game.Character
         private int m_iPosX;
         private int m_iPosY;
 
-        public int PosX {  get => m_iPosX; private set => m_iPosX = value; }
-        public int PosY { get => m_iPosY; private set => m_iPosY = value; }
+        public int PosX {  get => m_iPosX; set => m_iPosX = value; }
+        public int PosY { get => m_iPosY; set => m_iPosY = value; }
         public string Name { get => m_sName; set => m_sName = value; }
 
         public Player()
@@ -23,23 +23,24 @@ namespace Game.Character
 
             m_sName = "player0";
             PosX = 10; 
-            PosY = 12;
+            PosY = 13;
 
         }
         public int ConvertTo1Dim(int x, int y, int width)
         {
             return y * width + x;
         }
-        public bool CheckCollid(Draw oDraw, int iNextPosX, int iNextPosY)
+        public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
         {
-            if (iNextPosX == 0 || iNextPosY == -1) return false;
-
-      
-            else if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w' 
-                || oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
-                || oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
+           if (iNextPosY > 0)
             {
-                return false;
+                if (oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
+                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
+                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
+                {
+                    return false;
+                }
+                  
             }
             return true;
         }

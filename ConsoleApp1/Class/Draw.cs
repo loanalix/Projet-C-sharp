@@ -9,16 +9,19 @@ namespace Drawing
     public class Draw
     {
         public Map m_oMap = new Map();
-        public List<char> GetMap { get => m_lMap; }
 
-        public Dictionary<string, List<char>> m_dMap = new Dictionary<string, List<char>>();
+
+        private Dictionary<string, List<char>> m_dMap = new Dictionary<string, List<char>>();
+
+        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
+
 
         private int m_iWidth;
         public int GetWidth { get => m_iWidth; }
 
         private int m_iHeight;
         public int GetHeight { get => m_iHeight; } 
-        public List<char> LoadMap(string sFileName)
+        public void LoadMap(string sFileName, string name)
         {
             
             List<char> map = new List<char>(); 
@@ -32,17 +35,13 @@ namespace Drawing
                 char[] cChar = line.ToCharArray();
                 for (int i = 0; i < cChar.Length; i++)
                 {
-                    m_lMap.Add(cChar[i]);
                     map.Add(cChar[i]);
                 }
                 m_iHeight++;
             }
-            return map;
+            m_dMap.Add(name, map);
         }
-        public void ClearMap()
-        {
-            m_lMap.Clear();
-        }
+       
         public void DrawMap(Player oPlayer , List<char> drawMap )
         {
             for (int i = 0; i < drawMap.Count; i++)
