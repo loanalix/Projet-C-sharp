@@ -60,11 +60,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 m_oDraw.DrawMap(m_oPlayer);
             }
 
-
-
-
-
-
         }
     }
 }
