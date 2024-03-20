@@ -29,7 +29,7 @@ namespace Drawing
             string sizeLine = reader.ReadLine();
             m_iWidth = sizeLine.Length;
             string line;
-
+            int fileHeight = 0;
             while ((line = reader.ReadLine()) != null)
             {
                 char[] cChar = line.ToCharArray();
@@ -37,8 +37,9 @@ namespace Drawing
                 {
                     map.Add(cChar[i]);
                 }
-                m_iHeight++;
+                fileHeight++;
             }
+            m_iHeight = fileHeight;
             m_dMap.Add(name, map);
         }
        

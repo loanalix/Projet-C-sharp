@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -14,7 +15,14 @@ namespace Game.Map
         private List<int> m_lSpawnable = new List<int>();
 
         
-         
+        public string ChangeMap(int iChangePos, int iPos, string sNewMap)
+        {
+            if(iPos < iChangePos)
+            {
+                return sNewMap;
+            }
+            return "map";
+        }
         //private void UpdateMap(int iIndice, string sMove)
         //{
             

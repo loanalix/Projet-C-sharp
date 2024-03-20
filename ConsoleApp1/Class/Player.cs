@@ -32,15 +32,14 @@ namespace Game.Character
         }
         public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
         {
-           if (iNextPosY > 0)
-            {
+           if (iNextPosY > 0 )
+           {
                 if (oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
                 || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
                 || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
                 {
                     return false;
-                }
-                  
+                }  
             }
             return true;
         }
