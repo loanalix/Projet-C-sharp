@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class player
+    public class Player
     {
 
         string m_sName = "";
 
-        public player()
+        public Player()
         {
 
             m_sName = "player0";

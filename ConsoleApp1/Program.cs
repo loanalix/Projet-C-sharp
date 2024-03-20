@@ -12,7 +12,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             // map test = new map();
 
-            //Heroes hTest = new Heroes("Poke0", 100, 500, 30.0f, 15.0f, 50, 1.0f, Types.Fire);
+            Heroes hTest = new Heroes("Poke0", 100, 500, 30.0f, 15.0f, 50, 1.0f, Types.Fire);
             //Heroes hTest2 = new Heroes("Poke1", 500, 50, 50.0f, 10.0f, 50, 2.0f, Types.Water);
 
             //Console.WriteLine("Nom du héro: " + hTest.Name);
