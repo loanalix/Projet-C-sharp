@@ -13,7 +13,7 @@ namespace Main.Class
         #region Fields
 
         private string m_sName = "";
-        private int m_iHp;
+        private float m_iHp;
         private int m_iMana;
         private float m_fDamage;
         private float m_fResistance;
@@ -24,13 +24,21 @@ namespace Main.Class
         private float m_fExp;
         private int m_iLevel;
         private Types m_cTypes;
+        private FightManager fightManager;
+
+        private string m_sAttackName;
+        private Types m_cAttackType;
+        private float m_fAttackDamage;
+        private int m_iAttackMana;
+
+        private static List<Attack> m_lAttack = new List<Attack>();
 
         #endregion
 
         #region Property
 
         public string Name { get => m_sName; set => m_sName = value; }
-        public int HP { get => m_iHp; set => m_iHp = value; }
+        public float HP { get => m_iHp; set => m_iHp = value; }
         public int Mana { get => m_iMana; set => m_iMana = value; }
         public float Damage { get => m_fDamage; set => m_fDamage = value; }
         public float Resistance { get => m_fResistance; set => m_fResistance = value; }
@@ -41,7 +49,10 @@ namespace Main.Class
         public float Exp { get => m_fExp; set => m_fExp = value; }
         public int Level { get => m_iLevel; set => m_iLevel = value; }
         public Types GetType { get => m_cTypes; }
-
+        public string GetHeroAttackName { get => m_sAttackName; }
+        public Types GetHeroAttackType { get => m_cAttackType; }
+        public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
+        public int GetHeroAttackMana { get => m_iAttackMana; }
         #endregion
 
         #region Events
@@ -59,7 +70,7 @@ namespace Main.Class
 
         #region Methods
 
-        public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, float fPrecision, Types cType)
+        public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
         {
 
             m_sName = sName;
@@ -69,10 +80,11 @@ namespace Main.Class
             m_fResistance = fResistance;
             m_iSpeed = iSpeed;
             m_iFinalSpeed = iSpeed + m_iIVSpeed;
-            m_fPrecision = fPrecision;
-            m_fExp = 0;
+            m_fPrecision = 100f;
+            m_fExp = 0f;
             m_iLevel = 0;
             m_cTypes = cType;
+            fightManager = new FightManager();
 
         }
 
@@ -126,21 +138,43 @@ namespace Main.Class
             m_iFinalSpeed = m_iSpeed + m_iIVSpeed;
         }
 
-        public static void CalculateWhoIsStarting(Heroes h1, Heroes h2)
+        public void GetAttackProperties(string sAttackName) 
         {
-            int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
 
-            double dAttackProbabilityH1 = (double)iSpeedDiff / 100;
-            double dAttackProbabilityH2 = 1 - dAttackProbabilityH1;
+            Attack attack = GetAttack(sAttackName);
+            if (attack != null)
+            {
+                Console.WriteLine("Attack Name: " + attack.GetAttackName);
+                Console.WriteLine("Attack Type: " + attack.GetAttackType);
+                Console.WriteLine("Attack Damage: " + attack.GetAttackDamage);
+                Console.WriteLine("Attack Mana: " + attack.GetAttackMana);
+            }
+            else { return; }
+        }
 
-            Random random = new Random();
-            double dAttackerProbability = random.NextDouble();
+        public void AddAttacks(string sAttackName)
+        {
+            Attack attack = GetAttack(sAttackName);
+            if(attack != null)
+            {
+                m_lAttack.Add(attack);
+            } else { return; }
+        }
 
-            Console.WriteLine(" ");
-            Console.WriteLine("dAttackerProbability => " + dAttackerProbability);
-            Console.WriteLine("h1 => " + dAttackProbabilityH1);
-            Console.WriteLine("h2 => " + dAttackProbabilityH2);
-            Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
+        private Attack GetAttack(string sAttackName)
+        {
+            Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
+            return attack;
+        }
+
+        public void PerformAttackTo(Heroes op, string sAttackName)
+        {
+            Attack attack = GetAttack(sAttackName);
+            m_sAttackName = attack.GetAttackName;
+            m_cAttackType = attack.GetAttackType;
+            m_fAttackDamage = attack.GetAttackDamage;
+            m_iAttackMana = attack.GetAttackMana;
+            fightManager.AttackOpponent(this, op);
         }
 
         #endregion

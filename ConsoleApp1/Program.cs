@@ -11,9 +11,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
         {
 
             map test = new map();
+            FightManager fightManager = new FightManager();
 
-            Heroes hTest = new Heroes("Poke0", 100, 500, 30.0f, 15.0f, 50, 1.0f, Types.Fire);
-            Heroes hTest2 = new Heroes("Poke1", 500, 50, 50.0f, 10.0f, 50, 2.0f, Types.Water);
+            Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
+            Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
+            Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
 
             //Console.WriteLine("Nom du héro: " + hTest.Name);
             //Console.WriteLine("Hp de " + hTest.Name + ": " + hTest.HP);
@@ -24,15 +26,22 @@ namespace MyApp // Note: actual namespace depends on the project name.
             //Console.WriteLine("Precision de " + hTest.Name + ": " + hTest.Precision);
             //Console.WriteLine("Type de " + hTest.Name + ": " + hTest.GetType);
 
-            hTest.GenerateIVSpeed();
-            hTest2.GenerateIVSpeed();
+            //hTest.GenerateIVSpeed();
+            //hTest2.GenerateIVSpeed();
 
             //Console.WriteLine("IVSpeed Poke0: " + hTest.IVSpeed);
             //Console.WriteLine("IVSpeed Poke1: " + hTest2.IVSpeed);
 
-            Heroes.CalculateWhoIsStarting(hTest, hTest2);
+            //FightManager.CalculateWhoIsStarting(hTest, hTest2);
 
-            test.LoadMap();
+            //Attack attack = new Attack("test", Types.Fire, 50f, 20);
+            //hTest.AddAttacks("test");
+            //hTest.GetAttackProperties("test");
+            //hTest.PerformAttackTo(hTest2, "test");
+
+            fightManager.StartFight();
+
+            //test.LoadMap();
 
 
         }

@@ -9,16 +9,16 @@ namespace Main.Class
     public class player
     {
 
-        string m_sName = "";
+        private string m_sName = "";
 
-        public player()
+        public player(string sName)
         {
 
-            m_sName = "player0";
+            m_sName = sName;
 
         }
 
-        public string Name { get => m_sName; set => m_sName = value; }
+        public string Name { get => m_sName; private set => m_sName = value; }
 
     }
 }
