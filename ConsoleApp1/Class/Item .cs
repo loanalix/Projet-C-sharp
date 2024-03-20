@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Object;
 
-namespace Main.Class
+namespace Game.UsableItem
 {
     public class Item : GameObject
     {

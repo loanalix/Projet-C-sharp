@@ -1,6 +1,7 @@
-﻿using Main.Class;
+﻿using Game.Character;
+using Drawing;
 
-namespace Main.Class
+namespace Game.InputController
 {
     public class InputManager
     {

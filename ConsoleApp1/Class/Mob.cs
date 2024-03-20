@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.FightController;
+using Game.Spell;
+using Game.Enum;
 
-using Main.Enum;
-
-namespace Main.Class
+namespace Game.Entity
 {
-    public class Heroes
+    public class Mob
     {
         #region Fields
 
@@ -70,7 +71,7 @@ namespace Main.Class
 
         #region Methods
 
-        public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
+        public Mob(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
         {
 
             m_sName = sName;
@@ -167,7 +168,7 @@ namespace Main.Class
             return attack;
         }
 
-        public void PerformAttackTo(Heroes op, string sAttackName)
+        public void PerformAttackTo(Mob op, string sAttackName)
         {
             Attack attack = GetAttack(sAttackName);
             m_sAttackName = attack.GetAttackName;

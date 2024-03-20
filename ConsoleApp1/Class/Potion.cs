@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.UsableItem;
 
-namespace Main.Class
+namespace Game.Brewing
 {
     public class Potion : Item
     {
