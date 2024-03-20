@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Object;
-using Game.UsableItem;
+using Game.Class;
 
-namespace Game.Inventory
+namespace Game.Class
 {
     public  class Inventory
     {
@@ -23,13 +22,13 @@ namespace Game.Inventory
             Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }
 
-        public void UseItem( Player player , int index)
+        public void UseItem( Player player , Mob target, int index)
         {
             if (index >= 0 && index < items.Count)
             {
                 if (items[index] is Item usableItem)
                 {
-                    usableItem.Use(player);
+                    usableItem.Use(player, target);
                     items.RemoveAt(index);
                 }
                 else 

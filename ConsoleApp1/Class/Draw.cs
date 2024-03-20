@@ -1,10 +1,8 @@
-
-using Game.Map;
-using Game.Character;
+using Game.Class;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 
-namespace Drawing
+namespace Game.Class
 {
     public class Draw
     {

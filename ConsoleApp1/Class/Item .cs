@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Object;
+using Game.Class;
 
-namespace Game.UsableItem
+namespace Game.Class
 {
     public class Item : GameObject
     {
@@ -15,9 +15,9 @@ namespace Game.UsableItem
         }
 
 
-        public virtual void Use(Player player) 
+        public virtual void Use(Player player , Mob target ) 
         {
-            Console.WriteLine($"L'objet {Name} a été utilisé.");
+            Console.WriteLine($"L'objet {Name} a été utilisé sur {target.Name}.");
         }
     }
 

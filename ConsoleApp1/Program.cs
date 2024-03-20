@@ -1,12 +1,5 @@
-﻿using Game.Map;
-using Game.Inventory;
-using Game.Entity;
-using Game.Character;
-using Game.InputController;
-using Game.FightController;
+﻿using Game.Class;
 using Game.Enum;
-using Game.Brewing;
-using Drawing;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -35,18 +28,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             bool isRunning = true;
 
             m_oFightManager = new FightManager();
-            Player player = new Player();
 
-            Potion healthPotion = new Potion("Potion de santé", 50);
-
-            player.AddItemToInventory(healthPotion);
-
-            player.UseItemFromInventory(0);
-
-
-
-            PotionMana manaHeal = new PotionMana("Potion de mana", 10);
-            AttackBoost attackIncress = new AttackBoost("Boost d'Attaque", 20);
             Mob hTest = new Mob("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
 
             Mob hTest2 = new Mob("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
@@ -54,11 +36,22 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             m_oFightManager.StartFight();
 
-
             Potion healthPotion = new Potion("Potion de santé", 50);
-            Inventory inventory = new Inventory();
-            inventory.AddItem(healthPotion);
-            inventory.UseItem(0);
+
+            m_oPlayer.AddItemToInventory(healthPotion);
+
+            m_oPlayer.UseItemFromInventory(hTest2 ,0);
+
+
+
+            PotionMana manaHeal = new PotionMana("Potion de mana", 10);
+            AttackBoost attackIncress = new AttackBoost("Boost d'Attaque", 20);
+
+
+            //Potion potionHealth = new Potion("Potion de santé", 50);
+            //Inventory inventory = new Inventory();
+            //inventory.AddItem(potionHealth);
+            //inventory.UseItem(m_oPlayer, hTest2, 0);
 
             while (isRunning)
             {

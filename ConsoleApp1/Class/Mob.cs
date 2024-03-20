@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.FightController;
-using Game.Spell;
+using Game.Class;
 using Game.Enum;
 
-namespace Game.Entity
+
+namespace Game.Class
 {
     public class Mob
     {

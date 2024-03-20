@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Entity;
-using Game.Element;
+using Game.Class;
 
-namespace Game.FightController
+namespace Game.Class
 {
     public class FightManager
     {
 
         #region Field
 
-        private Game.Element.Type type;
+        private Type type;
 
         #endregion
 
@@ -22,7 +21,7 @@ namespace Game.FightController
 
         public FightManager()
         {
-            type = new Game.Element.Type();
+            type = new Type();
         }
 
         public void StartFight()

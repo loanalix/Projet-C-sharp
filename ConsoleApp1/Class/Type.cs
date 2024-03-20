@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Entity;
 
-namespace Game.Element
+namespace Game.Class
 {
     public class Type
     {

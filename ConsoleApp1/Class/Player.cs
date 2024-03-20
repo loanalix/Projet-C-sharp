@@ -1,11 +1,11 @@
-using Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Class;
 
-namespace Game.Character
+namespace Game.Class
 {
     public class Player
     {
@@ -63,9 +63,9 @@ namespace Game.Character
             Inventory.AddItem(item);
         }
 
-        public void UseItemFromInventory (int index ) 
+        public void UseItemFromInventory (Mob target ,int index ) 
         {
-            Inventory.UseItem(this, index) ;
+            Inventory.UseItem(this, target, index) ;
         }
 
     }
