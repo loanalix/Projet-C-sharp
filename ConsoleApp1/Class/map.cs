@@ -15,32 +15,45 @@ namespace Game.Map
 
         private List<int> m_lSpawnable = new List<int>();
 
-        
-        public string ChangeMap(Player oPlayer, Draw oDraw, string sNewMap)
+        Random rand = new Random();
+        Draw m_oDraw;
+         
+        public Draw oDraw { get=>m_oDraw; set => m_oDraw = value; }
+        public string ChangeMap(Player oPlayer, string sNewMap)
         {
             switch (sNewMap)
             {
                 case "map":
                     if (oPlayer.PosY < 0)
                     {
-                        oPlayer.PosY = oDraw.GetHeight - 4;
+                        oPlayer.PosY = m_oDraw.GetHeight - 4;
+                        spawnPokemon("map1");
                         return "map1";
                     }
                     return "map";
-                    break;
                 case "map1":
-                    if(oPlayer.PosY > oDraw.GetHeight - 5)
+                    if(oPlayer.PosY > m_oDraw.GetHeight - 5)
                     {
                         oPlayer.PosY = 0;
                         return "map";
                     }
                     return "map1";
-                    break;
 
                 default:
                     return "";
-                    break;
             }
+        }
+
+        public void spawnPokemon(string sMap)
+        {
+            for(int i= 0; i < 10; i++)
+            {
+                List<int> spawn = m_oDraw.GetSpawn[sMap];
+                List<char> Map = m_oDraw.GetMap[sMap];
+                int randomIndex = rand.Next(0, spawn.Count);
+                Map[randomIndex] = 's';
+            }
+            
         }
         //private void UpdateMap(int iIndice, string sMove)
         //{

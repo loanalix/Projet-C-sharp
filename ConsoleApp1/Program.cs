@@ -28,7 +28,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oMap = new Map();
             m_oPlayer = new Player();
             m_oDraw = new Draw();  
-            
+            m_oMap.oDraw = m_oDraw;
             m_oInputManager = new InputManager();
 
             m_oDraw.LoadMap("../../../txt/map.txt", "map");
@@ -58,7 +58,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             while (isRunning)
             {
                 Console.SetCursorPosition(0, 0); 
-                sCurrentMap = m_oMap.ChangeMap(m_oPlayer,m_oDraw, sCurrentMap);
+                sCurrentMap = m_oMap.ChangeMap(m_oPlayer, sCurrentMap);
 
                 m_oInputManager.GetInput(m_oPlayer, m_oDraw, sCurrentMap);
 
