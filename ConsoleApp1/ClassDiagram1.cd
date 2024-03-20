@@ -1,70 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MyApp.Program" Collapsed="true">
-    <Position X="7.75" Y="2.5" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Main.Class.UsableItem">
-    <Position X="10.5" Y="4.5" Width="1.5" />
+  <Class Name="Main.Class.Item">
+    <Position X="8.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Class\UsableItem .cs</FileName>
+      <FileName>Class\Item .cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Main.Class.Potion">
-    <Position X="10.75" Y="7" Width="1.5" />
+    <Position X="7.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
       <FileName>Class\Potion.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Main.Class.Player" Collapsed="true">
-    <Position X="10.75" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Class\Player.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Main.Class.map" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Class\map.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Main.Class.Inventory" Collapsed="true">
-    <Position X="8" Y="4.75" Width="1.5" />
+    <Position X="11.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQAAAAAAAAAAAgAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Main.Class.Heroes" Collapsed="true">
-    <Position X="2.25" Y="1.75" Width="1.5" />
+    <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABwCAAGoAKBAQAhlQIIBFAQDQAAAACEJgQAAoACIUBg=</HashCode>
+      <HashCode>ABQGAAGokKBIQAhlQIIBFAQDQAACACGZiQEAoAGIdBg=</HashCode>
       <FileName>Class\Heroes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Main.Class.GameObject">
-    <Position X="13" Y="3.25" Width="1.5" />
+    <Position X="10.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Main.Class.SpeedBoost">
-    <Position X="12.75" Y="7" Width="1.5" />
+    <Position X="10" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\SpeedBoost.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Main.Class.Attack" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAQAAAAEAABAAAAAAAAAACQAAAAEgEAAAA=</HashCode>
+      <FileName>Class\Attack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.Draw" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAABAAAAEAAAAAAAAAQAAAAAABAAA=</HashCode>
+      <FileName>Class\Draw.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.FightManager" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAIAAAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\FightManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.InputManager" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.Map" Collapsed="true">
+    <Position X="16.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.Type" Collapsed="true">
+    <Position X="14.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Class\Type.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Class.Player" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAACAAAAIAAAAAAAwAQAAAAAAMAIQAAAAAAAAAA=</HashCode>
+      <FileName>Class\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="Main.Enum.Types" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIBAAAAAAACAAkAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Enum\Types.cs</FileName>

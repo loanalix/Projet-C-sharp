@@ -18,16 +18,16 @@ namespace Main.Class
         public void AddItem(GameObject item)
         { 
             items.Add (item);
-            Console.WriteLine($"'{item.Name}' a été ajouté à l'inventaire.");
+            Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }
 
-        public void UseItem(int index)
+        public void UseItem( Player player , int index)
         {
             if (index >= 0 && index < items.Count)
             {
-                if (items[index] is UsableItem usableItem)
+                if (items[index] is Item usableItem)
                 {
-                    usableItem.Use();
+                    usableItem.Use(player);
                     items.RemoveAt(index);
                 }
                 else 

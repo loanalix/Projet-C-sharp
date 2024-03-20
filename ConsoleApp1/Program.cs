@@ -25,6 +25,28 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Heroes hTest = new Heroes("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
             Heroes hTest2 = new Heroes("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
             Heroes hTest3 = new Heroes("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
+            
+
+            Player player = new Player();
+
+            Potion healthPotion = new Potion("Potion de santé", 50);
+
+            player.AddItemToInventory(healthPotion);
+
+            player.UseItemFromInventory(0); 
+
+
+
+            PotionMana manaHeal = new PotionMana("Potion de mana", 10);
+            AttackBoost attackIncress = new AttackBoost("Boost d'Attaque", 20);
+
+
+            //Inventory inventory = new Inventory();
+            //inventory.AddItem(healthPotion);
+            //inventory.AddItem(manaHeal);
+            //inventory.AddItem(attackIncress);
+            //inventory.UseItem(2);
+        
 
             while (isRunning)
             {
@@ -60,13 +82,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
             //Heroes.CalculateWhoIsStarting(hTest, hTest2);
 
             //test.LoadMap();
-
-
-            Potion healthPotion = new Potion("Potion de santé", 50);
-            Inventory inventory = new Inventory();
-            inventory.AddItem(healthPotion);
-            inventory.UseItem(0);
-
 
 
 

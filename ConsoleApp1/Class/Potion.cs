@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class Potion : UsableItem
+    public class Potion : Item
     {
         public int HealingAmount { get; set; }
 
@@ -15,9 +15,9 @@ namespace Main.Class
             HealingAmount = healingAmount;
         }
 
-        public override void Use()
+        public override void Use(Player player)
         {
-            Console.WriteLine($"L'objet {Name} a été utilisée pour guérir de {HealingAmount} points de vie.");
+            Console.WriteLine($"L'objet {Name} a été utilisée par {player.Name} pour guérir de {HealingAmount} points de vie .");
         }
     }
 }

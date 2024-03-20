@@ -19,12 +19,15 @@ namespace Main.Class
 
         public string Name { get => m_sName; set => m_sName = value; }
 
+        public Inventory Inventory {get; private set; }
+
         public Player()
         {
 
             m_sName = "player0";
             PosX = 10; 
             PosY = 12;
+            Inventory = new Inventory();    
 
         }
         public int ConvertTo1Dim(int x, int y, int width)
@@ -54,6 +57,16 @@ namespace Main.Class
         public void MoveLeft()
         {
             PosX --;
+        }
+
+        public void AddItemToInventory(GameObject item) 
+        {
+            Inventory.AddItem(item);
+        }
+
+        public void UseItemFromInventory (int index ) 
+        {
+            Inventory.UseItem(this, index) ;
         }
 
     }

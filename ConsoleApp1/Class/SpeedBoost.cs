@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class SpeedBoost: UsableItem
+    public class SpeedBoost: Item
     {
         public int SpeedIncress { get; set; }
 
@@ -15,7 +15,7 @@ namespace Main.Class
             SpeedIncress = speedIncress; 
         }
 
-        public override void Use()
+        public override void Use(Player player)
         {
             Console.WriteLine($"L'objet {Name} a été utilisée pour boosté de {SpeedIncress} points de vitesse.");
         }

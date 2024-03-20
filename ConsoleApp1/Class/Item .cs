@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class UsableItem : GameObject
+    public class Item : GameObject
     {
-        public UsableItem(string name) : base(name)
+        public Item(string name) : base(name)
         {
 
         }
 
 
-        public virtual void Use() 
+        public virtual void Use(Player player) 
         {
             Console.WriteLine($"L'objet {Name} a été utilisé.");
         }
