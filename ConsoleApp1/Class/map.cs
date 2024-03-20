@@ -1,4 +1,5 @@
 ﻿using Game.Character;
+using Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,26 @@ namespace Game.Map
         private List<int> m_lSpawnable = new List<int>();
 
         
-        public string ChangeMap(int iChangePos, int iPos, string sNewMap)
+        public string ChangeMap(Player oPlayer, Draw oDraw, string sNewMap)
         {
-            if(iPos < iChangePos)
+            switch (sNewMap)
             {
-                return sNewMap;
+                case "map":
+                    if (oPlayer.PosY < 0)
+                    {
+                        oPlayer.PosY = oDraw.GetHeight - 4;
+                        return "map1";
+                    }
+                    return "map";
+                    break;
+                case "map1":
+                    return "map1";
+                    break;
+
+                default:
+                    return "";
+                    break;
             }
-            return "map";
         }
         //private void UpdateMap(int iIndice, string sMove)
         //{

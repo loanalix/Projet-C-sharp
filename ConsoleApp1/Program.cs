@@ -57,18 +57,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             while (isRunning)
             {
-                Console.SetCursorPosition(0, 0);
-                //sCurrentMap = m_oMap.ChangeMap(0, m_oPlayer.PosY, "map1");
-                if (m_oPlayer.PosY < 0)
-                {
-                    sCurrentMap = "map1";
-                    m_oPlayer.PosY = m_oDraw.GetHeight - 4;
-                }
-                else
-                {
-                    m_oInputManager.GetInput(m_oPlayer, m_oDraw, sCurrentMap);
+                Console.SetCursorPosition(0, 0); 
+                sCurrentMap = m_oMap.ChangeMap(m_oPlayer,m_oDraw, sCurrentMap);
 
-                }
+                m_oInputManager.GetInput(m_oPlayer, m_oDraw, sCurrentMap);
+
 
                 m_oDraw.DrawMap(m_oPlayer, m_oDraw.GetMap[sCurrentMap]);
             }
