@@ -12,14 +12,17 @@ namespace Drawing
         private List<char> m_lMap = new List<char>();
         public List<char> GetMap { get => m_lMap; }
 
-        private int iWidth;
-        
+        private int m_iWidth;
+        public int GetWidth { get => m_iWidth; }
 
-        public void LoadMap(string sFileName)
+        private int m_iHeight;
+        public int GetHeight { get => m_iHeight; } 
+        public List<char> LoadMap(string sFileName)
         {
+            
             StreamReader reader = File.OpenText(sFileName);
             string sizeLine = reader.ReadLine();
-            iWidth = sizeLine.Length;
+            m_iWidth = sizeLine.Length;
             string line;
 
             while ((line = reader.ReadLine()) != null)
@@ -29,13 +32,19 @@ namespace Drawing
                 {
                     m_lMap.Add(cChar[i]);
                 }
+                m_iHeight++;
             }
+            return m_lMap;
         }
-        public void DrawMap(Player oPlayer)
+        public void ClearMap()
         {
-            for (int i = 0; i < m_lMap.Count; i++)
+            m_lMap.Clear();
+        }
+        public void DrawMap(Player oPlayer , List<char> drawMap )
+        {
+            for (int i = 0; i < drawMap.Count; i++)
             {
-                switch (m_lMap[i])
+                switch (drawMap[i])
                 {
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -71,7 +80,7 @@ namespace Drawing
                 }
                 else
                 {
-                    if(m_lMap[i] != '/')
+                    if(drawMap[i] != '/')
                     {
                         Console.Write(' ');
                     }

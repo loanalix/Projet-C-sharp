@@ -32,11 +32,22 @@ namespace Game.Character
         }
         public bool CheckCollid(Draw oDraw, int iNextPosX, int iNextPosY)
         {
-            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, 73)] == 'w')
+            if (iNextPosX == 0 || iNextPosY == -1) return false;
+
+      
+            else if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w' 
+                || oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
+                || oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
             {
                 return false;
             }
             return true;
+        }
+
+        public bool ChangeMap(Draw oDraw, int iNextPosX, int iNextPosY)
+        {
+            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'a') return true;
+            return false;
         }
         public void MoveUp()
         {

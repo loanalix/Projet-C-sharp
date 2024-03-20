@@ -19,6 +19,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static Draw m_oDraw;
         static InputManager m_oInputManager;
         static FightManager m_oFightManager;
+        static private List<char> m_lfirstMap;
+        static private List<char> m_lSecondMap;
+
         public static void Main(string[] args)
         {
 
@@ -27,9 +30,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oDraw = new Draw();  
             
             m_oInputManager = new InputManager();
-            
-            m_oDraw.LoadMap("../../../txt/map.txt");
-            m_oDraw.DrawMap(m_oPlayer);
+
+            m_lfirstMap = m_oDraw.LoadMap("../../../txt/map.txt");
+            m_lSecondMap = m_oDraw.LoadMap("../../../txt/rootBeginer.txt");
+
+            m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
 
             Console.CursorVisible = false;
             bool isRunning = true;
@@ -52,7 +57,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             {
                 Console.SetCursorPosition(0, 0);
                 m_oInputManager.GetInput(m_oPlayer, m_oDraw);
-                m_oDraw.DrawMap(m_oPlayer);
+                m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
             }
 
 
