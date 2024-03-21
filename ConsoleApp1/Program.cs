@@ -12,6 +12,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static Draw m_oDraw;
         static InputManager m_oInputManager;
         static FightManager m_oFightManager;
+        static Menu m_oMenu;
+        static Inventory m_oInventory; 
         public static void Main(string[] args)
         {
 
@@ -19,7 +21,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oPlayer = new Player();
             m_oDraw = new Draw();  
             
+
+
             m_oInputManager = new InputManager();
+
+            m_oMenu = new Menu(m_oPlayer.Inventory);
             
             m_oDraw.LoadMap("../../../txt/map.txt");
             m_oDraw.DrawMap(m_oPlayer);
@@ -38,14 +44,19 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             Potion healthPotion = new Potion("Potion de santé", 50);
 
+            PotionMana manaHeal = new PotionMana("Potion de mana", 10);
+            AttackBoost attackIncress = new AttackBoost("Boost d'Attaque", 20);
+
             m_oPlayer.AddItemToInventory(healthPotion);
+            m_oPlayer.AddItemToInventory(manaHeal);
+            m_oPlayer.AddItemToInventory(attackIncress);
 
             m_oPlayer.UseItemFromInventory(hTest2 ,0);
 
+            m_oMenu.Affiche();
+            m_oMenu.TraiterChoix(1);
 
-
-            PotionMana manaHeal = new PotionMana("Potion de mana", 10);
-            AttackBoost attackIncress = new AttackBoost("Boost d'Attaque", 20);
+            
 
 
             //Potion potionHealth = new Potion("Potion de santé", 50);

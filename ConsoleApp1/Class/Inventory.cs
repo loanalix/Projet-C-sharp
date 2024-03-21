@@ -18,7 +18,7 @@ namespace Game.Class
 
         public void AddItem(GameObject item)
         { 
-            items.Add (item);
+            items.Add(item);
             Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }
 
@@ -39,6 +39,21 @@ namespace Game.Class
             else 
             { 
                 Console.WriteLine("Index d'objet invalide."); 
+            }
+        }
+        public void AfficherInventaire()
+        {
+            if (items.Count == 0)
+            {
+                Console.WriteLine("L'inventaire est vide.");
+            }
+            else
+            {
+                Console.WriteLine("Contenu de l'inventaire :");
+                foreach (GameObject item in items)
+                {
+                    Console.WriteLine($"- {item.Name}");
+                }
             }
         }
     }

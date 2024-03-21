@@ -9,6 +9,13 @@ namespace Game.Class
 {
     public class Menu
     {
+        private Inventory m_Inventory;
+
+        public Menu (Inventory inventory)
+        {
+            m_Inventory = inventory;
+        }
+
         public void Affiche() 
         {
             Console.WriteLine("Menu:");
@@ -23,7 +30,7 @@ namespace Game.Class
             switch (choix)
             {
                 case 1:
-                    AfficherInventaire();
+                    AfficherInventaire(); 
                     break;
                 case 2:
                     AfficherEquipe();
@@ -40,9 +47,10 @@ namespace Game.Class
             }
         }
 
-        public void AfficherInventaire()
+        private void AfficherInventaire()
         {
             Console.WriteLine("Affichage de l'inventaire...");
+            m_Inventory.AfficherInventaire();
         }
         private void AfficherEquipe()
         {
