@@ -14,7 +14,7 @@ namespace Game.Spell
 
         public static List<Attack> Attacks = new List<Attack>();
 
-        private string m_sAttackName = "";
+        private string m_sAttackName;
         private Types m_cAttackTypes;
         private float m_fAttackDamage;
         private int m_iAttackMana;

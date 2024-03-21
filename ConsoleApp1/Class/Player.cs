@@ -5,7 +5,7 @@ namespace Game.Character
     public class Player
     {
 
-        string m_sName = "";
+        string m_sName;
         private int m_iPosX;
         private int m_iPosY;
 

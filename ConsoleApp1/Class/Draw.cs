@@ -1,8 +1,6 @@
 
 using Game.Map;
 using Game.Character;
-using System.Drawing;
-using System.Runtime.CompilerServices;
 
 namespace Drawing
 {
