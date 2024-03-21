@@ -10,6 +10,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static Map m_oMap;
         static Player m_oPlayer;
         static Draw m_oDraw;
+        static DrawMob m_oDrawMob;
         static InputManager m_oInputManager;
         static FightManager m_oFightManager;
         static Menu m_oMenu;
@@ -21,13 +22,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oPlayer = new Player();
             m_oDraw = new Draw();  
             
-
-
+            m_oDrawMob = new DrawMob();
             m_oInputManager = new InputManager();
 
             m_oMenu = new Menu(m_oPlayer.Inventory);
-            
-            m_oDraw.LoadMap("../../../txt/map.txt");
+           
+            string Pikachu = "../../../txt/pikachu.txt";
+
+            m_oDrawMob.LoadMob(Pikachu);
             m_oDraw.DrawMap(m_oPlayer);
 
             Console.CursorVisible = false;
