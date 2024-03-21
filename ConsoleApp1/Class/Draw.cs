@@ -6,13 +6,18 @@ namespace Game.Class
 {
     public class Draw
     {
+        #region Fields
         public Map m_oMap = new Map();
         private List<char> m_lMap = new List<char>();
         public List<char> GetMap { get => m_lMap; }
 
         private int iWidth;
-        
+        #endregion
 
+
+        #region Methode 
+
+        #region //-----LoadMap-----//
         public void LoadMap(string sFileName)
         {
             StreamReader reader = File.OpenText(sFileName);
@@ -29,6 +34,9 @@ namespace Game.Class
                 }
             }
         }
+        #endregion
+
+        #region //-----DrawMap-----//
         public void DrawMap(Player oPlayer)
         {
             for (int i = 0; i < m_lMap.Count; i++)
@@ -78,5 +86,8 @@ namespace Game.Class
 
             }
         }
+        #endregion
+
+        #endregion
     }
 }

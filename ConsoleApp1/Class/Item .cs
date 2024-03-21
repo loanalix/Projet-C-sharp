@@ -9,6 +9,7 @@ namespace Game.Class
 {
     public class Item : GameObject
     {
+
         public Item(string name) : base(name)
         {
 

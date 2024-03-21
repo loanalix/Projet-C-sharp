@@ -9,13 +9,20 @@ namespace Game.Class
 {
     public class Menu
     {
+        #region Fields
         private Inventory m_Inventory;
+        #endregion
 
+        #region Property
         public Menu (Inventory inventory)
         {
             m_Inventory = inventory;
         }
+        #endregion
 
+        #region Methode 
+
+        #region //----Affiche---//
         public void Affiche() 
         {
             Console.WriteLine("Menu:");
@@ -24,7 +31,9 @@ namespace Game.Class
             Console.WriteLine("3. Options");
             Console.WriteLine("4. Quitter");
         }
+        #endregion
 
+        #region //----TraiterChoix---//
         public void TraiterChoix(int choix)
         {
             switch (choix)
@@ -46,22 +55,31 @@ namespace Game.Class
                     break;
             }
         }
+        #endregion
 
+        #region //----AfficherInventaire---//
         private void AfficherInventaire()
         {
             Console.WriteLine("Affichage de l'inventaire...");
             m_Inventory.AfficherInventaire();
         }
+        #endregion
+
+        #region //----AfficherEquipe---//
         private void AfficherEquipe()
         {
             Console.WriteLine("Affichage de l'équipe...");
         }
+        #endregion
 
+        #region //----AfficherOptions---//
         private void AfficherOptions()
         {
             Console.WriteLine("Affichage des options...");
          
         }
+        #endregion
 
+        #endregion
     }
 }

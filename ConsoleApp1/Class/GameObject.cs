@@ -9,12 +9,15 @@ namespace Game.Class
 {
     public class GameObject
     {
-        public string Name { get; set; } 
+        #region Property
+        public string Name { get; set; }
+        #endregion
 
+        #region Methode 
         public GameObject(string name) 
         {
             Name = name;        
         }
-
+        #endregion
     }
 }

@@ -4,10 +4,18 @@ namespace Game.Class
 {
     public class InputManager
     {
-        ConsoleKeyInfo input;
-        
-        public ConsoleKeyInfo Input { get => input; }
 
+        #region Fields
+        ConsoleKeyInfo input;
+        #endregion
+
+        #region Property
+        public ConsoleKeyInfo Input { get => input; }
+        #endregion
+
+        #region Methode
+
+        #region //-----GetInput-----//
         public void GetInput(Player m_oPlayer, Draw oDraw)
         {
             input = Console.ReadKey(true);
@@ -44,5 +52,8 @@ namespace Game.Class
             }
 
         }
+        #endregion
+
+        #endregion
     }
 }

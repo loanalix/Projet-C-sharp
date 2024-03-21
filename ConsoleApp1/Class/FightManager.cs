@@ -11,7 +11,7 @@ namespace Game.Class
     public class FightManager
     {
 
-        #region Field
+        #region Fields
 
         private Type type;
 
@@ -24,6 +24,7 @@ namespace Game.Class
             type = new Type();
         }
 
+        #region //-----StartFight-----//
         public void StartFight()
         {
             StreamReader reader = File.OpenText("../../../txt/choseHero.txt");
@@ -90,9 +91,10 @@ namespace Game.Class
                 // appeler l'handle input pour tester la suite des bails
             }
         }
+        #endregion
 
 
-
+        #region //-----CalculateWhoIsStarting-----//
         public static void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
             int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
@@ -109,7 +111,9 @@ namespace Game.Class
             //Console.WriteLine("h2 => " + dAttackProbabilityH2);
             Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
         }
+        #endregion
 
+        #region //-----AttackOpponent-----//
         public void AttackOpponent(Mob h1, Mob h2)
         {
             float fDamage = type.AttackDamage(h1, h2);
@@ -126,6 +130,7 @@ namespace Game.Class
             Console.WriteLine("Your Hero's Mana: " + h1.Mana);
             Console.ForegroundColor = ConsoleColor.White;
         }
+        #endregion
 
         #endregion
 

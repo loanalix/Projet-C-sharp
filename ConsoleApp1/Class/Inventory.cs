@@ -9,19 +9,25 @@ namespace Game.Class
 {
     public  class Inventory
     {
-        private List<GameObject> items; 
+        #region Field
+        private List<GameObject> items;
+        #endregion
 
+        #region Methode
         public Inventory()
         {
             items = new List<GameObject>();
         }
-
+        #region //-----------AddItem-----------//
         public void AddItem(GameObject item)
         { 
             items.Add(item);
             Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }
+        #endregion
 
+
+        #region //--------UseItem-------//
         public void UseItem( Player player , Mob target, int index)
         {
             if (index >= 0 && index < items.Count)
@@ -41,6 +47,10 @@ namespace Game.Class
                 Console.WriteLine("Index d'objet invalide."); 
             }
         }
+        #endregion
+
+
+        #region//------AfficherInventaire-----//
         public void AfficherInventaire()
         {
             if (items.Count == 0)
@@ -56,5 +66,7 @@ namespace Game.Class
                 }
             }
         }
+        #endregion
+        #endregion
     }
 }
