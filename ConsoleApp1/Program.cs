@@ -19,22 +19,24 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static Draw m_oDraw;
         static InputManager m_oInputManager;
         static FightManager m_oFightManager;
-        static private List<char> m_lfirstMap;
-        static private List<char> m_lSecondMap;
+       
 
+        static string sCurrentMap;
         public static void Main(string[] args)
         {
 
             m_oMap = new Map();
             m_oPlayer = new Player();
             m_oDraw = new Draw();  
-            
+            m_oMap.oDraw = m_oDraw;
             m_oInputManager = new InputManager();
 
-            m_lfirstMap = m_oDraw.LoadMap("../../../txt/map.txt");
-            m_lSecondMap = m_oDraw.LoadMap("../../../txt/rootBeginer.txt");
+            m_oDraw.LoadMap("../../../txt/map.txt", "map");
+            m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
 
-            m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
+            sCurrentMap = "map";
+            
+            m_oDraw.DrawMap(m_oPlayer, m_oDraw.GetMap[sCurrentMap]);
 
             Console.CursorVisible = false;
             bool isRunning = true;
@@ -55,9 +57,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             while (isRunning)
             {
-                Console.SetCursorPosition(0, 0);
-                m_oInputManager.GetInput(m_oPlayer, m_oDraw);
-                m_oDraw.DrawMap(m_oPlayer, m_lfirstMap);
+                Console.SetCursorPosition(0, 0); 
+                sCurrentMap = m_oMap.ChangeMap(m_oPlayer, sCurrentMap);
+
+                m_oInputManager.GetInput(m_oPlayer, m_oDraw, sCurrentMap);
+
+
+                m_oDraw.DrawMap(m_oPlayer, m_oDraw.GetMap[sCurrentMap]);
             }
 
 

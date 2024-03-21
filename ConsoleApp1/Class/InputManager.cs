@@ -9,19 +9,19 @@ namespace Game.InputController
         
         public ConsoleKeyInfo Input { get => input; }
 
-        public void GetInput(Player m_oPlayer, Draw oDraw)
+        public void GetInput(Player m_oPlayer, Draw oDraw, string currentMap)
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY-1 ))
+                if (m_oPlayer.CheckCollide(oDraw, m_oPlayer.PosX, m_oPlayer.PosY-1, currentMap))
                 {
                     m_oPlayer.MoveUp();
                 }
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY + 1))
+                if (m_oPlayer.CheckCollide(oDraw, m_oPlayer.PosX, m_oPlayer.PosY + 1, currentMap))
                 {
                     m_oPlayer.MoveDown();
 
@@ -29,7 +29,7 @@ namespace Game.InputController
             }
             else if (input.Key == ConsoleKey.RightArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX + 1, m_oPlayer.PosY))
+                if (m_oPlayer.CheckCollide(oDraw, m_oPlayer.PosX + 1, m_oPlayer.PosY, currentMap))
                 {
                     m_oPlayer.MoveRight();
 
@@ -37,7 +37,7 @@ namespace Game.InputController
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX - 1, m_oPlayer.PosY))
+                if (m_oPlayer.CheckCollide(oDraw, m_oPlayer.PosX - 1, m_oPlayer.PosY, currentMap))
                 {
                     m_oPlayer.MoveLeft();
 
