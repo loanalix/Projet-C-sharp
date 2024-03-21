@@ -53,21 +53,38 @@ namespace Game.Character
             }
             return true;
         }
-        public void MoveUp()
+        public void MoveUp(Draw oDraw, string sCurrentMap)
         {
-            PosY --;
+            if (CheckCollide(oDraw, PosX, PosY - 1, sCurrentMap))
+            {
+                PosY--;
+            }
         }
-        public void MoveDown()
+        public void MoveDown(Draw oDraw, string sCurrentMap)
         {
-            PosY ++;
+            if (CheckCollide(oDraw, PosX, PosY + 1, sCurrentMap))
+            {
+                PosY++;
+
+            }
+            
         }
-        public void MoveRight()
+        public void MoveRight(Draw oDraw, string sCurrentMap)
         {
-            PosX ++;
+            if (CheckCollide(oDraw, PosX + 1, PosY, sCurrentMap))
+            {
+                PosX++;
+
+            }
+            
         }
-        public void MoveLeft()
+        public void MoveLeft(Draw oDraw, string sCurrentMap)
         {
-            PosX --;
+            if (CheckCollide(oDraw, PosX - 1, PosY, sCurrentMap))
+            {
+                PosX--;
+            }
+            
         }
         #endregion
 

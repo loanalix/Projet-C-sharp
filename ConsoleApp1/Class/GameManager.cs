@@ -13,6 +13,7 @@ using Game.Entity;
 using Game.Enum;
 using Game.Brewing;
 using Game.Inventory;
+using System.Globalization;
 
 namespace Main.Class
 {
@@ -23,12 +24,12 @@ namespace Main.Class
         Map m_oMap;
         InputManager m_oInputManager;
         FightManager m_oFightManager;
+        Draw m_oDraw;
         string m_sCurrentMap;
 
         public enum GameState { start = 0, run = 1 };
-        enum DrawState { game = 0, fight = 1, menu = 2 }
+        public enum DrawState { game = 0, fight = 1, menu = 2 }
 
-        Dictionary<DrawState, Dictionary<>> 
 
         GameState m_eCurrentGameState;
         DrawState m_eCurrentDrawState;
@@ -52,7 +53,7 @@ namespace Main.Class
             }
             
         }
-    
+       
         public void Game()
         {
             switch (m_eCurrentGameState)
@@ -65,11 +66,19 @@ namespace Main.Class
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
                     m_oMap.oDraw = m_oWindowManager.GetDraw;
-
+                    m_oDraw = m_oWindowManager.GetDraw;
                     m_sCurrentMap = "map";
 
-                    m_oWindowManager.GetDraw.LoadMap("../../../txt/map.txt", "map");
-                    m_oWindowManager.GetDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
+                    Dictionary<string, Action> stateRun = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
+                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
+                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
+                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
+                    };
+                    InputManager.AddState
+                    m_oDraw.LoadMap("../../../txt/map.txt", "map");
+                    m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
 
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
