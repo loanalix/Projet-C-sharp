@@ -8,53 +8,70 @@ namespace Drawing
 {
     public class Draw
     {
-        public Map m_oMap = new Map();
+        #region Fields
 
-
-        private Dictionary<string, List<char>> m_dMap = new Dictionary<string, List<char>>();
-        private Dictionary<string, List<int>> m_dSpawnable = new Dictionary<string, List<int>>();
-        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
-        public Dictionary<string, List<int>> GetSpawn { get { return m_dSpawnable; } }
-
+        public Map m_oMap;
+        private Dictionary<string, List<char>> m_dMap;
+        private List<int> m_lSpawn;
         private int m_iWidth;
-        public int GetWidth { get => m_iWidth; }
-
         private int m_iHeight;
-        public int GetHeight { get => m_iHeight; } 
+        #endregion
+
+        #region Property
+        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
+        public List<int> GetSpawn { get => m_lSpawn; }
+        public int GetWidth { get => m_iWidth; }
+        public int GetHeight { get => m_iHeight; }
+        #endregion
+
+        #region Constructor
+        public Draw() 
+        {
+            m_dMap = new Dictionary<string, List<char>>();
+            m_lSpawn = new List<int>();
+            m_oMap = new Map();
+            m_iWidth = 0;
+            m_iHeight = 0;
+        }
+        #endregion
+
+        #region Method
         public void LoadMap(string sFileName, string name)
         {
             List<char> map = new List<char>();
-            List<int> spawn = new List<int>();
 
             StreamReader reader = File.OpenText(sFileName);
-            string sizeLine = reader.ReadLine();
-            m_iWidth = sizeLine.Length;
-
             string line;
             int fileHeight = 0;
-            int iIterrator = 0;
+
             while ((line = reader.ReadLine()) != null)
             {
+                m_iWidth = line.Length;
                 char[] cChar = line.ToCharArray();
                 for (int i = 0; i < cChar.Length; i++)
                 {
                     map.Add(cChar[i]);
-                    if (cChar[i] == 'g')
-                    {
-                        spawn.Add(iIterrator);
-                    }
-                    iIterrator++;
                 }
                 fileHeight++;
             }
             m_iHeight = fileHeight;
             m_dMap.Add(name, map);
-            m_dSpawnable.Add(name, spawn);
         }
-       
+        
+        public void GetGrass(string sMap)
+        {
+            List<char> map = m_dMap[sMap];
+            for (int i = 0;i < map.Count; i++)
+            {
+                if (map[i] == 'g')
+                {
+                    m_lSpawn.Add(i);
+                }
+            }
+        }
         public void DrawMap(Player oPlayer , List<char> drawMap )
         {
-            for (int i = 0; i < drawMap.Count; i++)
+            for (int i = m_iWidth; i < drawMap.Count; i++)
             {
                 switch (drawMap[i])
                 {
@@ -77,7 +94,7 @@ namespace Drawing
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
                     case 's':
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Green;
                         break;
                     case ' ':
                         Console.ResetColor();
@@ -104,5 +121,6 @@ namespace Drawing
 
             }
         }
+        #endregion
     }
 }

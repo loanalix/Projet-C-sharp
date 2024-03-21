@@ -12,13 +12,26 @@ namespace Game.Map
 {
     public class Map
     {
-
-        private List<int> m_lSpawnable = new List<int>();
-
-        Random rand = new Random();
+        #region Fields
+        private List<int> m_lSpawnable;
+        Random rand;
         Draw m_oDraw;
-         
+        #endregion
+
+        #region Property
         public Draw oDraw { get=>m_oDraw; set => m_oDraw = value; }
+
+        #endregion
+
+        #region Constructor
+        public Map() {
+
+            m_lSpawnable = new List<int>();
+            rand = new Random();
+        }
+        #endregion
+
+        #region Method
         public string ChangeMap(Player oPlayer, string sNewMap)
         {
             switch (sNewMap)
@@ -27,14 +40,14 @@ namespace Game.Map
                     if (oPlayer.PosY < 0)
                     {
                         oPlayer.PosY = m_oDraw.GetHeight - 4;
-                        spawnPokemon("map1");
+                        spawnEnnemies("map1");
                         return "map1";
                     }
                     return "map";
                 case "map1":
-                    if(oPlayer.PosY > m_oDraw.GetHeight - 5)
+                    if(oPlayer.PosY > m_oDraw.GetHeight - 2)
                     {
-                        oPlayer.PosY = 0;
+                        oPlayer.PosY = 1;
                         return "map";
                     }
                     return "map1";
@@ -44,57 +57,21 @@ namespace Game.Map
             }
         }
 
-        public void spawnPokemon(string sMap)
+        public void spawnEnnemies(string sMap)
         {
-            for(int i= 0; i < 10; i++)
+            m_oDraw.GetGrass(sMap);
+            List<int> spawn = m_oDraw.GetSpawn;
+            List<char> Map = m_oDraw.GetMap[sMap];
+
+            for (int i= 0; i < 15; i++)
             {
-                List<int> spawn = m_oDraw.GetSpawn[sMap];
-                List<char> Map = m_oDraw.GetMap[sMap];
                 int randomIndex = rand.Next(0, spawn.Count);
-                Map[randomIndex] = 's';
+                int chooseNumber = spawn[randomIndex];
+                spawn.RemoveAt(randomIndex);
+                Map[chooseNumber] = 's';
             }
             
         }
-        //private void UpdateMap(int iIndice, string sMove)
-        //{
-            
-        //    int move = m_lMap.FindIndex(chara => chara == '*');
-        //    int iMovement;
-
-        //    if (sMove == "down" || sMove == "right")
-        //    {
-        //        iMovement = move + iIndice;
-        //    }
-        //    else
-        //    {
-        //        iMovement = move - iIndice;
-        //    }
-
-        //    m_lMap.RemoveAt(move);
-        //    m_lMap.Insert(move, ' ');
-        //    m_lMap.RemoveAt(iMovement);
-        //    m_lMap.Insert(iMovement, '*');
-
-        //}
-        //public void Move(string sCharPressed)
-        //{
-
-        //    Console.SetCursorPosition(0, 0);
-        //    switch (sCharPressed)
-        //    {
-        //        case "up":
-        //            UpdateMap(iSizeLine, "up");
-        //            break;                    
-        //        case "down":
-        //            UpdateMap(iSizeLine, "down");
-        //            break;
-        //        case "left":
-        //            UpdateMap(1, "left");
-        //            break;
-        //        case "right":
-        //            UpdateMap(1, "right");
-        //            break;
-        //    }
-        //}
+        #endregion
     }
 }

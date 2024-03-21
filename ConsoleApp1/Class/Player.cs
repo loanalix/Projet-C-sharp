@@ -9,23 +9,28 @@ namespace Game.Character
 {
     public class Player
     {
-
-        string m_sName = "";
+        #region Fields
+        string m_sName;
         private int m_iPosX;
         private int m_iPosY;
+        #endregion
 
+        #region Property
         public int PosX {  get => m_iPosX; set => m_iPosX = value; }
         public int PosY { get => m_iPosY; set => m_iPosY = value; }
         public string Name { get => m_sName; set => m_sName = value; }
+        #endregion
 
+        #region Constructor
         public Player()
         {
-
             m_sName = "player0";
-            PosX = 10; 
-            PosY = 13;
-
+            PosX = 10;
+            PosY = 14;
         }
+        #endregion
+
+        #region Method
         public int ConvertTo1Dim(int x, int y, int width)
         {
             return y * width + x;
@@ -39,7 +44,12 @@ namespace Game.Character
                 || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
                 {
                     return false;
-                }  
+                }
+                else if(oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 's')
+                {
+                    Console.WriteLine("Oh un combat");
+                    return false;
+                }
             }
             return true;
         }
@@ -59,6 +69,7 @@ namespace Game.Character
         {
             PosX --;
         }
+        #endregion
 
     }
 }
