@@ -26,17 +26,20 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oInputManager = new InputManager();
 
             m_oMenu = new Menu(m_oPlayer.Inventory);
-           
-            string Pikachu = "../../../txt/pikachu.txt";
 
+            string Pikachu = "../../../txt/pikachu.txt";
             m_oDrawMob.LoadMob(Pikachu);
-            m_oDraw.DrawMap(m_oPlayer);
+            m_oDrawMob.MobDraw(Pikachu);
+
+            //m_oDraw.DrawMap(m_oPlayer);
 
             Console.CursorVisible = false;
             bool isRunning = true;
 
             m_oFightManager = new FightManager();
 
+
+            /*
             Mob hTest = new Mob("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
 
             Mob hTest2 = new Mob("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
@@ -56,9 +59,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oPlayer.UseItemFromInventory(hTest2 ,0);
 
             m_oMenu.Affiche();
-            m_oMenu.TraiterChoix(1);
+            m_oMenu.TraiterChoix(1);*/
 
-            
+
 
 
             //Potion potionHealth = new Potion("Potion de santé", 50);
