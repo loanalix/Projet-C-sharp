@@ -1,5 +1,6 @@
-﻿using Game.Enum;
-using Game.Entity;
+﻿using Game.Entity;
+using Tools;
+using Game.Enum;
 using Drawing;
 using Game.Character;
 using Game.Element;
@@ -15,6 +16,7 @@ namespace Game.FightController
         private List<char> m_lMap = new List<char>();
         private int m_iPosX;
         private int m_iPosY;
+        private Utils utils;
         //private int m_iWidth;
         private ConsoleKeyInfo input;
 
@@ -31,6 +33,7 @@ namespace Game.FightController
         public FightManager()
         {
             type = new Game.Element.Type();
+            utils = new Utils();
             m_iPosX = 4;
             m_iPosY = 2;
         }
@@ -72,7 +75,7 @@ namespace Game.FightController
                         Console.Write(m_lMap[i]);
                         break;
                 }
-                if(i == Tools.Utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21))
+                if(i == utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21))
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -88,23 +91,23 @@ namespace Game.FightController
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                m_iPosY += Tools.Utils.MoveUpOrLeft();
+                m_iPosY += utils.MoveUpOrLeft();
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-                m_iPosY += Tools.Utils.MoveDownOrRight();
+                m_iPosY += utils.MoveDownOrRight();
             }
             else if (input.Key == ConsoleKey.RightArrow)
             {
-                m_iPosX += Tools.Utils.MoveDownOrRight();
+                m_iPosX += utils.MoveDownOrRight();
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-                m_iPosX += Tools.Utils.MoveUpOrLeft();
+                m_iPosX += utils.MoveUpOrLeft();
             }
             else if (input.Key == ConsoleKey.Enter)
             {
-                int selectedHero = Tools.Utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21);
+                int selectedHero = utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21);
                 switch(selectedHero)
                 {
                     case 25:

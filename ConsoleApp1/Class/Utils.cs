@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tools
+﻿namespace Tools
 {
     public class Utils
     {
 
-        public static int ConvertTo1Dim(int x, int y, int width)
+        public Utils() { }
+
+        public int ConvertTo1Dim(int x, int y, int width)
         {
             return y * width + x;
         }
 
-        public static int MoveUpOrLeft()
+        public int MoveUpOrLeft()
         {
             return -1;
         }
-        public static int MoveDownOrRight()
+        public int MoveDownOrRight()
         {
             return 1;
         }

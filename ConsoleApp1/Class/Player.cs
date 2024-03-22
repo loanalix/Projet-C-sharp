@@ -1,4 +1,5 @@
 using Drawing;
+using Tools;
 
 namespace Game.Character
 {
@@ -8,6 +9,7 @@ namespace Game.Character
         string m_sName;
         private int m_iPosX;
         private int m_iPosY;
+        private Utils utils;
         #endregion
 
         #region Property
@@ -22,25 +24,22 @@ namespace Game.Character
             m_sName = "player0";
             PosX = 10;
             PosY = 14;
+            utils = new Utils();
         }
         #endregion
 
         #region Method
-        public int ConvertTo1Dim(int x, int y, int width)
-        {
-            return y * width + x;
-        }
         public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
         {
            if (iNextPosY > 0 )
            {
-                if (oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
-                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
-                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
+                if (oDraw.GetMap[sCurrentMap][utils.ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
+                || oDraw.GetMap[sCurrentMap][utils.ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
+                || oDraw.GetMap[sCurrentMap][utils.ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
                 {
                     return false;
                 }
-                else if(oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 's')
+                else if(oDraw.GetMap[sCurrentMap][utils.ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 's')
                 {
                     Console.WriteLine("Oh un combat");
                     return false;

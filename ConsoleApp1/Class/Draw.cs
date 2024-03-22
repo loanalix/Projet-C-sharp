@@ -1,6 +1,7 @@
 
 using Game.Map;
 using Game.Character;
+using Tools;
 
 namespace Drawing
 {
@@ -13,6 +14,7 @@ namespace Drawing
         private List<int> m_lSpawn;
         private int m_iWidth;
         private int m_iHeight;
+        private Utils utils;
         #endregion
 
         #region Property
@@ -28,6 +30,7 @@ namespace Drawing
             m_dMap = new Dictionary<string, List<char>>();
             m_lSpawn = new List<int>();
             m_oMap = new Map();
+            utils = new Utils();
             m_iWidth = 0;
             m_iHeight = 0;
         }
@@ -103,7 +106,7 @@ namespace Drawing
                         break;
                 
                 }
-                if (i == Tools.Utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
+                if (i == utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write('P');
