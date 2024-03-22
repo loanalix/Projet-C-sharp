@@ -6,34 +6,72 @@ namespace Drawing
 {
     public class Draw
     {
-        public Map m_oMap = new Map();
-        private List<char> m_lMap = new List<char>();
-        public List<char> GetMap { get => m_lMap; }
+        #region Fields
 
-        private int iWidth;
-        
+        public Map m_oMap;
+        private Dictionary<string, List<char>> m_dMap;
+        private List<int> m_lSpawn;
+        private int m_iWidth;
+        private int m_iHeight;
+        #endregion
 
-        public void LoadMap(string sFileName)
+        #region Property
+        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
+        public List<int> GetSpawn { get => m_lSpawn; }
+        public int GetWidth { get => m_iWidth; }
+        public int GetHeight { get => m_iHeight; }
+        #endregion
+
+        #region Constructor
+        public Draw() 
         {
+            m_dMap = new Dictionary<string, List<char>>();
+            m_lSpawn = new List<int>();
+            m_oMap = new Map();
+            m_iWidth = 0;
+            m_iHeight = 0;
+        }
+        #endregion
+
+        #region Method
+        public void LoadMap(string sFileName, string name)
+        {
+            List<char> map = new List<char>();
+
             StreamReader reader = File.OpenText(sFileName);
-            string sizeLine = reader.ReadLine();
-            iWidth = sizeLine.Length;
             string line;
+            int fileHeight = 0;
 
             while ((line = reader.ReadLine()) != null)
             {
+                m_iWidth = line.Length;
                 char[] cChar = line.ToCharArray();
                 for (int i = 0; i < cChar.Length; i++)
                 {
-                    m_lMap.Add(cChar[i]);
+                    map.Add(cChar[i]);
+                }
+                fileHeight++;
+            }
+            m_iHeight = fileHeight;
+            m_dMap.Add(name, map);
+        }
+        
+        public void GetGrass(string sMap)
+        {
+            List<char> map = m_dMap[sMap];
+            for (int i = 0;i < map.Count; i++)
+            {
+                if (map[i] == 'g')
+                {
+                    m_lSpawn.Add(i);
                 }
             }
         }
-        public void DrawMap(Player oPlayer)
+        public void DrawMap(Player oPlayer , List<char> drawMap )
         {
-            for (int i = 0; i < m_lMap.Count; i++)
+            for (int i = m_iWidth; i < drawMap.Count; i++)
             {
-                switch (m_lMap[i])
+                switch (drawMap[i])
                 {
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -53,7 +91,10 @@ namespace Drawing
                     case 'p':
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
-                     case ' ':
+                    case 's':
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        break;
+                    case ' ':
                         Console.ResetColor();
                         break;
                     case '/':
@@ -69,7 +110,7 @@ namespace Drawing
                 }
                 else
                 {
-                    if(m_lMap[i] != '/')
+                    if(drawMap[i] != '/')
                     {
                         Console.Write(' ');
                     }
@@ -78,5 +119,6 @@ namespace Drawing
 
             }
         }
+        #endregion
     }
 }

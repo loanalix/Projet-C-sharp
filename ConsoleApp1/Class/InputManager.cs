@@ -1,53 +1,71 @@
 ﻿using Game.Character;
 using Drawing;
+using static Main.Class.GameManager;
 
 namespace Game.InputController
 {
     public class InputManager
     {
+        #region Fields
         ConsoleKeyInfo input;
-        
+
+        public Dictionary<DrawState, Dictionary<string, Action>> stateMappings;
+        #endregion
+
+        #region Property
         public ConsoleKeyInfo Input { get => input; }
 
-        public void GetInput(Player m_oPlayer, Draw oDraw)
+        #endregion
+
+
+        #region Constructor
+        public InputManager()
+        {
+            stateMappings = new Dictionary<DrawState, Dictionary<string, Action>>();
+        }
+        #endregion
+        #region Method
+        public void GetInput(DrawState CurrentState)
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY-1 ))
-                {
-                    //m_oPlayer.MoveUp();
-                    m_oPlayer.PosY += Tools.Utils.MoveUpOrLeft();
-                }
+                ProcessInput(CurrentState, "UpArrow");
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX, m_oPlayer.PosY + 1))
-                {
-                    //m_oPlayer.MoveDown();
-                    m_oPlayer.PosY += Tools.Utils.MoveDownOrRight();
+                ProcessInput(CurrentState, "DownArrow");
 
-                }
             }
             else if (input.Key == ConsoleKey.RightArrow)
-            {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX + 1, m_oPlayer.PosY))
-                {
-                    //m_oPlayer.MoveRight();
-                    m_oPlayer.PosX += Tools.Utils.MoveDownOrRight();
+            {  
+                ProcessInput(CurrentState, "RightArrow");
 
-                }
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-                if (m_oPlayer.CheckCollid(oDraw, m_oPlayer.PosX - 1, m_oPlayer.PosY))
-                {
-                    //m_oPlayer.MoveLeft();
-                    m_oPlayer.PosX += Tools.Utils.MoveUpOrLeft();
 
-                }
+                ProcessInput(CurrentState, "LeftArrow");
+
             }
 
         }
+        public void AddState(DrawState stateName, Dictionary<string, Action> keyMappings)
+        {
+            stateMappings[stateName] = keyMappings;
+        }
+
+        public void ProcessInput(DrawState stateName, string key)
+        {
+            if (stateMappings.ContainsKey(stateName) && stateMappings[stateName].ContainsKey(key))
+            {
+                stateMappings[stateName][key]?.Invoke();
+            }
+            else
+            {
+                Console.WriteLine($"Aucune action associée à la touche {key} dans l'état {stateName}.");
+            }
+        }
+        #endregion
     }
 }
