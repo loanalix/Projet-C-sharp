@@ -37,7 +37,8 @@ namespace Game.Map
             switch (sNewMap)
             {
                 case "map":
-                    if (oPlayer.PosY < 0)
+                    
+                    if (m_oDraw.GetMap[sNewMap][oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, m_oDraw.GetWidth)] == 'a')
                     {
                         oPlayer.PosY = m_oDraw.GetHeight - 4;
                         spawnEnnemies("map1");
@@ -45,7 +46,7 @@ namespace Game.Map
                     }
                     return "map";
                 case "map1":
-                    if(oPlayer.PosY > m_oDraw.GetHeight - 2)
+                    if(m_oDraw.GetMap[sNewMap][oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, m_oDraw.GetWidth)] == 'a')
                     {
                         oPlayer.PosY = 1;
                         return "map";
