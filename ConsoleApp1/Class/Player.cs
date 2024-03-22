@@ -1,5 +1,6 @@
 using Drawing;
 using Tools;
+using Main.Class;
 
 namespace Game.Character
 {
@@ -10,6 +11,7 @@ namespace Game.Character
         private int m_iPosX;
         private int m_iPosY;
         private Utils utils;
+        //private GameManager gameManager;
         #endregion
 
         #region Property
@@ -29,6 +31,7 @@ namespace Game.Character
         #endregion
 
         #region Method
+
         public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
         {
            if (iNextPosY > 0 )
@@ -51,15 +54,14 @@ namespace Game.Character
         {
             if (CheckCollide(oDraw, PosX, PosY - 1, sCurrentMap))
             {
-                PosY--;
+                PosY += utils.MoveUpOrLeft();
             }
         }
         public void MoveDown(Draw oDraw, string sCurrentMap)
         {
             if (CheckCollide(oDraw, PosX, PosY + 1, sCurrentMap))
             {
-                PosY++;
-
+                PosY += utils.MoveDownOrRight();
             }
             
         }
@@ -67,8 +69,7 @@ namespace Game.Character
         {
             if (CheckCollide(oDraw, PosX + 1, PosY, sCurrentMap))
             {
-                PosX++;
-
+                PosX += utils.MoveDownOrRight();
             }
             
         }
@@ -76,7 +77,7 @@ namespace Game.Character
         {
             if (CheckCollide(oDraw, PosX - 1, PosY, sCurrentMap))
             {
-                PosX--;
+                PosX += utils.MoveUpOrLeft();
             }
             
         }

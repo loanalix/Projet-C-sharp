@@ -1,12 +1,5 @@
 ﻿using Game.Character;
 using Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Map
 {
@@ -51,6 +44,8 @@ namespace Game.Map
                         return "map";
                     }
                     return "map1";
+                //case "startFight":
+                //    return "startFight";
 
                 default:
                     return "";

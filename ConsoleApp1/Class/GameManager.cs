@@ -19,19 +19,19 @@ namespace Main.Class
 {
     public class GameManager
     {
-        WindowManager m_oWindowManager;
-        Player m_oPlayer;
-        Map m_oMap;
-        InputManager m_oInputManager;
-        FightManager m_oFightManager;
-        Draw m_oDraw;
-        string m_sCurrentMap;
+        private WindowManager m_oWindowManager;
+        private Player m_oPlayer;
+        private Map m_oMap;
+        private InputManager m_oInputManager;
+        private FightManager m_oFightManager;
+        private Draw m_oDraw;
+        private string m_sCurrentMap;
 
         public enum GameState { start = 0, run = 1 };
         public enum DrawState { game = 0, fight = 1, menu = 2 }
 
 
-        GameState m_eCurrentGameState;
+        private GameState m_eCurrentGameState;
         public DrawState m_eCurrentDrawState;
         bool m_bIsRunning; 
 
@@ -98,6 +98,7 @@ namespace Main.Class
 
                     m_oDraw.LoadMap("../../../txt/map.txt", "map");
                     m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
+                    //m_oDraw.LoadMap("../../../txt/choseHero.txt", "startFight");
 
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
@@ -124,6 +125,7 @@ namespace Main.Class
                     break;
 
                 case DrawState.fight:
+                    //m_oWindowManager.Draw(m_oPlayer, "startFight");
                     break;
             }
 
