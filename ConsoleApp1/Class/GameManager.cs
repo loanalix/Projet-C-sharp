@@ -17,7 +17,7 @@ using System.Globalization;
 
 namespace Main.Class
 {
-    internal class GameManager
+    public class GameManager
     {
         WindowManager m_oWindowManager;
         Player m_oPlayer;
@@ -32,7 +32,7 @@ namespace Main.Class
 
 
         GameState m_eCurrentGameState;
-        DrawState m_eCurrentDrawState;
+        public DrawState m_eCurrentDrawState;
         bool m_bIsRunning; 
 
         public GameManager() {
@@ -45,9 +45,9 @@ namespace Main.Class
         {
             while (m_bIsRunning)
             {
-                m_oWindowManager.SetCursor();
-                m_oInputManager.GetInput(m_oPlayer,m_oWindowManager.GetDraw, m_sCurrentMap);
-
+                m_oWindowManager.SetCursor(0,0);
+                m_oInputManager.GetInput(DrawState.game);
+                
                 m_sCurrentMap = m_oMap.ChangeMap(m_oPlayer, m_sCurrentMap);
                 DrawScene();
             }
@@ -69,14 +69,33 @@ namespace Main.Class
                     m_oDraw = m_oWindowManager.GetDraw;
                     m_sCurrentMap = "map";
 
-                    Dictionary<string, Action> stateRun = new Dictionary<string, Action>()
+                    Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
                     {
                         {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
                         {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
                         {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
                         {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
                     };
-                    InputManager.AddState
+                    m_oInputManager.AddState(DrawState.game, stateGame);
+
+                    //Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
+                    //{
+                    //    {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
+                    //    {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
+                    //    {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
+                    //    {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
+                    //};
+                    //m_oInputManager.AddState(DrawState.fight, stateFight);
+
+                    //Dictionary<string, Action> stateMenu = new Dictionary<string, Action>()
+                    //{
+                    //    {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
+                    //    {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
+                    //    {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
+                    //    {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
+                    //};
+                    //m_oInputManager.AddState(DrawState.menu, stateMenu);
+
                     m_oDraw.LoadMap("../../../txt/map.txt", "map");
                     m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
 

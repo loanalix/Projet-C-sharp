@@ -7,6 +7,7 @@ namespace Game.InputController
     public class InputManager
     {
         ConsoleKeyInfo input;
+
         public Dictionary<DrawState, Dictionary<string, Action>> stateMappings;
         public ConsoleKeyInfo Input { get => input; }
 
@@ -14,29 +15,27 @@ namespace Game.InputController
         {
             stateMappings = new Dictionary<DrawState, Dictionary<string, Action>>();
         }
-        public void GetInput(Player m_oPlayer, Draw oDraw, string currentMap)
+        public void GetInput(DrawState CurrentState)
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
-                m_oPlayer.MoveUp(oDraw, currentMap);
+                ProcessInput(CurrentState, "UpArrow");
             }
             else if (input.Key == ConsoleKey.DownArrow)
             {
-               
-                m_oPlayer.MoveDown(oDraw, currentMap);
+                ProcessInput(CurrentState, "DownArrow");
 
             }
             else if (input.Key == ConsoleKey.RightArrow)
-            {
-                
-                m_oPlayer.MoveRight(oDraw, currentMap);
+            {  
+                ProcessInput(CurrentState, "RightArrow");
 
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-               
-                m_oPlayer.MoveLeft(oDraw, currentMap);
+
+                ProcessInput(CurrentState, "LeftArrow");
 
             }
 

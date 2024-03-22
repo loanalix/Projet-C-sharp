@@ -18,9 +18,9 @@ namespace Game
             m_oDraw = new Draw();
         }
 
-        public void SetCursor()
+        public void SetCursor(int posX, int posY)
         {
-            Console.SetCursorPosition(0, 0);
+            Console.SetCursorPosition(posX, posY);
         }
         public void SetCursorVisibility(bool isVisible)
         {
