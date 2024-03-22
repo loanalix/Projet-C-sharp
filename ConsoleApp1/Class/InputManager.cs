@@ -1,5 +1,6 @@
 ﻿using Game.Class;
 using static Main.Class.GameManager;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Game.Class
 {
@@ -46,9 +47,15 @@ namespace Game.Class
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-
                 ProcessInput(CurrentState, "LeftArrow");
-
+            }
+            else if(input.Key == ConsoleKey.Escape)
+            {
+                ProcessInput(CurrentState, "Escape");
+            }
+            else if(input.Key == ConsoleKey.Enter)
+            {
+                ProcessInput(CurrentState, "Enter");
             }
 
         }
