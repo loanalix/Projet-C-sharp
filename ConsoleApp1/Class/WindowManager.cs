@@ -28,7 +28,7 @@ namespace Game
         }
         public void Draw(Player oPlayer, Map oMap)
         {
-            m_oDraw.DrawMap(oPlayer,oMap.GetMap);
+            m_oDraw.DrawMap(oPlayer,oMap);
         }
 
     }

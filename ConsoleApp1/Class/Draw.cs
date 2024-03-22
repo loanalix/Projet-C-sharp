@@ -8,36 +8,25 @@ namespace Game.Class
     {
         #region Fields
 
-        private Dictionary<string, List<char>> m_dMap;
-        private List<int> m_lSpawn;
-        private int m_iWidth;
-        private int m_iHeight;
         #endregion
 
         #region Property
-        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
-        public List<int> GetSpawn { get => m_lSpawn; }
-        public int GetWidth { get => m_iWidth; }
-        public int GetHeight { get => m_iHeight; }
         #endregion
 
         #region Constructor
         public Draw() 
         {
-            m_dMap = new Dictionary<string, List<char>>();
-            m_lSpawn = new List<int>();
-            m_iWidth = 0;
-            m_iHeight = 0;
         }
         #endregion
 
         #region Method
         
-        public void DrawMap(Player oPlayer , List<char> drawMap )
+        public void DrawMap(Player oPlayer , Map oMap )
         {
-            for (int i = m_iWidth; i < drawMap.Count; i++)
+            List<char> lMap = oMap.GetMap;
+            for (int i = oMap.GetWidth; i < lMap.Count; i++)
             {
-                switch (drawMap[i])
+                switch (lMap[i])
                 {
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -76,7 +65,7 @@ namespace Game.Class
                 }
                 else
                 {
-                    if(drawMap[i] != '/')
+                    if(lMap[i] != '/')
                     {
                         Console.Write(' ');
                     }
