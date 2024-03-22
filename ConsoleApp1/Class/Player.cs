@@ -9,54 +9,84 @@ namespace Game.Class
 {
     public class Player
     {
-
-        string m_sName = "";
+        #region Fields
+        string m_sName;
         private int m_iPosX;
         private int m_iPosY;
+        #endregion
 
-        public int PosX {  get => m_iPosX; private set => m_iPosX = value; }
-        public int PosY { get => m_iPosY; private set => m_iPosY = value; }
+        #region Property
+        public int PosX {  get => m_iPosX; set => m_iPosX = value; }
+        public int PosY { get => m_iPosY; set => m_iPosY = value; }
         public string Name { get => m_sName; set => m_sName = value; }
+        #endregion
 
-        public Inventory Inventory {get; private set; }
-
+        #region Constructor
         public Player()
         {
-
             m_sName = "player0";
-            PosX = 10; 
-            PosY = 12;
-            Inventory = new Inventory();    
-
+            PosX = 10;
+            PosY = 14;
         }
+        #endregion
+
+        #region Method
         public int ConvertTo1Dim(int x, int y, int width)
         {
             return y * width + x;
         }
-        public bool CheckCollid(Draw oDraw, int iNextPosX, int iNextPosY)
+        public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
         {
-            if (oDraw.GetMap[ConvertTo1Dim(iNextPosX, iNextPosY, 73)] == 'w')
-            {
-                return false;
+           if (iNextPosY > 0 )
+           {
+                if (oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
+                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
+                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
+                {
+                    return false;
+                }
+                else if(oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 's')
+                {
+                    Console.WriteLine("Oh un combat");
+                    return false;
+                }
             }
             return true;
         }
-        public void MoveUp()
+        public void MoveUp(Draw oDraw, string sCurrentMap)
         {
-            PosY --;
+            if (CheckCollide(oDraw, PosX, PosY - 1, sCurrentMap))
+            {
+                PosY--;
+            }
         }
-        public void MoveDown()
+        public void MoveDown(Draw oDraw, string sCurrentMap)
         {
-            PosY ++;
+            if (CheckCollide(oDraw, PosX, PosY + 1, sCurrentMap))
+            {
+                PosY++;
+
+            }
+            
         }
-        public void MoveRight()
+        public void MoveRight(Draw oDraw, string sCurrentMap)
         {
-            PosX ++;
+            if (CheckCollide(oDraw, PosX + 1, PosY, sCurrentMap))
+            {
+                PosX++;
+
+            }
+            
         }
-        public void MoveLeft()
+        public void MoveLeft(Draw oDraw, string sCurrentMap)
         {
-            PosX --;
+            if (CheckCollide(oDraw, PosX - 1, PosY, sCurrentMap))
+            {
+                PosX--;
+            }
+            
         }
+        #endregion
 
         public void AddItemToInventory(GameObject item) 
         {
