@@ -6,15 +6,25 @@ namespace Game.InputController
 {
     public class InputManager
     {
+        #region Fields
         ConsoleKeyInfo input;
 
         public Dictionary<DrawState, Dictionary<string, Action>> stateMappings;
+        #endregion
+
+        #region Property
         public ConsoleKeyInfo Input { get => input; }
 
+        #endregion
+
+
+        #region Constructor
         public InputManager()
         {
             stateMappings = new Dictionary<DrawState, Dictionary<string, Action>>();
         }
+        #endregion
+        #region Method
         public void GetInput(DrawState CurrentState)
         {
             input = Console.ReadKey(true);
@@ -56,5 +66,6 @@ namespace Game.InputController
                 Console.WriteLine($"Aucune action associée à la touche {key} dans l'état {stateName}.");
             }
         }
+        #endregion
     }
 }
