@@ -37,17 +37,17 @@ namespace Game.Class
         {
             return y * width + x;
         }
-        public bool CheckCollide(Draw oDraw, int iNextPosX, int iNextPosY, string sCurrentMap)
+        public bool CheckCollide(int iWidth, int iNextPosX, int iNextPosY, List<char> lCurrentMap)
         {
            if (iNextPosY > 0 )
            {
-                if (oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'w'
-                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'v'
-                || oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 'd')
+                if (lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
+                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
+                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
                 {
                     return false;
                 }
-                else if(oDraw.GetMap[sCurrentMap][ConvertTo1Dim(iNextPosX, iNextPosY, oDraw.GetWidth)] == 's')
+                else if(lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
                     Console.WriteLine("Oh un combat");
                     return false;
@@ -55,34 +55,34 @@ namespace Game.Class
             }
             return true;
         }
-        public void MoveUp(Draw oDraw, string sCurrentMap)
+        public void MoveUp(int iWidth, List<char> lCurrentMap)
         {
-            if (CheckCollide(oDraw, PosX, PosY - 1, sCurrentMap))
+            if (CheckCollide(iWidth, PosX, PosY - 1, lCurrentMap))
             {
                 PosY--;
             }
         }
-        public void MoveDown(Draw oDraw, string sCurrentMap)
+        public void MoveDown(int iWidth, List<char> lCurrentMap)
         {
-            if (CheckCollide(oDraw, PosX, PosY + 1, sCurrentMap))
+            if (CheckCollide(iWidth, PosX, PosY + 1, lCurrentMap))
             {
                 PosY++;
 
             }
             
         }
-        public void MoveRight(Draw oDraw, string sCurrentMap)
+        public void MoveRight(int iWidth, List<char> lCurrentMap)
         {
-            if (CheckCollide(oDraw, PosX + 1, PosY, sCurrentMap))
+            if (CheckCollide(iWidth, PosX + 1, PosY, lCurrentMap))
             {
                 PosX++;
 
             }
             
         }
-        public void MoveLeft(Draw oDraw, string sCurrentMap)
+        public void MoveLeft(int iWidth, List<char> lCurrentMap)
         {
-            if (CheckCollide(oDraw, PosX - 1, PosY, sCurrentMap))
+            if (CheckCollide(iWidth, PosX - 1, PosY, lCurrentMap))
             {
                 PosX--;
             }

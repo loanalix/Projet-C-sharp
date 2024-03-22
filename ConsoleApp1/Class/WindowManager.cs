@@ -26,9 +26,9 @@ namespace Game
         {
             Console.CursorVisible = isVisible;
         }
-        public void Draw(Player oPlayer, string sCurrentMap)
+        public void Draw(Player oPlayer, Map oMap)
         {
-            m_oDraw.DrawMap(oPlayer,m_oDraw.GetMap[sCurrentMap]);
+            m_oDraw.DrawMap(oPlayer,oMap.GetMap);
         }
 
     }

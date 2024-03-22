@@ -32,6 +32,9 @@ namespace Game.Class
         private float m_fAttackDamage;
         private int m_iAttackMana;
 
+
+        Random rand;
+
         private static List<Attack> m_lAttack = new List<Attack>();
 
         #endregion
@@ -86,6 +89,7 @@ namespace Game.Class
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();
+            rand = new Random();
 
         }
 
@@ -178,6 +182,22 @@ namespace Game.Class
             fightManager.AttackOpponent(this, op);
         }
 
+
+        public void spawnEnnemies(Map oMap, string sMap)
+        {
+            oMap.GetGrass();
+            List<int> spawn = oMap.GetSpawn;
+            List<char> Map = oMap.GetMap;
+
+            for (int i = 0; i < 15; i++)
+            {
+                int randomIndex = rand.Next(0, spawn.Count);
+                int chooseNumber = spawn[randomIndex];
+                spawn.RemoveAt(randomIndex);
+                Map[chooseNumber] = 's';
+            }
+
+        }
         #endregion
     }
 }

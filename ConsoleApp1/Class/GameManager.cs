@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Game.Class;
 using Game;
+using Game.Enum;
 using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Main.Class
 {
@@ -17,7 +19,10 @@ namespace Main.Class
         InputManager m_oInputManager;
         FightManager m_oFightManager;
         Draw m_oDraw;
-        string m_sCurrentMap;
+        Mob m_oMob;
+
+        List<Map> m_lMaps;
+        Map m_oCurrentMap;
 
         public enum GameState { start = 0, run = 1 };
         public enum DrawState { game = 0, fight = 1, menu = 2 }
@@ -31,6 +36,7 @@ namespace Main.Class
 
             m_eCurrentGameState = GameState.start;
             m_eCurrentDrawState = DrawState.game;
+            m_lMaps= new List<Map>();
         }
 
         public void GameLoop()
@@ -39,8 +45,8 @@ namespace Main.Class
             {
                 m_oWindowManager.SetCursor(0,0);
                 m_oInputManager.GetInput(DrawState.game);
-                
-                m_sCurrentMap = m_oMap.ChangeMap(m_oPlayer, m_sCurrentMap);
+                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_oCurrentMap, m_oMob);
+                m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == test);
                 DrawScene();
             }
             
@@ -54,42 +60,22 @@ namespace Main.Class
 
                     m_oWindowManager = new WindowManager();
                     m_oPlayer = new Player();
-                    m_oMap = new Map(); 
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
-                    m_oMap.oDraw = m_oWindowManager.GetDraw;
+                    m_oMob = new Mob("ennemi",100,10,5.0f,20.0f,10,Types.Fire);
+                    AddMaps("../../../txt/map.txt", "map");
+                    AddMaps("../../../txt/rootBeginer.txt", "map1");
+                    m_oCurrentMap = m_lMaps[0];
                     m_oDraw = m_oWindowManager.GetDraw;
-                    m_sCurrentMap = "map";
 
                     Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
                     {
-                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
-                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
-                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
-                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
+                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap)},
+                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap) },
+                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap.GetMap) },
+                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap) }
                     };
-                    m_oInputManager.AddState(DrawState.game, stateGame);
-
-                    //Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
-                    //{
-                    //    {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
-                    //    {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
-                    //    {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
-                    //    {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
-                    //};
-                    //m_oInputManager.AddState(DrawState.fight, stateFight);
-
-                    //Dictionary<string, Action> stateMenu = new Dictionary<string, Action>()
-                    //{
-                    //    {"UpArrow", ()=> m_oPlayer.MoveUp(m_oDraw, m_sCurrentMap)},
-                    //    {"DownArrow", ()=> m_oPlayer.MoveDown(m_oDraw, m_sCurrentMap) },
-                    //    {"RightArrow", ()=> m_oPlayer.MoveRight(m_oDraw, m_sCurrentMap) },
-                    //    {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oDraw, m_sCurrentMap) }
-                    //};
-                    //m_oInputManager.AddState(DrawState.menu, stateMenu);
-
-                    m_oDraw.LoadMap("../../../txt/map.txt", "map");
-                    m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
+                    m_oInputManager.AddState(DrawState.game, stateGame);                    
 
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
@@ -110,7 +96,7 @@ namespace Main.Class
             switch (m_eCurrentDrawState)
             {
                 case DrawState.game:
-                    m_oWindowManager.Draw(m_oPlayer, m_sCurrentMap);
+                    m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
                     break;
                 case DrawState.menu:
                     break;
@@ -119,6 +105,12 @@ namespace Main.Class
                     break;
             }
 
+        }
+        public void AddMaps(string sFileName, string sMapName)
+        {
+            Map map = new Map(sMapName);
+            map.LoadMap(sFileName);
+            m_lMaps.Add(map);
         }
     }
 

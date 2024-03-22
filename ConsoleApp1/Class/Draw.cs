@@ -8,7 +8,6 @@ namespace Game.Class
     {
         #region Fields
 
-        public Map m_oMap;
         private Dictionary<string, List<char>> m_dMap;
         private List<int> m_lSpawn;
         private int m_iWidth;
@@ -27,46 +26,13 @@ namespace Game.Class
         {
             m_dMap = new Dictionary<string, List<char>>();
             m_lSpawn = new List<int>();
-            m_oMap = new Map();
             m_iWidth = 0;
             m_iHeight = 0;
         }
         #endregion
 
         #region Method
-        public void LoadMap(string sFileName, string name)
-        {
-            List<char> map = new List<char>();
-
-            StreamReader reader = File.OpenText(sFileName);
-            string line;
-            int fileHeight = 0;
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                m_iWidth = line.Length;
-                char[] cChar = line.ToCharArray();
-                for (int i = 0; i < cChar.Length; i++)
-                {
-                    map.Add(cChar[i]);
-                }
-                fileHeight++;
-            }
-            m_iHeight = fileHeight;
-            m_dMap.Add(name, map);
-        }
         
-        public void GetGrass(string sMap)
-        {
-            List<char> map = m_dMap[sMap];
-            for (int i = 0;i < map.Count; i++)
-            {
-                if (map[i] == 'g')
-                {
-                    m_lSpawn.Add(i);
-                }
-            }
-        }
         public void DrawMap(Player oPlayer , List<char> drawMap )
         {
             for (int i = m_iWidth; i < drawMap.Count; i++)
