@@ -3,16 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Drawing;
+using Game.Class;
 using Game;
-using Game.Character;
-using Game.Map;
-using Game.InputController;
-using Game.FightController;
-using Game.Entity;
-using Game.Enum;
-using Game.Brewing;
-using Game.Inventory;
 using System.Globalization;
 
 namespace Main.Class

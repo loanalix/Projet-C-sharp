@@ -13,6 +13,7 @@ namespace Game.Class
         string m_sName;
         private int m_iPosX;
         private int m_iPosY;
+        Inventory m_oInventory;
         #endregion
 
         #region Property
@@ -27,6 +28,7 @@ namespace Game.Class
             m_sName = "player0";
             PosX = 10;
             PosY = 14;
+            m_oInventory = new Inventory();
         }
         #endregion
 
@@ -90,12 +92,12 @@ namespace Game.Class
 
         public void AddItemToInventory(GameObject item) 
         {
-            Inventory.AddItem(item);
+            m_oInventory.AddItem(item);
         }
 
         public void UseItemFromInventory (Mob target ,int index ) 
         {
-            Inventory.UseItem(this, target, index) ;
+            m_oInventory.UseItem(this, target, index) ;
         }
 
     }

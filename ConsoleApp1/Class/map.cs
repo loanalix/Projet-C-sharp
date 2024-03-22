@@ -1,6 +1,4 @@
-﻿using Game.Character;
-using Drawing;
-using System;
+﻿using Game.Class;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;

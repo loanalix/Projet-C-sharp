@@ -1,5 +1,4 @@
-﻿using Game.Character;
-using Drawing;
+﻿using Game.Class;
 using static Main.Class.GameManager;
 
 namespace Game.Class

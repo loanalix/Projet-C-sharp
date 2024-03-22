@@ -1,10 +1,10 @@
-﻿using Drawing;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Character;
+using Game.Class;
 using System.Dynamic;
 
 namespace Game
