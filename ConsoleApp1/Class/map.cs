@@ -63,6 +63,7 @@ namespace Game.Map
                 int randomIndex = rand.Next(0, spawn.Count);
                 int chooseNumber = spawn[randomIndex];
                 spawn.RemoveAt(randomIndex);
+                Console.ForegroundColor = ConsoleColor.Black;
                 Map[chooseNumber] = 's';
             }
             

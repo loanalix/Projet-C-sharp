@@ -98,7 +98,7 @@ namespace Main.Class
 
                     m_oDraw.LoadMap("../../../txt/map.txt", "map");
                     m_oDraw.LoadMap("../../../txt/rootBeginer.txt", "map1");
-                    //m_oDraw.LoadMap("../../../txt/choseHero.txt", "startFight");
+                    m_oFightManager.LoadFightMenu();
 
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
@@ -125,7 +125,6 @@ namespace Main.Class
                     break;
 
                 case DrawState.fight:
-                    //m_oWindowManager.Draw(m_oPlayer, "startFight");
                     break;
             }
 

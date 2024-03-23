@@ -11,7 +11,6 @@ namespace Game.Character
         private int m_iPosX;
         private int m_iPosY;
         private Utils utils;
-        //private GameManager gameManager;
         #endregion
 
         #region Property
