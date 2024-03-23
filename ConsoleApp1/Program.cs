@@ -27,7 +27,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             m_oMenu = new Menu(m_oPlayer.Inventory);
 
-            string Pikachu = "../../../txt/pikachu.txt";
+            string Pokemon = "../../../txt/darceaufeu.txt";
+            string Pikachu = "../../../txt/pikachu.txt"; 
+            m_oDrawMob.LoadMob(Pokemon);
+            m_oDrawMob.MobDraw(Pokemon);
+
             m_oDrawMob.LoadMob(Pikachu);
             m_oDrawMob.MobDraw(Pikachu);
 
