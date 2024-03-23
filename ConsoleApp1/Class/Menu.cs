@@ -4,66 +4,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Game.Class;
+using Main.Class;
+using static Main.Class.GameManager;
 
 namespace Game.Class
 {
     public class Menu
     {
         #region Fields
-        private Inventory m_Inventory;
+        private Inventory m_oInventory;
+        int m_iSelectedOption;
+        string[] m_sMenuOptions;
         #endregion
 
         #region Property
         public Menu (Inventory inventory)
         {
-            m_Inventory = inventory;
+            m_iSelectedOption = 0;
+            m_sMenuOptions = new string[4] { "Potion       ","Pokémon      ", "Sauvegarder  ", "Quitter      " };
+            m_oInventory = inventory;
         }
         #endregion
 
         #region Methode 
 
         #region //----Affiche---//
-        public void Affiche() 
+        public void DrawMenu()
         {
-            Console.WriteLine("Menu:");
-            Console.WriteLine("1. Inventaire");
-            Console.WriteLine("2. Équipe");
-            Console.WriteLine("3. Options");
-            Console.WriteLine("4. Quitter");
-        }
-        #endregion
-
-        #region //----TraiterChoix---//
-        public void TraiterChoix(int choix)
-        {
-            switch (choix)
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < m_sMenuOptions.Length; i++)
             {
-                case 1:
-                    AfficherInventaire(); 
-                    break;
-                case 2:
-                    AfficherEquipe();
-                    break;
-                case 3:
-                    AfficherOptions();
-                    break;
-                case 4:
-                    Console.WriteLine("Fermeture du menu.");
-                    break;
-                default:
-                    Console.WriteLine("Choix invalide.");
-                    break;
+                if (i == m_iSelectedOption)
+                {
+                    Console.Write("> ");
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
+                Console.WriteLine(m_sMenuOptions[i]);
+
             }
         }
         #endregion
-
-        #region //----AfficherInventaire---//
-        private void AfficherInventaire()
+        public void SelectOptionUp()
         {
-            Console.WriteLine("Affichage de l'inventaire...");
-            m_Inventory.AfficherInventaire();
+            m_iSelectedOption = Math.Max(0, m_iSelectedOption - 1);
         }
-        #endregion
+        public void SelectOptionDown()
+        {
+            m_iSelectedOption = Math.Min(m_sMenuOptions.Length - 1, m_iSelectedOption + 1);
+        }
+        public void SelectOptionEnter(GameManager oManager)
+        {
+            switch (m_iSelectedOption)
+            {
+                case 0:
+                    oManager.GetSetDrawState = DrawState.inventory;
+                    break;
+                case 1:
+                    break;
+                case 3:
+                    Environment.Exit(0);
+                    break;
+            }
+
+            Console.WriteLine($"Vous avez sélectionnée {m_iSelectedOption}");
+        }
 
         #region //----AfficherEquipe---//
         private void AfficherEquipe()

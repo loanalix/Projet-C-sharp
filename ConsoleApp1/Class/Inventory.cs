@@ -53,9 +53,14 @@ namespace Game.Class
         #region//------AfficherInventaire-----//
         public void AfficherInventaire()
         {
+            Console.SetCursorPosition(0,0);
             if (items.Count == 0)
             {
                 Console.WriteLine("L'inventaire est vide.");
+                Console.WriteLine("                      ");
+                Console.WriteLine("                      ");
+                Console.WriteLine("                      ");
+
             }
             else
             {
