@@ -16,16 +16,19 @@ namespace Game.Class
         List<int> m_lSpawn;
         Draw m_oDraw;
 
+
         string m_sName;
         int m_iWidth;
         int m_iHeight;
+        int[] m_iObjects;
         #endregion
 
         #region Property
-        public Draw oDraw { get=>m_oDraw; set => m_oDraw = value; }
+        public Draw oDraw { get => m_oDraw; set => m_oDraw = value; }
 
+        public int[] Object { get => m_iObjects; set => m_iObjects = value; }
         public List<char> GetMap { get => m_lMap; }
-        public List<int> GetSpawn{ get => m_lSpawn; }
+        public List<int> GetSpawn { get => m_lSpawn; }
         public int GetWidth { get => m_iWidth; }
         public int GetHeight { get => m_iHeight; }
         #endregion
@@ -49,8 +52,8 @@ namespace Game.Class
             switch (oMap.m_sName)
             {
                 case "map":
-                    
-                    if (GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
+
+                    if (GetMap[Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = GetHeight - 4;
                         oMob.spawnEnnemies(this, "map1");
@@ -58,7 +61,7 @@ namespace Game.Class
                     }
                     return "map";
                 case "map1":
-                    if(GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
+                    if (GetMap[Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = 1;
                         return "map";
@@ -100,5 +103,23 @@ namespace Game.Class
             }
         }
         #endregion
+
+        public List<int> SpawnableObject(Map oMap, char[] spawnChar)
+        {
+            List<int> objects = new List<int>();
+            List<char> map = oMap.GetMap;
+            for (int i = 0; i < map.Count; i++)
+            {
+                for(int j = 0; j < spawnChar.Length; j++)
+                {
+                    if (map[i] == spawnChar[j])
+                    {
+                        objects.Add(i);
+                    }
+                }
+            }
+            return objects;
+        }
+
     }
 }

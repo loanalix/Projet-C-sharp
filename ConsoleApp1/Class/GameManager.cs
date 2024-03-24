@@ -24,15 +24,14 @@ namespace Main.Class
         Mob m_oMob;
         List<Map> m_lMaps;
         Map m_oCurrentMap;
+        ItemsManager m_oItemsManager;
 
         string[] m_sMenuOptions;
-
         public enum GameState { start = 0, run = 1 };
         public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3 }
 
         GameState m_eCurrentGameState;
         DrawState m_eCurrentDrawState;
-
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
 
         bool m_bIsRunning;
@@ -64,23 +63,29 @@ namespace Main.Class
                 case GameState.start:
 
                     m_oWindowManager = new WindowManager();
-                    m_oPlayer = new Player();
+                    m_oItemsManager = new ItemsManager();
+                    m_oInventory = new Inventory();
+                    m_oPlayer = new Player(m_oItemsManager, m_oInventory);
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
-                    m_oInventory = new Inventory();
                     m_oMenu = new Menu(m_oInventory);
                     m_oMob = new Mob("ennemi",100,10,5.0f,20.0f,10,Types.Fire);
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
+                    char[] spawnable = new char[] { 'p' };
+                    m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
+                    char[] map1Spawnable = new char[] { 'p', 'g' };
+                    m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable);
+
                     m_oCurrentMap = m_lMaps[0];
                     m_oDraw = m_oWindowManager.GetDraw;
 
                     Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
                     {
-                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap)},
-                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap) },
-                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap.GetMap) },
-                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap) },
+                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oCurrentMap.GetWidth, m_oCurrentMap)},
+                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap) },
+                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap) },
+                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap) },
                         {"Escape", ()=> ToggleMenu() },
                     };
 

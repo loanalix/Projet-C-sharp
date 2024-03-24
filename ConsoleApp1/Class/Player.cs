@@ -14,6 +14,7 @@ namespace Game.Class
         private int m_iPosX;
         private int m_iPosY;
         Inventory m_oInventory;
+        ItemsManager m_oItemManager;
         #endregion
 
         #region Property
@@ -23,66 +24,69 @@ namespace Game.Class
         #endregion
 
         #region Constructor
-        public Player()
+        public Player(ItemsManager oItemsManager, Inventory oInventory)
         {
             m_sName = "player0";
             PosX = 10;
             PosY = 14;
-            m_oInventory = new Inventory();
+            m_oInventory = oInventory;
+            m_oItemManager = oItemsManager;
         }
         #endregion
 
         #region Method
-        public int ConvertTo1Dim(int x, int y, int width)
-        {
-            return y * width + x;
-        }
-        public bool CheckCollide(int iWidth, int iNextPosX, int iNextPosY, List<char> lCurrentMap)
+       
+        public bool CheckCollide(int iWidth, int iNextPosX, int iNextPosY, Map oMap)
         {
            if (iNextPosY > 0 )
            {
-                if (lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
-                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
-                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
+                if (oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
+                || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
+                || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
                 {
                     return false;
                 }
-                else if(lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
+                else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
                     Console.WriteLine("Oh un combat");
                     return false;
                 }
+                else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
+                    m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
+                    oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));
+                    return true;
+                }
             }
             return true;
         }
-        public void MoveUp(int iWidth, List<char> lCurrentMap)
+        public void MoveUp(int iWidth, Map oMap)
         {
-            if (CheckCollide(iWidth, PosX, PosY - 1, lCurrentMap))
+            if (CheckCollide(iWidth, PosX, PosY - 1, oMap))
             {
                 PosY--;
             }
         }
-        public void MoveDown(int iWidth, List<char> lCurrentMap)
+        public void MoveDown(int iWidth, Map oMap)
         {
-            if (CheckCollide(iWidth, PosX, PosY + 1, lCurrentMap))
+            if (CheckCollide(iWidth, PosX, PosY + 1, oMap))
             {
                 PosY++;
 
             }
             
         }
-        public void MoveRight(int iWidth, List<char> lCurrentMap)
+        public void MoveRight(int iWidth, Map oMap)
         {
-            if (CheckCollide(iWidth, PosX + 1, PosY, lCurrentMap))
+            if (CheckCollide(iWidth, PosX + 1, PosY, oMap))
             {
                 PosX++;
 
             }
             
         }
-        public void MoveLeft(int iWidth, List<char> lCurrentMap)
+        public void MoveLeft(int iWidth, Map oMap)
         {
-            if (CheckCollide(iWidth, PosX - 1, PosY, lCurrentMap))
+            if (CheckCollide(iWidth, PosX - 1, PosY, oMap))
             {
                 PosX--;
             }

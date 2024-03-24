@@ -58,10 +58,16 @@ namespace Game.Class
                         break;
                 
                 }
-                if (i == oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
+                if (i == Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write('P');
+                }
+                else if (Array.Exists(oMap.Object, element => element == i))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write('O');
+
                 }
                 else
                 {
