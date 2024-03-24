@@ -1,27 +1,27 @@
 using Game.Class;
-using System.Drawing;
-using System.Runtime.CompilerServices;
+using Tools;
 
-namespace Game.Class
+namespace Drawing
 {
     public class Draw
     {
         #region Fields
-
+        private Utils utils;
         #endregion
 
         #region Property
         #endregion
 
         #region Constructor
-        public Draw() 
+        public Draw()
         {
+            utils = new Utils();
         }
         #endregion
 
         #region Method
-        
-        public void DrawMap(Player oPlayer , Map oMap )
+
+        public void DrawMap(Player oPlayer, Map oMap)
         {
             List<char> lMap = oMap.GetMap;
             for (int i = oMap.GetWidth; i < lMap.Count; i++)
@@ -56,7 +56,7 @@ namespace Game.Class
                         Console.ResetColor();
                         Console.WriteLine();
                         break;
-                
+
                 }
                 if (i == utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
@@ -65,7 +65,7 @@ namespace Game.Class
                 }
                 else
                 {
-                    if(lMap[i] != '/')
+                    if (lMap[i] != '/')
                     {
                         Console.Write(' ');
                     }

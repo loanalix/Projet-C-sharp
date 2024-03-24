@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Game.Class;
+using Tools;
 
 namespace Game.Class
 {
@@ -18,7 +14,7 @@ namespace Game.Class
         #endregion
 
         #region Property
-        public int PosX {  get => m_iPosX; set => m_iPosX = value; }
+        public int PosX { get => m_iPosX; set => m_iPosX = value; }
         public int PosY { get => m_iPosY; set => m_iPosY = value; }
         public string Name { get => m_sName; set => m_sName = value; }
         #endregion
@@ -37,15 +33,15 @@ namespace Game.Class
         #region Method
         public bool CheckCollide(int iWidth, int iNextPosX, int iNextPosY, List<char> lCurrentMap)
         {
-           if (iNextPosY > 0 )
-           {
-                if (lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
-                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
-                || lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
+            if (iNextPosY > 0)
+            {
+                if (lCurrentMap[utils.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
+                || lCurrentMap[utils.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
+                || lCurrentMap[utils.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
                 {
                     return false;
                 }
-                else if(lCurrentMap[ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
+                else if (lCurrentMap[utils.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
                     Console.WriteLine("Oh un combat");
                     return false;
@@ -66,7 +62,7 @@ namespace Game.Class
             {
                 PosY += utils.MoveDownOrRight();
             }
-            
+
         }
         public void MoveRight(int iWidth, List<char> lCurrentMap)
         {
@@ -74,7 +70,7 @@ namespace Game.Class
             {
                 PosX += utils.MoveDownOrRight();
             }
-            
+
         }
         public void MoveLeft(int iWidth, List<char> lCurrentMap)
         {
@@ -82,18 +78,18 @@ namespace Game.Class
             {
                 PosX += utils.MoveUpOrLeft();
             }
-            
+
         }
         #endregion
 
-        public void AddItemToInventory(GameObject item) 
+        public void AddItemToInventory(GameObject item)
         {
             m_oInventory.AddItem(item);
         }
 
-        public void UseItemFromInventory (Mob target ,int index ) 
+        public void UseItemFromInventory(Mob target, int index)
         {
-            m_oInventory.UseItem(this, target, index) ;
+            m_oInventory.UseItem(this, target, index);
         }
 
     }

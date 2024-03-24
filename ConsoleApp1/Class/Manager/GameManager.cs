@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.Class;
-using Game;
+﻿using Game.Class;
 using Game.Enum;
-using System.Globalization;
-using System.Runtime.InteropServices;
+using Drawing;
 
-namespace Main.Class
+namespace Game.Class
 {
     public class GameManager
     {
@@ -37,7 +30,8 @@ namespace Main.Class
 
         bool m_bIsRunning;
         int m_iSelectedOption;
-        public GameManager() {
+        public GameManager()
+        {
 
             m_eCurrentGameState = GameState.start;
             m_eCurrentDrawState = DrawState.game;
@@ -48,15 +42,15 @@ namespace Main.Class
         {
             while (m_bIsRunning)
             {
-                m_oWindowManager.SetCursor(0,0);
+                m_oWindowManager.SetCursor(0, 0);
                 m_oInputManager.GetInput(m_eCurrentDrawState);
                 string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_oCurrentMap, m_oMob);
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == test);
                 DrawScene();
             }
-            
+
         }
-       
+
         public void Game()
         {
             switch (m_eCurrentGameState)
@@ -69,7 +63,7 @@ namespace Main.Class
                     m_oFightManager = new FightManager();
                     m_oInventory = new Inventory();
                     m_oMenu = new Menu(m_oInventory);
-                    m_oMob = new Mob("ennemi",100,10,5.0f,20.0f,10,Types.Fire);
+                    m_oMob = new Mob("ennemi", 100, 10, 5.0f, 20.0f, 10, Types.Fire, false);
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     m_oCurrentMap = m_lMaps[0];
@@ -97,7 +91,7 @@ namespace Main.Class
                     };
                     m_oInputManager.AddState(DrawState.menu, stateMenu);
 
-                    Dictionary<string, Action> stateInventory= new Dictionary<string, Action>()
+                    Dictionary<string, Action> stateInventory = new Dictionary<string, Action>()
                     {
                         //{"UpArrow", ()=> m_oMenu.SelectOptionUp()},
                         //{"DownArrow", ()=> m_oMenu.SelectOptionDown()},
@@ -145,7 +139,8 @@ namespace Main.Class
         }
         public void ToggleMenu()
         {
-            switch(m_eCurrentDrawState){
+            switch (m_eCurrentDrawState)
+            {
                 case DrawState.game:
                     m_eCurrentDrawState = DrawState.menu;
                     break;

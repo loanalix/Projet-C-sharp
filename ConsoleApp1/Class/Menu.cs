@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.Class;
-using Main.Class;
-using static Main.Class.GameManager;
+﻿using Game.Class;
 
 namespace Game.Class
 {
-    public class Menu
+    public class Menu : GameManager
     {
         #region Fields
         private Inventory m_oInventory;

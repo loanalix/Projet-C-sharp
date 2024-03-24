@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.Class;
+﻿using Game.Class;
 
 namespace Game.Class
 {
@@ -16,7 +11,7 @@ namespace Game.Class
         }
 
 
-        public virtual void Use(Player player , Mob target ) 
+        public virtual void Use(Player player, Mob target)
         {
             Console.WriteLine($"L'objet {Name} a été utilisé sur {target.Name}.");
         }

@@ -1,0 +1,48 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------
+			{heroName} : CurrentHP / MaxHp										MaxHp / CurrentHP : {EnnemyName}
+			   Nv{levelH} CurrentMana / MaxMana									MaxMana / CurrentMana	Nv{levelO}
+
+
+														 Attack
+													   Inventaire
+														 Fuite

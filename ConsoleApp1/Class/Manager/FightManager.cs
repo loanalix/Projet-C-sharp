@@ -1,9 +1,6 @@
-﻿using Game.Entity;
-using Tools;
+﻿using Tools;
 using Game.Enum;
-using Drawing;
-using Game.Character;
-using Game.Element;
+using Game.Class;
 
 namespace Game.Class
 {
@@ -12,8 +9,9 @@ namespace Game.Class
 
         #region Fields
 
-        private Game.Element.Type type;
+        private Game.Class.Type type;
         private List<char> m_lMap = new List<char>();
+        private List<Attack> m_lAttack = new List<Attack>();
         private int m_iPosX;
         private int m_iPosY;
         private Utils utils;
@@ -32,7 +30,7 @@ namespace Game.Class
 
         public FightManager()
         {
-            type = new Game.Element.Type();
+            type = new Game.Class.Type();
             utils = new Utils();
             m_iPosX = 4;
             m_iPosY = 2;
@@ -52,12 +50,66 @@ namespace Game.Class
                 }
             }
         }
+        public void CreateAttacks(Mob mob)
+            {
+                // Non damage abilities
+                m_lAttack.Add(new Attack("Aqua ring", Types.Flying, 0f, 0f, 15f, 30, 20, Attack.AttackType.Spell));
+                m_lAttack.Add(new Attack("Stun Spore", Types.Grass, 0f, 0f, 0f, 15, 50, Attack.AttackType.Stun));
+                m_lAttack.Add(new Attack("Withdraw", Types.Water, 0f, 15f, 0f, 30, 40, Attack.AttackType.Spell));
+                m_lAttack.Add(new Attack("Dragon Dance", Types.Dragon, 15f, 0f, 0f, 30, 20, Attack.AttackType.Spell));
+                m_lAttack.Add(new Attack("Fire shield", Types.Fire, 0f, 15f, 0f, 30, 20, Attack.AttackType.Spell));
+
+                // Dragon
+                m_lAttack.Add(new Attack("Breaking Swipe", Types.Dragon, 60f, 0f, 0f, 30, 40, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Dragon Hammer", Types.Dragon, 90f, 0f, 0f, 40, 70, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Dragon Claw", Types.Dragon, 80f, 0f, 0f, 35, 55, Attack.AttackType.Attack));
+
+                m_lAttack.Add(new Attack("Dynamax Cannon", Types.Dragon, 100f, 0f, 0f, 100, 125, Attack.AttackType.Attack));
+
+                // Grass
+                m_lAttack.Add(new Attack("Trop Kick", Types.Grass, 70f, 0f, 0f, 30, 40, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Grav Apple", Types.Grass, 40f, 7f, 0f, 30, 55, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Power Whip", Types.Grass, 120f, 0f, 0f, 60, 90, Attack.AttackType.Attack));
+
+                m_lAttack.Add(new Attack("Chronoblast", Types.Fire, 150f, 0f, 0f, 95, 125, Attack.AttackType.Special));
+
+                // Fire
+                m_lAttack.Add(new Attack("Flare Blitz", Types.Fire, 25f, 0f, 0f, 30, 30, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Fire Lash", Types.Fire, 40f, 0f, 0f, 35, 45, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Flame Charge", Types.Fire, 70f, 0f, 0f, 55, 65, Attack.AttackType.Attack));
+
+                m_lAttack.Add(new Attack("Armor Cannon", Types.Fire, 120f, 15f, 0f, 100, 100, Attack.AttackType.Special));
+
+                // Flying
+                m_lAttack.Add(new Attack("Aerial Ace", Types.Flying, 20f, 0f, 0f, 100, 30, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Wing Attack", Types.Flying, 45f, 0f, 0f, 100, 35, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Dragon Ascent", Types.Flying, 80f, 15f, 0f, 100, 85, Attack.AttackType.Attack));
+
+                m_lAttack.Add(new Attack("Air Slash", Types.Flying, 75f, 0f, 0f, 95, 85, Attack.AttackType.Special));
+
+                // Water
+                m_lAttack.Add(new Attack("Liquidation", Types.Water, 15f, 3f, 0f, 85, 25, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Aqua tail", Types.Water, 90f, 0f, 0f, 70, 75, Attack.AttackType.Attack));
+                m_lAttack.Add(new Attack("Triple Dive", Types.Water, 30f, 0f, 0f, 20, 95, Attack.AttackType.Attack));
+
+                m_lAttack.Add(new Attack("Chilling Water", Types.Water, 50, 0f, 0f, 100, 45, Attack.AttackType.Special));
+
+                for(int i = 0; i < m_lAttack.Count; i++)
+                {
+                    mob.AddAttacks(m_lAttack[i].GetAttackName);
+                }
+            }
+
+        public void InitFightStuff(Mob mob)
+        {
+            CreateAttacks(mob);
+        }
 
         public void StartFight()
         {
             for (int i = 0; i < m_lMap.Count; i++)
             {
-                switch(m_lMap[i])
+                switch (m_lMap[i])
                 {
                     case 'X':
                         Console.BackgroundColor = ConsoleColor.Green;
@@ -75,7 +127,7 @@ namespace Game.Class
                         Console.Write(m_lMap[i]);
                         break;
                 }
-                if(i == utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21))
+                if (i == utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21))
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -108,7 +160,7 @@ namespace Game.Class
             else if (input.Key == ConsoleKey.Enter)
             {
                 int selectedHero = utils.ConvertTo1Dim(m_iPosX, m_iPosY, 21);
-                switch(selectedHero)
+                switch (selectedHero)
                 {
                     case 25:
                         Console.WriteLine("You've selected Salameche");
@@ -122,11 +174,10 @@ namespace Game.Class
                 }
             }
         }
-        #endregion
 
         public void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
-            if(h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
+            if (h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
             int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
 
             double dAttackProbabilityH1 = (double)iSpeedDiff / 100;
@@ -141,9 +192,6 @@ namespace Game.Class
             //Console.WriteLine("h2 => " + dAttackProbabilityH2);
             Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
         }
-        #endregion
-
-        #region //-----AttackOpponent-----//
         public void AttackOpponent(Mob h1, Mob h2)
         {
             float fDamage = type.AttackDamage(h1, h2);
@@ -160,7 +208,6 @@ namespace Game.Class
             Console.WriteLine("Your Hero's Mana: " + h1.Mana);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        #endregion
 
         #endregion
 

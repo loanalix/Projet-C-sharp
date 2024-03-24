@@ -1,10 +1,6 @@
 ﻿using Game.Class;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+using Drawing;
+using Tools;
 
 namespace Game.Class
 {
@@ -19,6 +15,7 @@ namespace Game.Class
         string m_sName;
         int m_iWidth;
         int m_iHeight;
+        Utils utils;
         #endregion
 
         #region Property
@@ -40,6 +37,7 @@ namespace Game.Class
             m_iWidth = 0;
             m_iHeight = 0;
             m_sName = sName;
+            utils = new Utils();
         }
         #endregion  
 
@@ -50,7 +48,7 @@ namespace Game.Class
             {
                 case "map":
                     
-                    if (GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
+                    if (GetMap[utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = GetHeight - 4;
                         oMob.spawnEnnemies(this, "map1");
@@ -58,14 +56,18 @@ namespace Game.Class
                     }
                     return "map";
                 case "map1":
-                    if(GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
+                    if(GetMap[utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = 1;
                         return "map";
                     }
                     return "map1";
-                //case "startFight":
-                //    return "startFight";
+                case "startFight":
+                    if (GetMap[utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 's')
+                    {
+                        return "startFight";
+                    }
+                    return "map1";
 
                 default:
                     return "";

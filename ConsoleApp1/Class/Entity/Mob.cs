@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Game.Enum;
 using Game.Class;
-using Game.Enum;
-
 
 namespace Game.Class
 {
@@ -28,6 +22,7 @@ namespace Game.Class
         private Types m_cTypes;
         private FightManager fightManager;
         private bool m_bIsHero;
+        private bool m_bIsStun;
 
         private string m_sAttackName;
         private Types m_cAttackType;
@@ -76,7 +71,7 @@ namespace Game.Class
 
         #region Methods
 
-        public Mob(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType, bool isHero)
+        public Mob(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cType)
         {
 
             m_sName = sName;
@@ -93,9 +88,20 @@ namespace Game.Class
             m_cTypes = cType;
             fightManager = new FightManager();
             rand = new Random();
-
             m_bIsHero = isHero;
             m_iIVSpeed = 0;
+        }
+
+        public void Stun()
+        {
+            if(m_bIsStun == false)
+            {
+                m_bIsStun = true;
+            } 
+            else
+            {
+                m_bIsStun = false;
+            }
         }
 
         public void TakeDamage(float fDamage)
@@ -148,11 +154,11 @@ namespace Game.Class
             m_iFinalSpeed = m_iSpeed + m_iIVSpeed;
         }
 
-        public void GetAttackProperties(string sAttackName) 
+        public void GetAttackProperties(string sAttackName)
         {
-            if(sAttackName == null) 
-            { 
-                throw new ArgumentException("Argument is null", "sAttackName"); 
+            if (sAttackName == null)
+            {
+                throw new ArgumentException("Argument is null", "sAttackName");
             }
             else
             {
@@ -161,21 +167,27 @@ namespace Game.Class
                 Console.WriteLine("Attack Type: " + attack.GetAttackType);
                 Console.WriteLine("Attack Damage: " + attack.GetAttackDamage);
                 Console.WriteLine("Attack Mana: " + attack.GetAttackMana);
+                Console.WriteLine("Attack Resistance: " + attack.GetAttackResistance);
+                Console.WriteLine("Attack Speed: " + attack.GetAttackSpeed);
+                Console.WriteLine("Attack Hp: " + attack.GetAttackHP);
+                Console.WriteLine("Attack Class: " + attack.GetAttackClass);
+                Console.WriteLine("\n");
             }
         }
 
         public void AddAttacks(string sAttackName)
         {
             Attack attack = GetAttack(sAttackName);
-            if(attack != null)
+            if (attack != null)
             {
                 m_lAttack.Add(attack);
-            } else { throw new ArgumentException("Argument is null", "sAttackName"); }
+            }
+            else { throw new ArgumentException("Argument is null", "sAttackName"); }
         }
 
         private Attack GetAttack(string sAttackName)
         {
-            if(sAttackName == null) { throw new ArgumentException("Argument is null", "sAttackName"); }
+            if (sAttackName == null) { throw new ArgumentException("Argument is null", "sAttackName"); }
             Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
             return attack;
         }
