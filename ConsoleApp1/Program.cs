@@ -1,12 +1,5 @@
-﻿using Game.Map;
-using Game.Inventory;
-using Game.Entity;
-using Game.Character;
-using Game.InputController;
-using Game.FightController;
+﻿using Game.Class;
 using Game.Enum;
-using Game.Brewing;
-using Drawing;
 using System;
 using System.Security.Cryptography.X509Certificates;
 using Main.Class;

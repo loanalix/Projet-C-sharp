@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.UsableItem;
+using Game.Class;
 
-namespace Game.Brewing
+namespace Game.Class
 {
     public class Potion : Item
     {
@@ -16,9 +16,9 @@ namespace Game.Brewing
             HealingAmount = healingAmount;
         }
 
-        public override void Use()
+        public override void Use(Player player , Mob target )
         {
-            Console.WriteLine($"L'objet {Name} a été utilisée pour guérir de {HealingAmount} points de vie.");
+            Console.WriteLine($"La potion {Name} a été utilisée par {player.Name} sur {target.Name} pour guérir de {HealingAmount} points de vie.");
         }
     }
 }

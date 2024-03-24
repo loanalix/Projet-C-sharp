@@ -1,44 +1,64 @@
-﻿using Game.Character;
-using Drawing;
+﻿using Game.Class;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Game.Map
+namespace Game.Class
 {
     public class Map
     {
         #region Fields
-        private List<int> m_lSpawnable;
-        Random rand;
+
+        public List<char> m_lMap;
+        List<int> m_lSpawn;
         Draw m_oDraw;
+
+        string m_sName;
+        int m_iWidth;
+        int m_iHeight;
         #endregion
 
         #region Property
         public Draw oDraw { get=>m_oDraw; set => m_oDraw = value; }
 
+        public List<char> GetMap { get => m_lMap; }
+        public List<int> GetSpawn{ get => m_lSpawn; }
+        public int GetWidth { get => m_iWidth; }
+        public int GetHeight { get => m_iHeight; }
         #endregion
+        public string GetName { get => m_sName; }
 
         #region Constructor
-        public Map() {
+        public Map(string sName)
+        {
 
-            m_lSpawnable = new List<int>();
-            rand = new Random();
+            m_lMap = new List<char>();
+            m_lSpawn = new List<int>();
+            m_iWidth = 0;
+            m_iHeight = 0;
+            m_sName = sName;
         }
-        #endregion
+        #endregion  
 
         #region Method
-        public string ChangeMap(Player oPlayer, string sNewMap)
+        public string ChangeMap(Player oPlayer, Map oMap, Mob oMob)
         {
-            switch (sNewMap)
+            switch (oMap.m_sName)
             {
                 case "map":
-                    if (oPlayer.PosY < 0)
+                    
+                    if (GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
-                        oPlayer.PosY = m_oDraw.GetHeight - 4;
-                        spawnEnnemies("map1");
+                        oPlayer.PosY = GetHeight - 4;
+                        oMob.spawnEnnemies(this, "map1");
                         return "map1";
                     }
                     return "map";
                 case "map1":
-                    if(oPlayer.PosY > m_oDraw.GetHeight - 2)
+                    if(GetMap[oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = 1;
                         return "map";
@@ -52,21 +72,34 @@ namespace Game.Map
             }
         }
 
-        public void spawnEnnemies(string sMap)
+        public void LoadMap(string sFileName)
         {
-            m_oDraw.GetGrass(sMap);
-            List<int> spawn = m_oDraw.GetSpawn;
-            List<char> Map = m_oDraw.GetMap[sMap];
+            StreamReader reader = File.OpenText(sFileName);
+            string line;
+            int fileHeight = 0;
 
-            for (int i= 0; i < 15; i++)
+            while ((line = reader.ReadLine()) != null)
             {
-                int randomIndex = rand.Next(0, spawn.Count);
-                int chooseNumber = spawn[randomIndex];
-                spawn.RemoveAt(randomIndex);
-                Console.ForegroundColor = ConsoleColor.Black;
-                Map[chooseNumber] = 's';
+                m_iWidth = line.Length;
+                char[] cChar = line.ToCharArray();
+                for (int i = 0; i < cChar.Length; i++)
+                {
+                    m_lMap.Add(cChar[i]);
+                }
+                fileHeight++;
             }
-            
+            m_iHeight = fileHeight;
+
+        }
+        public void GetGrass()
+        {
+            for (int i = 0; i < m_lMap.Count; i++)
+            {
+                if (m_lMap[i] == 'g')
+                {
+                    m_lSpawn.Add(i);
+                }
+            }
         }
         #endregion
     }

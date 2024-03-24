@@ -5,12 +5,12 @@ using Drawing;
 using Game.Character;
 using Game.Element;
 
-namespace Game.FightController
+namespace Game.Class
 {
     public class FightManager
     {
 
-        #region Field
+        #region Fields
 
         private Game.Element.Type type;
         private List<char> m_lMap = new List<char>();
@@ -122,7 +122,7 @@ namespace Game.FightController
                 }
             }
         }
-
+        #endregion
 
         public void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
@@ -141,7 +141,9 @@ namespace Game.FightController
             //Console.WriteLine("h2 => " + dAttackProbabilityH2);
             Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
         }
+        #endregion
 
+        #region //-----AttackOpponent-----//
         public void AttackOpponent(Mob h1, Mob h2)
         {
             float fDamage = type.AttackDamage(h1, h2);
@@ -158,6 +160,7 @@ namespace Game.FightController
             Console.WriteLine("Your Hero's Mana: " + h1.Mana);
             Console.ForegroundColor = ConsoleColor.White;
         }
+        #endregion
 
         #endregion
 

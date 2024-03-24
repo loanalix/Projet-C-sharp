@@ -1,8 +1,8 @@
-﻿using Game.Character;
-using Drawing;
+﻿using Game.Class;
 using static Main.Class.GameManager;
+using static System.Formats.Asn1.AsnWriter;
 
-namespace Game.InputController
+namespace Game.Class
 {
     public class InputManager
     {
@@ -14,6 +14,9 @@ namespace Game.InputController
 
         #region Property
         public ConsoleKeyInfo Input { get => input; }
+        #endregion
+
+        #region Methode
 
         #endregion
 
@@ -44,9 +47,15 @@ namespace Game.InputController
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-
                 ProcessInput(CurrentState, "LeftArrow");
-
+            }
+            else if(input.Key == ConsoleKey.Escape)
+            {
+                ProcessInput(CurrentState, "Escape");
+            }
+            else if(input.Key == ConsoleKey.Enter)
+            {
+                ProcessInput(CurrentState, "Enter");
             }
 
         }

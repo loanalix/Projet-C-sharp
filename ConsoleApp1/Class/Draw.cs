@@ -1,80 +1,32 @@
+using Game.Class;
+using System.Drawing;
+using System.Runtime.CompilerServices;
 
-using Game.Map;
-using Game.Character;
-using Tools;
-
-namespace Drawing
+namespace Game.Class
 {
     public class Draw
     {
         #region Fields
 
-        public Map m_oMap;
-        private Dictionary<string, List<char>> m_dMap;
-        private List<int> m_lSpawn;
-        private int m_iWidth;
-        private int m_iHeight;
-        private Utils utils;
         #endregion
 
         #region Property
-        public Dictionary<string, List<char>> GetMap { get { return m_dMap; } }
-        public List<int> GetSpawn { get => m_lSpawn; }
-        public int GetWidth { get => m_iWidth; }
-        public int GetHeight { get => m_iHeight; }
         #endregion
 
         #region Constructor
         public Draw() 
         {
-            m_dMap = new Dictionary<string, List<char>>();
-            m_lSpawn = new List<int>();
-            m_oMap = new Map();
-            utils = new Utils();
-            m_iWidth = 0;
-            m_iHeight = 0;
         }
         #endregion
 
         #region Method
-        public void LoadMap(string sFileName, string name)
-        {
-            List<char> map = new List<char>();
-
-            StreamReader reader = File.OpenText(sFileName);
-            string line;
-            int fileHeight = 0;
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                m_iWidth = line.Length;
-                char[] cChar = line.ToCharArray();
-                for (int i = 0; i < cChar.Length; i++)
-                {
-                    map.Add(cChar[i]);
-                }
-                fileHeight++;
-            }
-            m_iHeight = fileHeight;
-            m_dMap.Add(name, map);
-        }
         
-        public void GetGrass(string sMap)
+        public void DrawMap(Player oPlayer , Map oMap )
         {
-            List<char> map = m_dMap[sMap];
-            for (int i = 0;i < map.Count; i++)
+            List<char> lMap = oMap.GetMap;
+            for (int i = oMap.GetWidth; i < lMap.Count; i++)
             {
-                if (map[i] == 'g')
-                {
-                    m_lSpawn.Add(i);
-                }
-            }
-        }
-        public void DrawMap(Player oPlayer , List<char> drawMap )
-        {
-            for (int i = m_iWidth; i < drawMap.Count; i++)
-            {
-                switch (drawMap[i])
+                switch (lMap[i])
                 {
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -113,7 +65,7 @@ namespace Drawing
                 }
                 else
                 {
-                    if(drawMap[i] != '/')
+                    if(lMap[i] != '/')
                     {
                         Console.Write(' ');
                     }

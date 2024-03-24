@@ -1,10 +1,10 @@
-﻿using Drawing;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Character;
+using Game.Class;
 using System.Dynamic;
 
 namespace Game
@@ -26,9 +26,9 @@ namespace Game
         {
             Console.CursorVisible = isVisible;
         }
-        public void Draw(Player oPlayer, string sCurrentMap)
+        public void Draw(Player oPlayer, Map oMap)
         {
-            m_oDraw.DrawMap(oPlayer,m_oDraw.GetMap[sCurrentMap]);
+            m_oDraw.DrawMap(oPlayer,oMap);
         }
 
     }
