@@ -20,11 +20,11 @@ namespace Game.Class
         public int[] SpawnObject(Map oMap, char[] spawnChar)
         {
 
-            int[] iObject = new int[6];
+            int[] iObject = new int[2];
             string[] itemsName = new string[6] { "Potion de soin", "Potion de vitesse" , "Potion d'attaque" , "Hyper Potion" , "Potion de défense", "Potion de mana"};
             List<int> spawnObject = oMap.SpawnableObject(oMap, spawnChar);
             int[] coord = new int[2];
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Item item = new Item(itemsName[i]);
                 int randomIndex = rand.Next(0, spawnObject.Count);
