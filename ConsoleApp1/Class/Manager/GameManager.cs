@@ -63,7 +63,6 @@ namespace Game.Class
                     m_oFightManager = new FightManager();
                     m_oInventory = new Inventory();
                     m_oMenu = new Menu(m_oInventory);
-                    m_oMob = new Mob("ennemi", 100, 10, 5.0f, 20.0f, 10, Types.Fire, false);
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     m_oCurrentMap = m_lMaps[0];

@@ -11,12 +11,17 @@ namespace Game.Class
 
         private Game.Class.Type type;
         private List<char> m_lMap = new List<char>();
+        private List<char> m_lMapFight = new List<char>();
         private List<Attack> m_lAttack = new List<Attack>();
+        private string hero;
         private int m_iPosX;
         private int m_iPosY;
         private Utils utils;
         //private int m_iWidth;
         private ConsoleKeyInfo input;
+
+        private enum FightState { menu = 0, fight = 1 }
+        private FightState m_state = 0;
 
         #endregion
 
@@ -47,6 +52,21 @@ namespace Game.Class
                 for (int i = 0; i < cChar.Length; i++)
                 {
                     m_lMap.Add(cChar[i]);
+                }
+            }
+        }
+
+        public void LoadFight()
+        {
+            StreamReader reader = File.OpenText("../../../txt/FightUI.txt");
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                char[] cChar = line.ToCharArray();
+                for (int i = 0; i < cChar.Length; i++)
+                {
+                    m_lMapFight.Add(cChar[i]);
                 }
             }
         }
@@ -105,8 +125,28 @@ namespace Game.Class
             CreateAttacks(mob);
         }
 
-        public void StartFight()
+        public void FightSteps()
         {
+            Console.SetCursorPosition(0, 0);
+
+            switch (m_state)
+            {
+                case FightState.menu:
+                    Console.SetCursorPosition(0, 0);
+                    FightMenu();
+                    break;
+                case FightState.fight:
+                    Console.SetCursorPosition(0, 0);
+                    Fight();
+                    break;
+            }
+        }
+
+        public void FightMenu()
+        {
+            Console.SetCursorPosition(0, 0);
+            LoadFightMenu();
+
             for (int i = 0; i < m_lMap.Count; i++)
             {
                 switch (m_lMap[i])
@@ -135,11 +175,46 @@ namespace Game.Class
                 }
                 Console.BackgroundColor = ConsoleColor.Black;
             }
+            MenuInput();
+            Console.SetCursorPosition(0, 0);
+        }
+
+        public void Fight()
+        {
+
+            Console.Clear();
+            LoadFight();
+
+            string line = new string(m_lMapFight.ToArray());
+
+            line = line.Replace("{heroName}", hero);
+
+            foreach (char c in line)
+            {
+                switch (c)
+                {
+                    case 'X':
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write(' ');
+                        break;
+                    case ' ':
+                        Console.ResetColor();
+                        Console.Write(' ');
+                        break;
+                    case '/':
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        break;
+                    default:
+                        Console.Write(c);
+                        break;
+                }
+            }
         }
 
         public void MenuInput()
         {
-
+            Console.SetCursorPosition(0, 0);
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
@@ -163,16 +238,20 @@ namespace Game.Class
                 switch (selectedHero)
                 {
                     case 25:
-                        Console.WriteLine("You've selected Salameche");
+                        hero = "Salameche";
+                        m_state = FightState.fight;
                         break;
                     case 46:
-                        Console.WriteLine("You've selected Bulbizarre");
+                        hero = "Bulbizarre";
+                        m_state = FightState.fight;
                         break;
                     case 67:
-                        Console.WriteLine("You've selected Carapuce");
+                        hero = "Carapuce";
+                        m_state = FightState.fight;
                         break;
                 }
             }
+            Console.SetCursorPosition(0, 0);
         }
 
         public void CalculateWhoIsStarting(Mob h1, Mob h2)

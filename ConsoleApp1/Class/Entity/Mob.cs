@@ -21,7 +21,6 @@ namespace Game.Class
         private int m_iLevel;
         private Types m_cTypes;
         private FightManager fightManager;
-        private bool m_bIsHero;
         private bool m_bIsStun;
 
         private string m_sAttackName;
@@ -88,7 +87,6 @@ namespace Game.Class
             m_cTypes = cType;
             fightManager = new FightManager();
             rand = new Random();
-            m_bIsHero = isHero;
             m_iIVSpeed = 0;
         }
 
