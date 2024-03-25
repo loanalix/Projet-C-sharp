@@ -31,9 +31,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
             string Pikachu = "../../../txt/pikachu.txt"; 
             m_oDrawMob.LoadMob(Pokemon);
             m_oDrawMob.MobDraw(Pokemon);
-
             m_oDrawMob.LoadMob(Pikachu);
             m_oDrawMob.MobDraw(Pikachu);
+
 
             //m_oDraw.DrawMap(m_oPlayer);
 

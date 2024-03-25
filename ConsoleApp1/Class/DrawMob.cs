@@ -37,13 +37,16 @@ namespace Game.Class
 
         public void MobDraw(string asciiArt)
         {
-            origRow = Console.CursorLeft; 
-            for (int i = 0; i < mapLine.Count / 2 ; i++)
+            for (int i = 0; i < mapLine.Count ; i++)
             {
+                //Console.SetCursorPosition(0, 0);
                 Console.WriteLine(mapLine[i]);
             }
 
-
+            for (int y = 0 ; y < m_iWidth; y++) 
+            {
+                Console.SetCursorPosition(m_iWidth + 1, y);
+            }
 
 
         }
