@@ -43,10 +43,10 @@ namespace Game.Class
                 Console.WriteLine(mapLine[i]);
             }
 
-            for (int y = 0 ; y < m_iWidth; y++) 
-            {
-                Console.SetCursorPosition(m_iWidth + 1, y);
-            }
+            //for (int y = 0 ; y < m_iWidth; y++) 
+            //{
+            //    Console.SetCursorPosition(m_iWidth + 1, y);
+            //}
 
 
         }
