@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.Class;
+﻿using Game.Class;
 
 namespace Game.Class
 {
@@ -20,7 +15,7 @@ namespace Game.Class
         }
         #region //-----------AddItem-----------//
         public void AddItem(GameObject item)
-        { 
+        {
             items.Add(item);
             Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }
@@ -53,9 +48,14 @@ namespace Game.Class
         #region//------AfficherInventaire-----//
         public void AfficherInventaire()
         {
+            Console.SetCursorPosition(0,0);
             if (items.Count == 0)
             {
                 Console.WriteLine("L'inventaire est vide.");
+                Console.WriteLine("                      ");
+                Console.WriteLine("                      ");
+                Console.WriteLine("                      ");
+
             }
             else
             {

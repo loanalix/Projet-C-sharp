@@ -1,8 +1,6 @@
 ﻿using Game.Class;
-using System.Drawing;
-using System.Runtime.CompilerServices;
 
-namespace Game.Class
+namespace Drawing
 {
     public class DrawMob
     {
