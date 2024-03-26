@@ -1,22 +1,17 @@
 using Game.Class;
-using Tools;
 
 namespace Drawing
 {
     public class Draw
     {
         #region Fields
-        private Utils utils;
         #endregion
 
         #region Property
         #endregion
 
         #region Constructor
-        public Draw()
-        {
-            utils = new Utils();
-        }
+        public Draw() { }
         #endregion
 
         #region Method

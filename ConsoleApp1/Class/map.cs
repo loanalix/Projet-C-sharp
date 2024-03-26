@@ -1,6 +1,5 @@
 ﻿using Game.Class;
 using Drawing;
-using Tools;
 
 namespace Game.Class
 {
@@ -39,7 +38,6 @@ namespace Game.Class
             m_iWidth = 0;
             m_iHeight = 0;
             m_sName = sName;
-            utils = new Utils();
         }
         #endregion  
 
@@ -65,7 +63,7 @@ namespace Game.Class
                     }
                     return "map1";
                 case "fightMenu":
-                    if (GetMap[utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 's')
+                    if (GetMap[Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 's')
                     {
                         return "fightMenu";
                     }

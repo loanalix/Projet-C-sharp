@@ -1,5 +1,4 @@
 using Game.Class;
-using Tools;
 
 namespace Game.Class
 {
@@ -12,7 +11,6 @@ namespace Game.Class
         Inventory m_oInventory;
         ItemsManager m_oItemManager;
         FightManager m_fightManager;
-        private Utils utils;
         private List<Heroes> m_lPlayerHeroes = new List<Heroes>();
         #endregion
 
@@ -62,14 +60,14 @@ namespace Game.Class
         {
             if (CheckCollide(iWidth, PosX, PosY - 1, oMap))
             {
-                PosY += utils.MoveUpOrLeft();
+                PosY += Maths.MoveUpOrLeft();
             }
         }
         public void MoveDown(int iWidth, Map oMap)
         {
             if (CheckCollide(iWidth, PosX, PosY + 1, oMap))
             {
-                PosY += utils.MoveDownOrRight();
+                PosY += Maths.MoveDownOrRight();
             }
 
         }
@@ -77,7 +75,7 @@ namespace Game.Class
         {
             if (CheckCollide(iWidth, PosX + 1, PosY, oMap))
             {
-                PosX += utils.MoveDownOrRight();
+                PosX += Maths.MoveDownOrRight();
             }
 
         }
@@ -85,7 +83,7 @@ namespace Game.Class
         {
             if (CheckCollide(iWidth, PosX - 1, PosY, oMap))
             {
-                PosX += utils.MoveUpOrLeft();
+                PosX += Maths.MoveUpOrLeft();
             }
 
         }
