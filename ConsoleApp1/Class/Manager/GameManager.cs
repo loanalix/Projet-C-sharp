@@ -1,6 +1,7 @@
 ﻿using Game.Class;
 using Game.Enum;
 using Drawing;
+using Main.Class;
 
 namespace Game.Class
 {
@@ -18,6 +19,7 @@ namespace Game.Class
         List<Map> m_lMaps;
         Map m_oCurrentMap;
         ItemsManager m_oItemsManager;
+        Dialog m_oDialog;
 
         string[] m_sMenuOptions;
         public enum GameState { start = 0, run = 1 };
@@ -43,7 +45,7 @@ namespace Game.Class
             {
                 m_oWindowManager.SetCursor(0, 0);
                 m_oInputManager.GetInput(m_eCurrentDrawState);
-                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_oCurrentMap, m_oMob);
+                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == test);
                 DrawScene();
             }
@@ -63,6 +65,13 @@ namespace Game.Class
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
                     m_oMenu = new Menu(m_oInventory);
+                    m_oMob = new Mob("ennemi", 100, 10, 5.0f, 20.0f, 10, Types.Fire);
+                    m_oDialog = new Dialog();
+                    m_oDialog.AddText("test");
+                    m_oDialog.AddText("bar");
+                    m_oDialog.AddText("gros pot de sucre");
+                    m_oDialog.AddText("apagnan");
+
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     char[] spawnable = new char[] { 'p' };
@@ -127,6 +136,7 @@ namespace Game.Class
             {
                 case DrawState.game:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
+                    m_oDialog.DrawDialog();
                     break;
                 case DrawState.menu:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);

@@ -28,8 +28,8 @@ namespace Game.Class
         private float m_fAttackDamage;
         private int m_iAttackMana;
 
+        Random random = new Random();
 
-        Random rand;
 
         private static List<Attack> m_lAttack = new List<Attack>();
 
@@ -86,7 +86,6 @@ namespace Game.Class
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();
-            rand = new Random();
             m_iIVSpeed = 0;
         }
 
@@ -146,7 +145,6 @@ namespace Game.Class
 
         public void GenerateIVSpeed()
         {
-            Random random = new Random();
             int randomIVSpeed = random.Next(1, 101);
             m_iIVSpeed = randomIVSpeed;
             m_iFinalSpeed = m_iSpeed + m_iIVSpeed;
@@ -202,21 +200,7 @@ namespace Game.Class
         }
 
 
-        public void spawnEnnemies(Map oMap, string sMap)
-        {
-            oMap.GetGrass();
-            List<int> spawn = oMap.GetSpawn;
-            List<char> Map = oMap.GetMap;
 
-            for (int i = 0; i < 15; i++)
-            {
-                int randomIndex = rand.Next(0, spawn.Count);
-                int chooseNumber = spawn[randomIndex];
-                spawn.RemoveAt(randomIndex);
-                Map[chooseNumber] = 's';
-            }
-
-        }
         #endregion
     }
 }

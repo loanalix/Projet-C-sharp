@@ -38,14 +38,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
             
 
 
-            string Pokemon = "../../../txt/darceaufeu.txt";
-            string Pikachu = "../../../txt/pikachu.txt"; 
-            m_oDrawMob.LoadMob(Pikachu);
-            m_oDrawMob.LoadMob(Pokemon);
+            //string Pokemon = "../../../txt/darceaufeu.txt";
+            //string Pikachu = "../../../txt/pikachu.txt"; 
+            //m_oDrawMob.LoadMob(Pikachu);
+            //m_oDrawMob.LoadMob(Pokemon);
 
  
-            m_oDrawMob.MobDraw(Pikachu, Pokemon);
-            m_oDrawMob.SaveMob(Pikachu);
+            //m_oDrawMob.MobDraw(Pikachu, Pokemon);
+            //m_oDrawMob.SaveMob(Pikachu);
 
 
             m_oGameManager.Game();

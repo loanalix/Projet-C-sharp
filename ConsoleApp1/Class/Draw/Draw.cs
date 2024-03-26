@@ -42,7 +42,7 @@ namespace Drawing
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
                     case 's':
-                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
                         break;
                     case ' ':
                         Console.ResetColor();
@@ -53,7 +53,7 @@ namespace Drawing
                         break;
 
                 }
-                if (i == Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
+                if (i == Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, oMap.GetWidth))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write('P');

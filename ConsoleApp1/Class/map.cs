@@ -10,7 +10,7 @@ namespace Game.Class
         public List<char> m_lMap;
         List<int> m_lSpawn;
         Draw m_oDraw;
-
+        Random rand;
 
         string m_sName;
         int m_iWidth;
@@ -38,20 +38,23 @@ namespace Game.Class
             m_iWidth = 0;
             m_iHeight = 0;
             m_sName = sName;
+            rand = new Random();
+
         }
         #endregion  
 
         #region Method
-        public string ChangeMap(Player oPlayer, Map oMap, Mob oMob)
+        public string ChangeMap(Player oPlayer, List<Map> sMap, string sName)
         {
-            switch (oMap.m_sName)
+
+            switch (sMap.Find(x=>x.m_sName == sName).GetName)
             {
                 case "map":
 
                     if (GetMap[Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 'a')
                     {
                         oPlayer.PosY = GetHeight - 4;
-                        oMob.spawnEnnemies(this, "map1");
+                        spawnEnnemies(sMap[1]);
                         return "map1";
                     }
                     return "map";
@@ -73,7 +76,21 @@ namespace Game.Class
                     return "";
             }
         }
+        public void spawnEnnemies(Map oMap)
+        {
+            oMap.GetGrass();
+            List<int> spawn = oMap.GetSpawn;
+            List<char> Map = oMap.GetMap;
 
+            for (int i = 0; i < 15; i++)
+            {
+                int randomIndex = rand.Next(0, spawn.Count);
+                int chooseNumber = spawn[randomIndex];
+                spawn.RemoveAt(randomIndex);
+                Map[chooseNumber] = 's';
+            }
+
+        }
         public void LoadMap(string sFileName)
         {
             StreamReader reader = File.OpenText(sFileName);
