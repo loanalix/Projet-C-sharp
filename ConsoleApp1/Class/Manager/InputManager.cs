@@ -1,9 +1,9 @@
 ﻿using Game.Class;
-using static Main.Class.GameManager;
+using Drawing;
 
 namespace Game.Class
 {
-    public class InputManager
+    public class InputManager : GameManager
     {
         #region Fields
         ConsoleKeyInfo input;
@@ -19,13 +19,13 @@ namespace Game.Class
 
         #endregion
 
-
         #region Constructor
         public InputManager()
         {
             stateMappings = new Dictionary<DrawState, Dictionary<string, Action>>();
         }
         #endregion
+
         #region Method
         public void GetInput(DrawState CurrentState)
         {
@@ -40,15 +40,21 @@ namespace Game.Class
 
             }
             else if (input.Key == ConsoleKey.RightArrow)
-            {  
+            {
                 ProcessInput(CurrentState, "RightArrow");
 
             }
             else if (input.Key == ConsoleKey.LeftArrow)
             {
-
                 ProcessInput(CurrentState, "LeftArrow");
-
+            }
+            else if (input.Key == ConsoleKey.Escape)
+            {
+                ProcessInput(CurrentState, "Escape");
+            }
+            else if (input.Key == ConsoleKey.Enter)
+            {
+                ProcessInput(CurrentState, "Enter");
             }
 
         }
