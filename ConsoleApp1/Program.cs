@@ -44,8 +44,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
             m_oDrawMob.LoadMob(Pokemon);
 
  
-            m_oDrawMob.MobDraw(Pikachu, Pokemon);
-            m_oDrawMob.SaveMob(Pikachu);
+           // m_oDrawMob.MobDraw(Pikachu, Pokemon);
+
 
 
             m_oGameManager.Game();
