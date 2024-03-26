@@ -12,12 +12,15 @@ namespace Game.Class
         private List<char> m_lMap = new List<char>();
         private List<char> m_lMapFight = new List<char>();
         private List<Attack> m_lAttack = new List<Attack>();
-        private string hero;
+        private List<Mob> allMobs = new List<Mob>();
+        private Ennemy ennemy;
+        private Heroes hero;
         private int m_iPosX;
         private int m_iPosY;
         private int apagnan = 0;
         //private int m_iWidth;
         private ConsoleKeyInfo input;
+        private Random random;
 
         private enum FightState { menu = 0, fight = 1 }
         private FightState m_state = 0;
@@ -35,40 +38,60 @@ namespace Game.Class
         public FightManager()
         {
             type = new Game.Class.Type();
+            allMobs = Mob.GetAllMobs;
             m_iPosX = 4;
             m_iPosY = 2;
+            random = new Random();
         }
 
-        public void LoadFightMenu()
-        {
-            StreamReader reader = File.OpenText("../../../txt/choseHero.txt");
-            string line;
+        //public void LoadFightMenu()
+        //{
+        //    StreamReader reader = File.OpenText("../../../txt/choseHero.txt");
+        //    string line;
 
-            while ((line = reader.ReadLine()) != null)
+        //    while ((line = reader.ReadLine()) != null)
+        //    {
+        //        char[] cChar = line.ToCharArray();
+        //        for (int i = 0; i < cChar.Length; i++)
+        //        {
+        //            m_lMap.Add(cChar[i]);
+        //        }
+        //    }
+        //}
+
+        //public void LoadFight()
+        //{
+        //    StreamReader reader = File.OpenText("../../../txt/FightUI.txt");
+        //    string line;
+
+        //    while ((line = reader.ReadLine()) != null)
+        //    {
+        //        char[] cChar = line.ToCharArray();
+        //        for (int i = 0; i < cChar.Length; i++)
+        //        {
+        //            m_lMapFight.Add(cChar[i]);
+        //        }
+        //    }
+        //}
+
+        public void LoadMaps(List<Map> map, string sMapName)
+        {
+            switch (map.Find(x => x.GetName == sMapName).GetName)
             {
-                char[] cChar = line.ToCharArray();
-                for (int i = 0; i < cChar.Length; i++)
-                {
-                    m_lMap.Add(cChar[i]);
-                }
+                case "fightMenu":
+                    List<char> menu = map[2].GetMap;
+                    m_lMap = menu;
+                    break;
+                case "fightUI":
+                    List<char> ui = map[3].GetMap;
+                    m_lMapFight = ui;
+                    break;
+                default:
+                    break;
             }
         }
 
-        public void LoadFight()
-        {
-            StreamReader reader = File.OpenText("../../../txt/FightUI.txt");
-            string line;
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                char[] cChar = line.ToCharArray();
-                for (int i = 0; i < cChar.Length; i++)
-                {
-                    m_lMapFight.Add(cChar[i]);
-                }
-            }
-        }
-        public void CreateAttacks(Mob mob)
+        public void CreateAttacks(List<Mob> mob)
             {
                 // Non damage abilities
                 m_lAttack.Add(new Attack("Aqua ring", Types.Flying, 0f, 0f, 15f, 30, 20, Attack.AttackType.Spell));
@@ -114,17 +137,33 @@ namespace Game.Class
 
                 for(int i = 0; i < m_lAttack.Count; i++)
                 {
-                    mob.AddAttacks(m_lAttack[i].GetAttackName);
+                    for(int j = 0; j < mob.Count; j++)
+                    {
+                        mob[j].AddAttacks(m_lAttack[i].GetAttackName);
+                    }
                 }
             }
-
-        public void InitFightStuff(Mob mob)
+        public void TakeAnEnnemy()
         {
+            List<Ennemy> ennemies = allMobs.OfType<Ennemy>().ToList();
+            int chosenEnnemy = random.Next(0, ennemies.Count);
+            ennemy = ennemies[chosenEnnemy];
+        }
+        public Heroes chosenHero(int i)
+        {
+            List<Heroes> hero = allMobs.OfType<Heroes>().ToList();
+            return hero[i];
+        }
+        public void InitFightStuff(List<Mob> mob)
+        {
+            Ennemy.CreateEnnemies();
+            Heroes.CreateHeroes();
             CreateAttacks(mob);
         }
 
         public void FightSteps()
         {
+            InitFightStuff(allMobs);
             switch (m_state)
             {
                 case FightState.menu:
@@ -168,14 +207,26 @@ namespace Game.Class
                 }
                 Console.BackgroundColor = ConsoleColor.Black;
             }
-            MenuInput();
+            //MenuInput();
         }
 
         public void Fight()
         {
             string line = new string(m_lMapFight.ToArray());
 
-            line = line.Replace("{heroName}", hero);
+            line = line.Replace("{heroName}", hero.Name);
+            line = line.Replace("{CurrentHP}", hero.HP.ToString());
+            line = line.Replace("{MaxHP}", hero.MaxHP.ToString());
+            line = line.Replace("{levelH}", hero.Level.ToString());
+            line = line.Replace("{CurrentMana}", hero.Mana.ToString());
+            line = line.Replace("{MaxMana}", hero.MaxMana.ToString());
+
+            line = line.Replace("{MaxHpO}", ennemy.MaxHP.ToString());
+            line = line.Replace("{CurrentHPO}", ennemy.HP.ToString());
+            line = line.Replace("{EnnemyName}", ennemy.Name);
+            line = line.Replace("{MaxManaO}", ennemy.Mana.ToString());
+            line = line.Replace("{CurrentManaO}", ennemy.Mana.ToString());
+            line = line.Replace("{levelO}", ennemy.Mana.ToString());
 
             foreach (char c in line)
             {
@@ -196,7 +247,43 @@ namespace Game.Class
             }
         }
 
-        public void MenuInput()
+        public void MoveUpward()
+        {
+            m_iPosY += Maths.MoveUpOrLeft();
+        }
+
+        public void MoveDownward()
+        {
+            m_iPosY += Maths.MoveDownOrRight();
+        }
+
+        public void Enter()
+        {
+            int selectedHero = Maths.ConvertTo1Dim(m_iPosX, m_iPosY, 21);
+            switch (selectedHero)
+            {
+                case 25:
+                    hero = chosenHero(0);
+                    TakeAnEnnemy();
+                    m_state = FightState.fight;
+                    Console.Clear();
+                    break;
+                case 46:
+                    hero = chosenHero(1);
+                    TakeAnEnnemy();
+                    m_state = FightState.fight;
+                    Console.Clear();
+                    break;
+                case 67:
+                    hero = chosenHero(2);
+                    TakeAnEnnemy();
+                    m_state = FightState.fight;
+                    Console.Clear();
+                    break;
+            }
+        }
+
+        /*public void MenuInput()
         {
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
@@ -237,7 +324,7 @@ namespace Game.Class
                         break;
                 }
             }
-        }
+        }*/
 
         public void CalculateWhoIsStarting(Mob h1, Mob h2)
         {

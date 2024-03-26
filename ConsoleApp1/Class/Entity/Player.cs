@@ -11,7 +11,9 @@ namespace Game.Class
         Inventory m_oInventory;
         ItemsManager m_oItemManager;
         FightManager m_fightManager;
-        private List<Heroes> m_lPlayerHeroes = new List<Heroes>();
+
+        Random random;
+
         #endregion
 
         #region Property
@@ -45,8 +47,8 @@ namespace Game.Class
                 }
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
-                    Console.WriteLine("Oh un combat");
-                    return false;
+                    GameManager.StartFight();
+                    return true;
                 }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
@@ -97,14 +99,6 @@ namespace Game.Class
         public void UseItemFromInventory(Mob target, int index)
         {
             m_oInventory.UseItem(this, target, index);
-        }
-
-        public void InitHeroes()
-        {
-            for(int i = 0; i < Heroes.GetHeroes.Count; i++)
-            {
-                m_lPlayerHeroes.Add(Heroes.GetHeroes[i]);
-            }
         }
 
     }

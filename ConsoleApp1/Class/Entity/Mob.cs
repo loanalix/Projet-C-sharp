@@ -11,6 +11,7 @@ namespace Game.Class
         private int m_iMaxHp;
         private float m_iHp;
         private int m_iMana;
+        private int m_iMaxMana;
         private float m_fDamage;
         private float m_fResistance;
         private int m_iSpeed;
@@ -28,10 +29,10 @@ namespace Game.Class
         private float m_fAttackDamage;
         private int m_iAttackMana;
 
+        private static List<Attack> m_lAttack = new List<Attack>();
+        private static List<Mob> m_lAllMobs = new List<Mob>();
 
         Random rand;
-
-        private static List<Attack> m_lAttack = new List<Attack>();
 
         #endregion
 
@@ -39,7 +40,9 @@ namespace Game.Class
 
         public string Name { get => m_sName; set => m_sName = value; }
         public float HP { get => m_iHp; set => m_iHp = value; }
+        public float MaxHP { get => m_iMaxHp; }
         public int Mana { get => m_iMana; set => m_iMana = value; }
+        public int MaxMana { get => m_iMaxMana; }
         public float Damage { get => m_fDamage; set => m_fDamage = value; }
         public float Resistance { get => m_fResistance; set => m_fResistance = value; }
         public int Speed { get => m_iSpeed; set => m_iSpeed = value; }
@@ -53,6 +56,7 @@ namespace Game.Class
         public Types GetHeroAttackType { get => m_cAttackType; }
         public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
         public int GetHeroAttackMana { get => m_iAttackMana; }
+        public static List<Mob> GetAllMobs { get => m_lAllMobs; } 
         #endregion
 
         #region Events
@@ -86,8 +90,9 @@ namespace Game.Class
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();
-            rand = new Random();
             m_iIVSpeed = 0;
+            rand = new Random();
+            m_lAllMobs.Add(this);
         }
 
         public void Stun()
@@ -201,22 +206,6 @@ namespace Game.Class
             fightManager.AttackOpponent(this, op);
         }
 
-
-        public void spawnEnnemies(Map oMap, string sMap)
-        {
-            oMap.GetGrass();
-            List<int> spawn = oMap.GetSpawn;
-            List<char> Map = oMap.GetMap;
-
-            for (int i = 0; i < 15; i++)
-            {
-                int randomIndex = rand.Next(0, spawn.Count);
-                int chooseNumber = spawn[randomIndex];
-                spawn.RemoveAt(randomIndex);
-                Map[chooseNumber] = 's';
-            }
-
-        }
         #endregion
     }
 }

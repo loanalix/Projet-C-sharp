@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------------------------/
-	{heroName} : CurrentHP | MaxHp					MaxHp | CurrentHP : {EnnemyName}		  	  	  	  	  				                  /
-	  Nv{levelH} CurrentMana | MaxMana				MaxMana | CurrentMana	Nv{levelO}		  	  	  	  	  				                  /
+	{heroName} : {CurrentHP} | {MaxHp}					{MaxHpO | {CurrentHPO} : {EnnemyName}		  	  	  	  	  				                  /
+	  Nv{levelH} {CurrentMana} | {MaxMana}				{MaxManaO} | {CurrentManaO}	Nv{levelO}		  	  	  	  	  				                  /
 																														  	  	  	  	  	  /
                                                     Attack                                                                                    /
                                                   Inventaire                                                                                  /
