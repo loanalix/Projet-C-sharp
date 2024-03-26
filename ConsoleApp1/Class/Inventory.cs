@@ -15,7 +15,7 @@ namespace Game.Class
         }
         #region //-----------AddItem-----------//
         public void AddItem(GameObject item)
-        { 
+        {
             items.Add(item);
             Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
         }

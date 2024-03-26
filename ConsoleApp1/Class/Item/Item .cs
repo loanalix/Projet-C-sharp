@@ -7,7 +7,6 @@ namespace Game.Class
 
         public Item(string name) : base(name)
         {
-
         }
 
 
@@ -16,6 +15,4 @@ namespace Game.Class
             Console.WriteLine($"L'objet {Name} a été utilisé sur {target.Name}.");
         }
     }
-
-
 }
