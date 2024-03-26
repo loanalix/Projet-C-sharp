@@ -135,7 +135,7 @@ namespace Game.Class
                     FightMenu();
                     break;
                 case FightState.fight:
-                    Console.SetCursorPosition(0, 41);
+                    Console.SetCursorPosition(0, 0);
                     Fight();
                     break;
             }
