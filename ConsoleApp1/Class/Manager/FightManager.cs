@@ -17,6 +17,7 @@ namespace Game.Class
         private int m_iPosX;
         private int m_iPosY;
         private Utils utils;
+        private int apagnan = 0;
         //private int m_iWidth;
         private ConsoleKeyInfo input;
 
@@ -127,8 +128,6 @@ namespace Game.Class
 
         public void FightSteps()
         {
-            Console.SetCursorPosition(0, 0);
-
             switch (m_state)
             {
                 case FightState.menu:
@@ -136,7 +135,7 @@ namespace Game.Class
                     FightMenu();
                     break;
                 case FightState.fight:
-                    Console.SetCursorPosition(0, 0);
+                    Console.SetCursorPosition(0, 41);
                     Fight();
                     break;
             }
@@ -144,9 +143,6 @@ namespace Game.Class
 
         public void FightMenu()
         {
-            Console.SetCursorPosition(0, 0);
-            LoadFightMenu();
-
             for (int i = 0; i < m_lMap.Count; i++)
             {
                 switch (m_lMap[i])
@@ -176,15 +172,10 @@ namespace Game.Class
                 Console.BackgroundColor = ConsoleColor.Black;
             }
             MenuInput();
-            Console.SetCursorPosition(0, 0);
         }
 
         public void Fight()
         {
-
-            Console.Clear();
-            LoadFight();
-
             string line = new string(m_lMapFight.ToArray());
 
             line = line.Replace("{heroName}", hero);
@@ -214,7 +205,6 @@ namespace Game.Class
 
         public void MenuInput()
         {
-            Console.SetCursorPosition(0, 0);
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.UpArrow)
             {
@@ -240,18 +230,20 @@ namespace Game.Class
                     case 25:
                         hero = "Salameche";
                         m_state = FightState.fight;
+                        Console.Clear();
                         break;
                     case 46:
                         hero = "Bulbizarre";
                         m_state = FightState.fight;
+                        Console.Clear();
                         break;
                     case 67:
                         hero = "Carapuce";
                         m_state = FightState.fight;
+                        Console.Clear();
                         break;
                 }
             }
-            Console.SetCursorPosition(0, 0);
         }
 
         public void CalculateWhoIsStarting(Mob h1, Mob h2)

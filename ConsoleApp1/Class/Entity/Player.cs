@@ -10,7 +10,9 @@ namespace Game.Class
         private int m_iPosX;
         private int m_iPosY;
         Inventory m_oInventory;
+        FightManager m_fightManager;
         private Utils utils;
+        private List<Heroes> m_lPlayerHeroes = new List<Heroes>();
         #endregion
 
         #region Property
@@ -27,6 +29,7 @@ namespace Game.Class
             PosY = 14;
             m_oInventory = new Inventory();
             utils = new Utils();
+            m_fightManager = new FightManager();
         }
         #endregion
 
@@ -90,6 +93,14 @@ namespace Game.Class
         public void UseItemFromInventory(Mob target, int index)
         {
             m_oInventory.UseItem(this, target, index);
+        }
+
+        public void InitHeroes()
+        {
+            for(int i = 0; i < Heroes.GetHeroes.Count; i++)
+            {
+                m_lPlayerHeroes.Add(Heroes.GetHeroes[i]);
+            }
         }
 
     }
