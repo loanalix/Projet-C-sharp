@@ -26,7 +26,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Ennemy groudon = new Ennemy("Groudon", 150, 20, 2f, 0f, 100, Types.Fire);
             fightManager.LoadFightMenu();
             fightManager.LoadFight();
-            Console.SetWindowSize(1920, 1080);
             while (true)
             {
                 Console.CursorVisible = false;

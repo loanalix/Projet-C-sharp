@@ -62,10 +62,10 @@ namespace Game.Class
                         return "map";
                     }
                     return "map1";
-                case "startFight":
+                case "fightMenu":
                     if (GetMap[utils.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 's')
                     {
-                        return "startFight";
+                        return "fightMenu";
                     }
                     return "map1";
 

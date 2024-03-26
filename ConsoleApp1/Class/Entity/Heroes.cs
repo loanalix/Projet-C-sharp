@@ -6,7 +6,7 @@ namespace Game.Class
     public class Heroes : Mob
     {
 
-        List<Heroes> heroes = new List<Heroes>();
+        private static List<Heroes> heroes = new List<Heroes>();
 
         public static List<Heroes> GetHeroes { get => heroes; }
 

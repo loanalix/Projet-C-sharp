@@ -188,10 +188,6 @@ namespace Game.Class
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.Write(' ');
                         break;
-                    case ' ':
-                        Console.ResetColor();
-                        Console.Write(' ');
-                        break;
                     case '/':
                         Console.ResetColor();
                         Console.WriteLine();
@@ -233,12 +229,12 @@ namespace Game.Class
                         Console.Clear();
                         break;
                     case 46:
-                        hero = "Bulbizarre";
+                        hero = "Caparuce";
                         m_state = FightState.fight;
                         Console.Clear();
                         break;
                     case 67:
-                        hero = "Carapuce";
+                        hero = "Bulbizarre";
                         m_state = FightState.fight;
                         Console.Clear();
                         break;

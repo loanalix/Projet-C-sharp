@@ -65,6 +65,7 @@ namespace Game.Class
                     m_oMenu = new Menu(m_oInventory);
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
+                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     m_oCurrentMap = m_lMaps[0];
                     m_oDraw = m_oWindowManager.GetDraw;
 
