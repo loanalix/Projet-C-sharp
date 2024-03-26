@@ -1,41 +1,27 @@
-
-using Game.Map;
-using Game.Character;
-using System.Drawing;
-using System.Runtime.CompilerServices;
+using Game.Class;
 
 namespace Drawing
 {
     public class Draw
     {
-        public Map m_oMap = new Map();
-        private List<char> m_lMap = new List<char>();
-        public List<char> GetMap { get => m_lMap; }
+        #region Fields
+        #endregion
 
-        private int iWidth;
-        
+        #region Property
+        #endregion
 
-        public void LoadMap(string sFileName)
+        #region Constructor
+        public Draw() { }
+        #endregion
+
+        #region Method
+
+        public void DrawMap(Player oPlayer, Map oMap)
         {
-            StreamReader reader = File.OpenText(sFileName);
-            string sizeLine = reader.ReadLine();
-            iWidth = sizeLine.Length;
-            string line;
-
-            while ((line = reader.ReadLine()) != null)
+            List<char> lMap = oMap.GetMap;
+            for (int i = oMap.GetWidth; i < lMap.Count; i++)
             {
-                char[] cChar = line.ToCharArray();
-                for (int i = 0; i < cChar.Length; i++)
-                {
-                    m_lMap.Add(cChar[i]);
-                }
-            }
-        }
-        public void DrawMap(Player oPlayer)
-        {
-            for (int i = 0; i < m_lMap.Count; i++)
-            {
-                switch (m_lMap[i])
+                switch (lMap[i])
                 {
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -55,23 +41,32 @@ namespace Drawing
                     case 'p':
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
-                     case ' ':
+                    case 's':
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        break;
+                    case ' ':
                         Console.ResetColor();
                         break;
                     case '/':
                         Console.ResetColor();
                         Console.WriteLine();
                         break;
-                
+
                 }
-                if (i == oPlayer.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
+                if (i == Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, 73))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write('P');
                 }
+                else if (Array.Exists(oMap.Object, element => element == i))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write('O');
+
+                }
                 else
                 {
-                    if(m_lMap[i] != '/')
+                    if (lMap[i] != '/')
                     {
                         Console.Write(' ');
                     }
@@ -80,5 +75,6 @@ namespace Drawing
 
             }
         }
+        #endregion
     }
 }

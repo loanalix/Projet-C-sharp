@@ -1,24 +1,15 @@
-﻿using Game.Map;
-using Game.Inventory;
-using Game.Entity;
-using Game.Character;
-using Game.InputController;
-using Game.FightController;
-using Game.Enum;
-using Game.Brewing;
+﻿using Game.Enum;
+using Game.Class;
 using Drawing;
-using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MyApp // Note: actual namespace depends on the project name.
 {
     internal class Program 
     {
-        static Map m_oMap;
-        static Player m_oPlayer;
-        static Draw m_oDraw;
-        static InputManager m_oInputManager;
-        static FightManager m_oFightManager;
+
+        static GameManager m_oGameManager;
+        static FightManager fightManager;
+        static DrawMob m_oDrawMob;
         public static void Main(string[] args)
         {
             m_oGameManager = new GameManager();
@@ -44,21 +35,28 @@ namespace MyApp // Note: actual namespace depends on the project name.
             //    fightManager.FightSteps();
             //}
 
+            
+
+
             string Pokemon = "../../../txt/darceaufeu.txt";
             string Pikachu = "../../../txt/pikachu.txt"; 
             m_oDrawMob.LoadMob(Pikachu);
             m_oDrawMob.LoadMob(Pokemon);
 
-            Console.CursorVisible = false;
-            bool isRunning = true;
+ 
+            m_oDrawMob.MobDraw(Pikachu, Pokemon);
+            m_oDrawMob.SaveMob(Pikachu);
 
-            m_oFightManager = new FightManager();
 
-            Mob hTest = new Mob("Test", 100, 500, 30.0f, 15.0f, 50, Types.Fire);
-            Mob hTest2 = new Mob("Poke2", 500, 50, 50.0f, 10.0f, 50, Types.Water);
-            Mob hTest3 = new Mob("Poke3", 500, 50, 50.0f, 10.0f, 50, Types.Dragon);
+            m_oGameManager.Game();
 
-            m_oFightManager.StartFight();
+
+
+
+
+
+
+         
 
         }
     }

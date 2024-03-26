@@ -1,36 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.FightController;
-using Game.Spell;
-using Game.Enum;
+﻿using Game.Enum;
+using Game.Class;
 
-namespace Game.Entity
+namespace Game.Class
 {
     public class Mob
     {
         #region Fields
 
-        private string m_sName = "";
+        private string m_sName;
+        private int m_iMaxHp;
         private float m_iHp;
         private int m_iMana;
         private float m_fDamage;
         private float m_fResistance;
         private int m_iSpeed;
-        private int m_iIVSpeed = 0;
+        private int m_iIVSpeed;
         private int m_iFinalSpeed;
         private float m_fPrecision;
         private float m_fExp;
         private int m_iLevel;
         private Types m_cTypes;
         private FightManager fightManager;
+        private bool m_bIsStun;
 
         private string m_sAttackName;
         private Types m_cAttackType;
         private float m_fAttackDamage;
         private int m_iAttackMana;
+
+
+        Random rand;
 
         private static List<Attack> m_lAttack = new List<Attack>();
 
@@ -76,6 +75,7 @@ namespace Game.Entity
 
             m_sName = sName;
             m_iHp = iHp;
+            m_iMaxHp = iHp;
             m_iMana = iMana;
             m_fDamage = fDamage;
             m_fResistance = fResistance;
@@ -86,7 +86,20 @@ namespace Game.Entity
             m_iLevel = 0;
             m_cTypes = cType;
             fightManager = new FightManager();
+            rand = new Random();
+            m_iIVSpeed = 0;
+        }
 
+        public void Stun()
+        {
+            if(m_bIsStun == false)
+            {
+                m_bIsStun = true;
+            } 
+            else
+            {
+                m_bIsStun = false;
+            }
         }
 
         public void TakeDamage(float fDamage)
@@ -139,37 +152,47 @@ namespace Game.Entity
             m_iFinalSpeed = m_iSpeed + m_iIVSpeed;
         }
 
-        public void GetAttackProperties(string sAttackName) 
+        public void GetAttackProperties(string sAttackName)
         {
-
-            Attack attack = GetAttack(sAttackName);
-            if (attack != null)
+            if (sAttackName == null)
             {
+                throw new ArgumentException("Argument is null", "sAttackName");
+            }
+            else
+            {
+                Attack attack = GetAttack(sAttackName);
                 Console.WriteLine("Attack Name: " + attack.GetAttackName);
                 Console.WriteLine("Attack Type: " + attack.GetAttackType);
                 Console.WriteLine("Attack Damage: " + attack.GetAttackDamage);
                 Console.WriteLine("Attack Mana: " + attack.GetAttackMana);
+                Console.WriteLine("Attack Resistance: " + attack.GetAttackResistance);
+                Console.WriteLine("Attack Speed: " + attack.GetAttackSpeed);
+                Console.WriteLine("Attack Hp: " + attack.GetAttackHP);
+                Console.WriteLine("Attack Class: " + attack.GetAttackClass);
+                Console.WriteLine("\n");
             }
-            else { return; }
         }
 
         public void AddAttacks(string sAttackName)
         {
             Attack attack = GetAttack(sAttackName);
-            if(attack != null)
+            if (attack != null)
             {
                 m_lAttack.Add(attack);
-            } else { return; }
+            }
+            else { throw new ArgumentException("Argument is null", "sAttackName"); }
         }
 
         private Attack GetAttack(string sAttackName)
         {
+            if (sAttackName == null) { throw new ArgumentException("Argument is null", "sAttackName"); }
             Attack attack = Attack.Attacks.FirstOrDefault(a => a.GetAttackName == sAttackName);
             return attack;
         }
 
         public void PerformAttackTo(Mob op, string sAttackName)
         {
+            if (op == null || sAttackName == null) { throw new ArgumentException("Argument is null"); }
             Attack attack = GetAttack(sAttackName);
             m_sAttackName = attack.GetAttackName;
             m_cAttackType = attack.GetAttackType;
@@ -178,6 +201,22 @@ namespace Game.Entity
             fightManager.AttackOpponent(this, op);
         }
 
+
+        public void spawnEnnemies(Map oMap, string sMap)
+        {
+            oMap.GetGrass();
+            List<int> spawn = oMap.GetSpawn;
+            List<char> Map = oMap.GetMap;
+
+            for (int i = 0; i < 15; i++)
+            {
+                int randomIndex = rand.Next(0, spawn.Count);
+                int chooseNumber = spawn[randomIndex];
+                spawn.RemoveAt(randomIndex);
+                Map[chooseNumber] = 's';
+            }
+
+        }
         #endregion
     }
 }
