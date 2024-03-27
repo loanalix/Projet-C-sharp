@@ -1,7 +1,8 @@
 using Game.Class;
-
+using Main.Class.Save;
 namespace Game.Class
 {
+    
     public class Player
     {
         #region Fields
@@ -39,7 +40,8 @@ namespace Game.Class
            {
                 if (oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
                 || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
-                || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd')
+                || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd'
+                || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'h')
                 {
                     return false;
                 }
@@ -56,6 +58,7 @@ namespace Game.Class
                 }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
+                    //on refait une liste d'objet sans l'objet qui vient d'etre ajouter a l'inventaire
                     oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));
                     return true;
                 }
@@ -93,7 +96,6 @@ namespace Game.Class
             }
 
         }
-        #endregion
 
         public void AddItemToInventory(GameObject item)
         {
@@ -113,5 +115,11 @@ namespace Game.Class
             }
         }
 
+        public PlayerData GetPlayerData()
+        {
+            PlayerData player = new PlayerData(PosX, PosY, m_lPlayerHeroes, m_oInventory.GetInventoryData());
+            return player;
+        }        
+        #endregion
     }
 }

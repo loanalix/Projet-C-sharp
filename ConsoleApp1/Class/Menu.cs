@@ -56,6 +56,7 @@ namespace Game.Class
                     oManager.GetSetDrawState = DrawState.inventory;
                     break;
                 case 1:
+
                     break;
                 case 3:
                     Environment.Exit(0);

@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace Main.Class
 {
-    public class Dialog
+    public  class Dialog
     {
         #region Field
-        List<string> m_lText;
-        List<int> m_lTimeToRead;
-        int m_iSizeBox;
-        int m_iWidthBox;
-        int m_iHeightBox;
-        bool m_bEndText;
+        static int m_iTimeToRead;
+        static string m_sText;
+        static int m_iSizeBox;
+        static int m_iWidthBox;
+        static int m_iHeightBox;
+        static bool m_bEndText;
         #endregion
         #region Constructor
         public Dialog()
         {
-            m_lText = new List<string>();
-            m_lTimeToRead = new List<int>();
+            m_iTimeToRead = 0;
             m_iSizeBox = 20;
             m_iWidthBox = 46;
             m_iHeightBox = 6;
@@ -30,7 +29,7 @@ namespace Main.Class
         }
         #endregion
 
-        public void FillBlack(int x, int y, int width, int height)
+        public static void FillBlack(int x, int y, int width, int height)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             for (int k = y + 1; k < y + height - 1; k++)
@@ -42,7 +41,7 @@ namespace Main.Class
                 }
             }
         }
-        public void DrawRectangle(int x, int y, int width, int height)
+        public static void DrawRectangle(int x, int y, int width, int height)
         {
             Console.SetCursorPosition(x, y);
             Console.Write("╔");
@@ -71,78 +70,76 @@ namespace Main.Class
                 Console.Write("║");
             }
         }
-        public void AddText(string text)
-        {
-            m_lText.Add(text);
-        }
+        
 
-        public void TimeToRead()
+        public static void TimeToRead()
         {
-            for(int i = 0; i < m_lText.Count; i++)
+            int Time = 2000;
+            string world = m_sText;
+            for (int j = 0; j < m_sText.Length - 1; j++)
             {
-                int Time = 2000;
-                string world = m_lText[i];
-                for (int j = 0; j < m_lText[i].Length - 1; j++)
+                if (world[j] == ' ')
                 {
-                    if (world[j] == ' ')
-                    {
-                        Time += 50;
-                    }
+                    Time += 50;
                 }
-                m_lTimeToRead.Add(Time);
             }
+            m_iTimeToRead = Time;
         }
 
-        public void DrawDialog(string sSpeaker)
+        public static void SetDialog(string sText)
+        {
+            m_sText = sText;
+        }
+        public static void DrawDialog(string sSpeaker)
         {
             DrawRectangle(Console.WindowWidth / 2 - m_iWidthBox/2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
             int iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
             int iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
             int iRightBoxPos = Console.WindowWidth / 2 - m_iWidthBox / 2 + m_iWidthBox - 2;
             //Console.WriteLine($"[{sSpeaker}]:");
-            for (int i = 0; i < m_lText.Count; i++)
+            
+            int index = 0;
+            Console.SetCursorPosition(iTextPosX, iTextPosY);
+
+            foreach (char letter in m_sText)
             {
-                int index = 0;
-                Console.SetCursorPosition(iTextPosX, iTextPosY);
+                bool currentCharacterIsSpace = (letter == ' ');
 
-                foreach (char letter in m_lText[i])
+                if(iTextPosY == Console.WindowHeight - 9 + m_iHeightBox - 1)
                 {
-                    bool currentCharacterIsSpace = (letter == ' ');
+                    Thread.Sleep(1500);
+                    FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+                    iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+                    iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
+                    Console.SetCursorPosition(iTextPosX, iTextPosY);
+                }
+                Console.Write(letter);
 
-                    if(iTextPosY == Console.WindowHeight - 9 + m_iHeightBox - 1)
-                    {
-                        FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
-                        iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
-                        iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
-                        Console.SetCursorPosition(iTextPosX, iTextPosY);
-                    }
-                    Console.Write(letter);
-
-                    if (currentCharacterIsSpace && iTextPosX + index > iRightBoxPos)
-                    {
-                        iTextPosY++;
-                        Console.WriteLine();
-                        iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
-                        Console.SetCursorPosition(iTextPosX, iTextPosY);
-                        index = 0;
-                        continue;
-                    }
-
-                    Thread.Sleep(40);
-                    iTextPosX++;
-                    index++;
+                if (currentCharacterIsSpace && iTextPosX + index > iRightBoxPos)
+                {
+                    iTextPosY++;
+                    Console.WriteLine();
+                    iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+                    Console.SetCursorPosition(iTextPosX, iTextPosY);
+                    index = 0;
+                    continue;
                 }
 
-                TimeToRead();
-                Thread.Sleep(m_lTimeToRead[i]);
-                FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
-                iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
-                iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
+                Thread.Sleep(40);
+                iTextPosX++;
+                index++;
             }
+
+            TimeToRead();
+            Thread.Sleep(m_iTimeToRead);
+            FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+            iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+            iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
+            
             SetTextEnd();
 
         }
-        public bool SetTextEnd()
+        public static bool SetTextEnd()
         {
             return !m_bEndText;
         }

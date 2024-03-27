@@ -1,5 +1,7 @@
 ﻿using Game.Enum;
 using Game.Class;
+using Main.Class.Save;
+using System.Reflection;
 
 namespace Game.Class
 {
@@ -38,6 +40,7 @@ namespace Game.Class
         #region Property
 
         public string Name { get => m_sName; set => m_sName = value; }
+        public int HPMax { get => m_iMaxHp; }
         public float HP { get => m_iHp; set => m_iHp = value; }
         public int Mana { get => m_iMana; set => m_iMana = value; }
         public float Damage { get => m_fDamage; set => m_fDamage = value; }
@@ -53,6 +56,7 @@ namespace Game.Class
         public Types GetHeroAttackType { get => m_cAttackType; }
         public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
         public int GetHeroAttackMana { get => m_iAttackMana; }
+        public bool GetStun { get => m_bIsStun; }
         #endregion
 
         #region Events
@@ -200,7 +204,32 @@ namespace Game.Class
         }
 
 
+        public MobData GetMobData()
+        {
+            MobData mobData = new MobData();
+            mobData.m_sName = Name;
+            mobData.m_iMaxHp = HPMax;
+            mobData.m_iHp = HP;
+            mobData.m_iMana = Mana;
+            mobData.m_fDamage = Damage;
+            mobData.m_fResistance = Resistance;
+            mobData.m_iSpeed = Speed;
+            mobData.m_iIVSpeed = IVSpeed;
+            mobData.m_iFinalSpeed = FinalSpeed ;
+            mobData.m_fPrecision = Precision;
+            mobData.m_fExp = Exp;
+            mobData. m_iLevel = Level ;
+            mobData.m_cTypes = GetType;
+            mobData.m_bIsStun = GetStun;
 
+            mobData.m_sAttackName = GetHeroAttackName;
+            mobData.m_cAttackType = GetHeroAttackType;
+            mobData.m_fAttackDamage = HeroAttackDamage;
+            mobData.m_iAttackMana = GetHeroAttackMana;
+
+            return mobData;
+
+    }
         #endregion
     }
 }

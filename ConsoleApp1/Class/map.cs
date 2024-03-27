@@ -1,8 +1,11 @@
 ﻿using Game.Class;
 using Drawing;
+using System.Transactions;
+using Main.Class.Save;
 
 namespace Game.Class
 {
+   
     public class Map
     {
         #region Fields
@@ -137,6 +140,19 @@ namespace Game.Class
                 }
             }
             return objects;
+        }
+
+        public MapData GetMapData()
+        {
+            MapData mapData = new MapData();
+            mapData.m_lMap = m_lMap;
+            mapData.m_lSpawn = m_lSpawn;
+            mapData.m_sName = m_sName;
+            mapData.m_iObjects = m_iObjects;
+            mapData.m_iWidth = m_iWidth;
+            mapData.m_iHeight = m_iHeight;
+
+            return mapData;
         }
 
     }

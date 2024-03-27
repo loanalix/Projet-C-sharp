@@ -1,7 +1,10 @@
 ﻿using Game.Class;
+using Main.Class;
+using Main.Class.Save;
 
 namespace Game.Class
 {
+    
     public  class Inventory
     {
         #region Field
@@ -17,7 +20,10 @@ namespace Game.Class
         public void AddItem(GameObject item)
         {
             items.Add(item);
-            Console.WriteLine($"'{item.Name}' a été ajouté à votre inventaire.");
+
+            Dialog.SetDialog($"'{item.Name}' a été ajouté à votre inventaire.");
+            Dialog.DrawDialog(" ");
+            Console.Clear();
         }
         #endregion
 
@@ -67,6 +73,14 @@ namespace Game.Class
             }
         }
         #endregion
+
+
+        public InventoryData GetInventoryData()
+        {
+            InventoryData data = new InventoryData();
+            data.m_lItems = items;
+            return data;
+        }
         #endregion
     }
 }
