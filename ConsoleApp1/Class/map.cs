@@ -19,6 +19,8 @@ namespace Game.Class
         int m_iWidth;
         int m_iHeight;
         int[] m_iObjects;
+
+        Random rand;
         #endregion
 
         #region Property
@@ -71,7 +73,8 @@ namespace Game.Class
                 case "fightMenu":
                     if (GetMap[Maths.ConvertTo1Dim(oPlayer.PosX, oPlayer.PosY, GetWidth)] == 's')
                     {
-                        return "fightMenu";
+                        Console.WriteLine("combat!!!! ehbgerghyuiegyhuierhuiygeruhigeruigh");
+                        return null;
                     }
                     return "map1";
 
@@ -153,6 +156,22 @@ namespace Game.Class
             mapData.m_iHeight = m_iHeight;
 
             return mapData;
+        }
+
+        public void spawnEnnemies(Map oMap)
+        {
+            oMap.GetGrass();
+            List<int> spawn = oMap.GetSpawn;
+            List<char> Map = oMap.GetMap;
+
+            for (int i = 0; i < 15; i++)
+            {
+                int randomIndex = rand.Next(0, spawn.Count);
+                int chooseNumber = spawn[randomIndex];
+                spawn.RemoveAt(randomIndex);
+                Map[chooseNumber] = 's';
+            }
+
         }
 
     }

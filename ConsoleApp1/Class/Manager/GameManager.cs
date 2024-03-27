@@ -18,6 +18,7 @@ namespace Game.Class
         Menu m_oMenu;
         List<Map> m_lMaps;
         Map m_oCurrentMap;
+        Mob m_oMob;
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
@@ -32,10 +33,11 @@ namespace Game.Class
         int m_iSelectedOption;
         public GameManager()
         {
-
             m_eCurrentGameState = GameState.start;
             m_eCurrentDrawState = DrawState.game;
+            m_oFightManager = new FightManager();
             m_lMaps = new List<Map>();
+            m_lMob = new List<string>();
         }
 
         public void GameLoop()
@@ -69,13 +71,16 @@ namespace Game.Class
 
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
+                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
+                    AddMaps("../../../txt/FightUI.txt", "fightUI");
+                    m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
+                    m_oFightManager.LoadMaps(m_lMaps, "fightUI");
 
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
                     m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable);
 
-                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     m_oCurrentMap = m_lMaps[0];
 
                     Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
@@ -116,6 +121,15 @@ namespace Game.Class
                     };
                     m_oInputManager.AddState(DrawState.dialog, stateDialog);
 
+                    Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oFightManager.MoveUpward()},
+                        {"DownArrow", ()=> m_oFightManager.MoveDownward()},
+                        {"Enter", ()=> m_oFightManager.Enter() },
+                        {"Escape", ()=> ToggleMenu() }
+                    };
+                    m_oInputManager.AddState(DrawState.fight, stateFight);
+
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
 
@@ -155,6 +169,8 @@ namespace Game.Class
                     m_oInventory.AfficherInventaire();
                     break;
                 case DrawState.fight:
+                    Console.Clear();
+                    m_oFightManager.FightSteps();
                     break;
             }
 
@@ -165,6 +181,7 @@ namespace Game.Class
             switch (m_eCurrentDrawState)
             {
                 case DrawState.game:
+                //case DrawState.fight:
                     m_eCurrentDrawState = DrawState.menu;
                     break;
                 case DrawState.menu:
@@ -174,6 +191,18 @@ namespace Game.Class
                     m_eCurrentDrawState = DrawState.game;
                     break;
             }
+        }
+
+        public static void StartFight()
+        {
+            m_eCurrentDrawState = DrawState.fight;
+        }
+
+        public void NewPokemon (string sName )
+        { 
+
+            
+
         }
 
         public static void StartDialog()

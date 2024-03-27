@@ -26,6 +26,9 @@ namespace Drawing
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         break;
+                    case 'c':
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        break;
                     case 'g':
                         Console.BackgroundColor = ConsoleColor.Green;
                         break;
@@ -78,6 +81,11 @@ namespace Drawing
 
             }
         }
+
+        
+
+
+
         #endregion
     }
 }
