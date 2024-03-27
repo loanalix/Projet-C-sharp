@@ -17,8 +17,9 @@ namespace Game.Class
 
         public static void CreateEnnemies()
         {
-            Ennemy pikachu = new Ennemy("Pikachu", 150, 20, 2f, 0f, 100, Types.Flying);
+            Ennemy pikachu = new Ennemy("pikachu", 150, 20, 2f, 0f, 100, Types.Flying);
             Ennemy bulbizarre = new Ennemy("Bulbizarre", 150, 20, 2f, 0f, 100, Types.Grass);
+            Ennemy dracaufeu = new Ennemy("dracaufeu", 150, 20, 2f, 0f, 100, Types.Grass);
             Ennemy salameche = new Ennemy("Salameche", 150, 20, 2f, 0f, 100, Types.Fire);
             Ennemy rayquaza = new Ennemy("Rayquaza", 150, 20, 2f, 0f, 100, Types.Dragon);
             Ennemy artikodin = new Ennemy("Artikodin", 150, 20, 2f, 0f, 100, Types.Flying);

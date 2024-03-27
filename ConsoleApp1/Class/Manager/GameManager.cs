@@ -16,8 +16,9 @@ namespace Game.Class
         Draw m_oDraw;
         List<Map> m_lMaps;
         Map m_oCurrentMap;
+        Mob m_oMob;
         ItemsManager m_oItemsManager;
-
+        List<string> m_lMob; 
         string[] m_sMenuOptions;
         public enum GameState { start = 0, run = 1 };
         public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3 }
@@ -34,6 +35,7 @@ namespace Game.Class
             m_eCurrentDrawState = DrawState.game;
             m_oFightManager = new FightManager();
             m_lMaps = new List<Map>();
+            m_lMob = new List<string>();
         }
 
         public void GameLoop()
@@ -61,13 +63,14 @@ namespace Game.Class
                     m_oPlayer = new Player(m_oItemsManager, m_oInventory);
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
-                    m_oMenu = new Menu(m_oInventory);
+                    m_oMenu = new Menu(m_oInventory); 
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     AddMaps("../../../txt/FightUI.txt", "fightUI");
                     m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
                     m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
@@ -175,6 +178,13 @@ namespace Game.Class
         public static void StartFight()
         {
             m_eCurrentDrawState = DrawState.fight;
+        }
+
+        public void NewPokemon (string sName )
+        { 
+
+            
+
         }
 
         public void AddMaps(string sFileName, string sMapName)

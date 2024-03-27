@@ -17,6 +17,7 @@ namespace Game.Class
         private bool pokemonLoaded;
         private int m_iPosX;
         private int m_iPosY;
+        private bool pokemonLoaded;
         //private int m_iWidth;
         private ConsoleKeyInfo input;
         private Random random;
@@ -42,6 +43,7 @@ namespace Game.Class
             allMobs = Mob.GetAllMobs;
             m_iPosX = 4;
             m_iPosY = 2;
+            pokemonLoaded = false;
             random = new Random();
         }
 
@@ -158,6 +160,21 @@ namespace Game.Class
             pokemonLoaded = true;
         }
 
+        private void NewPokemon(string sName)
+        {
+            Mob poke = GetAllMobs.Find(heros => heros.Name == sName);
+            poke.LoadMob("../../../txt/" + sName + ".txt");
+        }
+
+        public void DrawMob()
+        {
+
+            hero.Draw(false);
+
+            ennemy.Draw(true);
+
+        }
+
         public void FightSteps()
         {
             if(pokemonLoaded == false) InitFightStuff(allMobs);
@@ -168,7 +185,6 @@ namespace Game.Class
                     FightMenu();
                     break;
                 case FightState.fight:
-                    Console.SetCursorPosition(0, 0);
                     Fight();
                     break;
             }
@@ -208,6 +224,8 @@ namespace Game.Class
 
         public void Fight()
         {
+
+            DrawMob();
             foreach (char c in replaceString(m_lMapFight))
             {
                 switch (c)
@@ -260,18 +278,24 @@ namespace Game.Class
                     hero = chosenHero(0);
                     TakeAnEnnemy();
                     m_state = FightState.fight;
+                    NewPokemon(hero.Name);
+                    NewPokemon(ennemy.Name);
                     Console.Clear();
                     break;
                 case 46:
                     hero = chosenHero(1);
                     TakeAnEnnemy();
                     m_state = FightState.fight;
+                    NewPokemon(hero.Name);
+                    NewPokemon(ennemy.Name);
                     Console.Clear();
                     break;
                 case 67:
                     hero = chosenHero(2);
                     TakeAnEnnemy();
                     m_state = FightState.fight;
+                    NewPokemon(hero.Name);
+                    NewPokemon(ennemy.Name);
                     Console.Clear();
                     break;
             }

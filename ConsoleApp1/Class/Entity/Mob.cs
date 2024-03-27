@@ -29,8 +29,12 @@ namespace Game.Class
         private float m_fAttackDamage;
         private int m_iAttackMana;
 
+        private int m_iWidth;
+        private int m_iHeight;
+
         private static List<Attack> m_lAttack = new List<Attack>();
         private static List<Mob> m_lAllMobs = new List<Mob>();
+        private List<string> mapLine;
 
         Random rand;
 
@@ -56,6 +60,9 @@ namespace Game.Class
         public Types GetHeroAttackType { get => m_cAttackType; }
         public float HeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
         public int GetHeroAttackMana { get => m_iAttackMana; }
+        public List<string> Line { get { return mapLine; } }
+        public int GetWidth { get => m_iWidth; }
+        public int GetHeight { get => m_iHeight; }
         public static List<Mob> GetAllMobs { get => m_lAllMobs; } 
         #endregion
 
@@ -205,6 +212,35 @@ namespace Game.Class
             m_fAttackDamage = attack.GetAttackDamage;
             m_iAttackMana = attack.GetAttackMana;
             fightManager.AttackOpponent(this, op);
+        }
+
+        public void Draw(bool shift)
+        {
+            for (int i = 0; i < mapLine.Count; i++)
+            {
+                if(shift) Console.SetCursorPosition(55, i);
+
+                Console.WriteLine(mapLine[i]);
+            }
+
+        }
+
+        public void LoadMob(string sFileName)
+        {
+            mapLine = new List<string>();
+
+            StreamReader reader = File.OpenText(sFileName);
+            string line;
+            int fileHeight = 0;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                m_iWidth = line.Length;
+                mapLine.Add(line);
+                fileHeight++;
+            }
+
+            reader.Close();
         }
 
         #endregion

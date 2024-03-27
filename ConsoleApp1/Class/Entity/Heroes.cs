@@ -17,9 +17,11 @@ namespace Game.Class
 
         public static void CreateHeroes()
         {
+            Heroes pikachu = new Heroes("pikachu", 850, 90, 100f, 45f, 45, Types.Dragon);
             Heroes dialga = new Heroes("Dialga", 1200, 200, 75f, 70f, 70, Types.Grass);
             Heroes zekrom = new Heroes("Zekrom", 1300, 210, 80f, 76f, 45, Types.Fire);
             Heroes darkrai = new Heroes("Darkrai", 850, 90, 100f, 45f, 45, Types.Dragon);
+
         }
 
     }
