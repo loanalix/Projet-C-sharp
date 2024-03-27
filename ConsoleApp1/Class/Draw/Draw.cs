@@ -26,6 +26,9 @@ namespace Drawing
                     case 'v':
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         break;
+                    case 'c':
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        break;
                     case 'g':
                         Console.BackgroundColor = ConsoleColor.Green;
                         break;
@@ -42,7 +45,7 @@ namespace Drawing
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
                     case 's':
-                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Black;
                         break;
                     case ' ':
                         Console.ResetColor();

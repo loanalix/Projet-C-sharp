@@ -14,7 +14,6 @@ namespace Game.Class
         Inventory m_oInventory;
         Menu m_oMenu;
         Draw m_oDraw;
-        Mob m_oMob;
         List<Map> m_lMaps;
         Map m_oCurrentMap;
         ItemsManager m_oItemsManager;
@@ -24,16 +23,16 @@ namespace Game.Class
         public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3 }
 
         GameState m_eCurrentGameState;
-        DrawState m_eCurrentDrawState;
+        static DrawState m_eCurrentDrawState;
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
 
         bool m_bIsRunning;
         int m_iSelectedOption;
         public GameManager()
         {
-
             m_eCurrentGameState = GameState.start;
             m_eCurrentDrawState = DrawState.game;
+            m_oFightManager = new FightManager();
             m_lMaps = new List<Map>();
             m_lMob = new List<string>();
         }
@@ -44,7 +43,7 @@ namespace Game.Class
             {
                 m_oWindowManager.SetCursor(0, 0);
                 m_oInputManager.GetInput(m_eCurrentDrawState);
-                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_oCurrentMap, m_oMob);
+                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == test);
                 DrawScene();
             }
@@ -66,12 +65,15 @@ namespace Game.Class
                     m_oMenu = new Menu(m_oInventory);
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
+                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
+                    AddMaps("../../../txt/FightUI.txt", "fightUI");
+                    m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
+                    m_oFightManager.LoadMaps(m_lMaps, "fightUI");
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
                     m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable);
 
-                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     m_oCurrentMap = m_lMaps[0];
                     m_oDraw = m_oWindowManager.GetDraw;
 
@@ -108,6 +110,15 @@ namespace Game.Class
                     };
                     m_oInputManager.AddState(DrawState.inventory, stateInventory);
 
+                    Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oFightManager.MoveUpward()},
+                        {"DownArrow", ()=> m_oFightManager.MoveDownward()},
+                        {"Enter", ()=> m_oFightManager.Enter() },
+                        {"Escape", ()=> ToggleMenu() }
+                    };
+                    m_oInputManager.AddState(DrawState.fight, stateFight);
+
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
 
@@ -139,6 +150,8 @@ namespace Game.Class
                     m_oInventory.AfficherInventaire();
                     break;
                 case DrawState.fight:
+                    Console.Clear();
+                    m_oFightManager.FightSteps();
                     break;
             }
 
@@ -148,6 +161,7 @@ namespace Game.Class
             switch (m_eCurrentDrawState)
             {
                 case DrawState.game:
+                //case DrawState.fight:
                     m_eCurrentDrawState = DrawState.menu;
                     break;
                 case DrawState.menu:
@@ -157,6 +171,11 @@ namespace Game.Class
                     m_eCurrentDrawState = DrawState.game;
                     break;
             }
+        }
+
+        public static void StartFight()
+        {
+            m_eCurrentDrawState = DrawState.fight;
         }
 
         public void NewPokemon (string src )
