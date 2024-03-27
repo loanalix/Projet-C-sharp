@@ -37,7 +37,6 @@ namespace Game.Class
             m_eCurrentDrawState = DrawState.game;
             m_oFightManager = new FightManager();
             m_lMaps = new List<Map>();
-            m_lMob = new List<string>();
         }
 
         public void GameLoop()

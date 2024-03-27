@@ -114,7 +114,8 @@ namespace Game.Class
 
         public PlayerData GetPlayerData()
         {
-            PlayerData player = new PlayerData(PosX, PosY, m_lPlayerHeroes, m_oInventory.GetInventoryData());
+            PlayerData player = new PlayerData(PosX, PosY, null, m_oInventory.GetInventoryData());
+
             return player;
         }        
         #endregion

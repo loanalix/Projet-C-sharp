@@ -20,7 +20,6 @@ namespace Game.Class
         int m_iHeight;
         int[] m_iObjects;
 
-        Random rand;
         #endregion
 
         #region Property
@@ -82,21 +81,7 @@ namespace Game.Class
                     return "";
             }
         }
-        public void spawnEnnemies(Map oMap)
-        {
-            oMap.GetGrass();
-            List<int> spawn = oMap.GetSpawn;
-            List<char> Map = oMap.GetMap;
-
-            for (int i = 0; i < 15; i++)
-            {
-                int randomIndex = rand.Next(0, spawn.Count);
-                int chooseNumber = spawn[randomIndex];
-                spawn.RemoveAt(randomIndex);
-                Map[chooseNumber] = 's';
-            }
-
-        }
+        
         public void LoadMap(string sFileName)
         {
             StreamReader reader = File.OpenText(sFileName);
