@@ -14,7 +14,6 @@ namespace Game.Class
         private List<Mob> allMobs = new List<Mob>();
         private Ennemy ennemy;
         private Heroes hero;
-        private bool pokemonLoaded;
         private int m_iPosX;
         private int m_iPosY;
         private bool pokemonLoaded;
