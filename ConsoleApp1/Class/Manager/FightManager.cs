@@ -162,7 +162,7 @@ namespace Game.Class
         private void NewPokemon(string sName)
         {
             Mob poke = GetAllMobs.Find(heros => heros.Name == sName);
-            poke.LoadMob("../../../txt/" + sName + ".txt");
+            poke.LoadMob("../../../txt/pokemon/" + sName + ".txt");
         }
 
         public void DrawMob()

@@ -27,6 +27,7 @@ namespace Game.Class
             Ennemy mewtwo = new Ennemy("Mewtwo", 150, 20, 2f, 0f, 100, Types.Grass);
             Ennemy lunala = new Ennemy("Lunala", 150, 20, 2f, 0f, 100, Types.Flying);
             Ennemy groudon = new Ennemy("Groudon", 150, 20, 2f, 0f, 100, Types.Fire);
+            Ennemy kyogre = new Ennemy("Kyogre", 150, 20, 2f, 0f, 100, Types.Water);
         }
 
     }
