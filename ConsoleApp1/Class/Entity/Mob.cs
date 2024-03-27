@@ -214,12 +214,12 @@ namespace Game.Class
             fightManager.AttackOpponent(this, op);
         }
 
-        public void Draw()
+        public void Draw(bool shift)
         {
-
             for (int i = 0; i < mapLine.Count; i++)
             {
-                //Console.SetCursorPosition(0, 0);
+                if(shift) Console.SetCursorPosition(55, i);
+
                 Console.WriteLine(mapLine[i]);
             }
 

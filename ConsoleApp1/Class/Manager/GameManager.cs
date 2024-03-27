@@ -16,6 +16,7 @@ namespace Game.Class
         Draw m_oDraw;
         List<Map> m_lMaps;
         Map m_oCurrentMap;
+        Mob m_oMob;
         ItemsManager m_oItemsManager;
         List<string> m_lMob; 
         string[] m_sMenuOptions;
@@ -62,13 +63,14 @@ namespace Game.Class
                     m_oPlayer = new Player(m_oItemsManager, m_oInventory);
                     m_oInputManager = new InputManager();
                     m_oFightManager = new FightManager();
-                    m_oMenu = new Menu(m_oInventory);
+                    m_oMenu = new Menu(m_oInventory); 
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     AddMaps("../../../txt/FightUI.txt", "fightUI");
                     m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
                     m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
@@ -178,10 +180,10 @@ namespace Game.Class
             m_eCurrentDrawState = DrawState.fight;
         }
 
-        public void NewPokemon (string src )
-        {
-           Mob mob = new Mob("Dialga", 1200, 200, 75f, 70f, 70, Types.Grass);
-            mob.LoadMob(src);
+        public void NewPokemon (string sName )
+        { 
+
+            
 
         }
 
