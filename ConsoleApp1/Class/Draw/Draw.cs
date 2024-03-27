@@ -75,6 +75,16 @@ namespace Drawing
 
             }
         }
+
+        public void DrawMob (Mob pokemon1 , Mob pokemon2 ) 
+        {
+            pokemon1.Draw(); 
+            pokemon2.Draw();
+            
+        }
+
+
+
         #endregion
     }
 }

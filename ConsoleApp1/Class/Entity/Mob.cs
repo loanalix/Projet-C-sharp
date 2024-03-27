@@ -227,6 +227,16 @@ namespace Game.Class
             reader.Close();
         }
 
+        public void Draw()
+        {
+
+            for (int i = 0; i < mapLine.Count; i++)
+            {
+                //Console.SetCursorPosition(0, 0);
+                Console.WriteLine(mapLine[i]);
+            }
+
+        }
 
         public void spawnEnnemies(Map oMap, string sMap)
         {
@@ -245,16 +255,6 @@ namespace Game.Class
         }
 
 
-        public void MobDraw(string mob1, string mob2)
-        {
-
-            for (int i = 0; i < mapLine.Count; i++)
-            {
-                //Console.SetCursorPosition(0, 0);
-                Console.WriteLine(mapLine[i]);
-            }
-
-        }
         #endregion
     }
 }

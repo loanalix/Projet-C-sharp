@@ -18,7 +18,7 @@ namespace Game.Class
         List<Map> m_lMaps;
         Map m_oCurrentMap;
         ItemsManager m_oItemsManager;
-
+        List<string> m_lMob; 
         string[] m_sMenuOptions;
         public enum GameState { start = 0, run = 1 };
         public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3 }
@@ -35,6 +35,7 @@ namespace Game.Class
             m_eCurrentGameState = GameState.start;
             m_eCurrentDrawState = DrawState.game;
             m_lMaps = new List<Map>();
+            m_lMob = new List<string>();
         }
 
         public void GameLoop()
@@ -156,6 +157,13 @@ namespace Game.Class
                     m_eCurrentDrawState = DrawState.game;
                     break;
             }
+        }
+
+        public void NewPokemon (string src )
+        {
+           Mob mob = new Mob("Dialga", 1200, 200, 75f, 70f, 70, Types.Grass);
+            mob.LoadMob(src);
+
         }
 
         public void AddMaps(string sFileName, string sMapName)
