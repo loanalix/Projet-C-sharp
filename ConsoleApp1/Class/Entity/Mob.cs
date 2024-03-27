@@ -81,13 +81,14 @@ namespace Game.Class
             m_iHp = iHp;
             m_iMaxHp = iHp;
             m_iMana = iMana;
+            m_iMaxMana = iMana;
             m_fDamage = fDamage;
             m_fResistance = fResistance;
             m_iSpeed = iSpeed;
             m_iFinalSpeed = iSpeed + m_iIVSpeed;
             m_fPrecision = 100f;
             m_fExp = 0f;
-            m_iLevel = 0;
+            m_iLevel = 1;
             m_cTypes = cType;
             fightManager = new FightManager();
             m_iIVSpeed = 0;

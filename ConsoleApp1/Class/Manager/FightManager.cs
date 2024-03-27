@@ -25,6 +25,8 @@ namespace Game.Class
         private enum FightState { menu = 0, fight = 1 }
         private FightState m_state = 0;
 
+        public List<Mob> GetAllMobs { get => allMobs; }
+
         #endregion
 
         #region Property
@@ -43,36 +45,6 @@ namespace Game.Class
             m_iPosY = 2;
             random = new Random();
         }
-
-        //public void LoadFightMenu()
-        //{
-        //    StreamReader reader = File.OpenText("../../../txt/choseHero.txt");
-        //    string line;
-
-        //    while ((line = reader.ReadLine()) != null)
-        //    {
-        //        char[] cChar = line.ToCharArray();
-        //        for (int i = 0; i < cChar.Length; i++)
-        //        {
-        //            m_lMap.Add(cChar[i]);
-        //        }
-        //    }
-        //}
-
-        //public void LoadFight()
-        //{
-        //    StreamReader reader = File.OpenText("../../../txt/FightUI.txt");
-        //    string line;
-
-        //    while ((line = reader.ReadLine()) != null)
-        //    {
-        //        char[] cChar = line.ToCharArray();
-        //        for (int i = 0; i < cChar.Length; i++)
-        //        {
-        //            m_lMapFight.Add(cChar[i]);
-        //        }
-        //    }
-        //}
 
         public void LoadMaps(List<Map> map, string sMapName)
         {
@@ -154,6 +126,25 @@ namespace Game.Class
             List<Heroes> hero = allMobs.OfType<Heroes>().ToList();
             return hero[i];
         }
+        public string replaceString(List<char> mRef)
+        {
+            string line = new string(mRef.ToArray());
+
+            line = line.Replace("{heroName}", hero.Name);
+            line = line.Replace("{CurrentHP}", hero.HP.ToString());
+            line = line.Replace("{MaxHp}", hero.MaxHP.ToString());
+            line = line.Replace("{levelH}", hero.Level.ToString());
+            line = line.Replace("{CurrentMana}", hero.Mana.ToString());
+            line = line.Replace("{MaxMana}", hero.MaxMana.ToString());
+
+            line = line.Replace("{MaxHpO}", ennemy.MaxHP.ToString());
+            line = line.Replace("{CurrentHPO}", ennemy.HP.ToString());
+            line = line.Replace("{EnnemyName}", ennemy.Name);
+            line = line.Replace("{MaxManaO}", ennemy.MaxMana.ToString());
+            line = line.Replace("{CurrentManaO}", ennemy.Mana.ToString());
+            line = line.Replace("{levelO}", ennemy.Level.ToString());
+            return line;
+        }
         public void InitFightStuff(List<Mob> mob)
         {
             Ennemy.CreateEnnemies();
@@ -179,6 +170,14 @@ namespace Game.Class
 
         public void FightMenu()
         {
+            //bool IsUno(int index, string sName)
+            //{
+            //    for(int i = 0; i < index; i++)
+            //    {
+            //        m_lMap[index + i] = sName[i];
+            //    }
+            //}
+
             for (int i = 0; i < m_lMap.Count; i++)
             {
                 switch (m_lMap[i])
@@ -195,6 +194,34 @@ namespace Game.Class
                         Console.ResetColor();
                         Console.WriteLine();
                         break;
+                        /*
+                    case '{':
+                        if (IsUno(i))
+                        {
+                            m_lMap[i] = chosenHero(0).Name[0]; // Modifier la valeur de {heroUno} selon vos besoins
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write('*');
+                        }
+                        else if (IsDos(i))
+                        {
+                            m_lMap[i] = ' '; // Modifier la valeur de {heroDos} selon vos besoins
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write('*');
+                        }
+                        else if (IsTreiz(i))
+                        {
+                            m_lMap[i] = ' '; // Modifier la valeur de {heroTreiz} selon vos besoins
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write('*');
+                        }
+                        else
+                        {
+                            Console.Write(m_lMap[i]);
+                        }
+                        break;*/
                     default:
                         Console.Write(m_lMap[i]);
                         break;
@@ -212,23 +239,7 @@ namespace Game.Class
 
         public void Fight()
         {
-            string line = new string(m_lMapFight.ToArray());
-
-            line = line.Replace("{heroName}", hero.Name);
-            line = line.Replace("{CurrentHP}", hero.HP.ToString());
-            line = line.Replace("{MaxHP}", hero.MaxHP.ToString());
-            line = line.Replace("{levelH}", hero.Level.ToString());
-            line = line.Replace("{CurrentMana}", hero.Mana.ToString());
-            line = line.Replace("{MaxMana}", hero.MaxMana.ToString());
-
-            line = line.Replace("{MaxHpO}", ennemy.MaxHP.ToString());
-            line = line.Replace("{CurrentHPO}", ennemy.HP.ToString());
-            line = line.Replace("{EnnemyName}", ennemy.Name);
-            line = line.Replace("{MaxManaO}", ennemy.Mana.ToString());
-            line = line.Replace("{CurrentManaO}", ennemy.Mana.ToString());
-            line = line.Replace("{levelO}", ennemy.Mana.ToString());
-
-            foreach (char c in line)
+            foreach (char c in replaceString(m_lMapFight))
             {
                 switch (c)
                 {
@@ -282,50 +293,6 @@ namespace Game.Class
                     break;
             }
         }
-
-        /*public void MenuInput()
-        {
-            input = Console.ReadKey(true);
-            if (input.Key == ConsoleKey.UpArrow)
-            {
-                m_iPosY += Maths.MoveUpOrLeft();
-            }
-            else if (input.Key == ConsoleKey.DownArrow)
-            {
-                m_iPosY += Maths.MoveDownOrRight();
-            }
-            else if (input.Key == ConsoleKey.RightArrow)
-            {
-                m_iPosX += Maths.MoveDownOrRight();
-            }
-            else if (input.Key == ConsoleKey.LeftArrow)
-            {
-                m_iPosX += Maths.MoveUpOrLeft();
-            }
-            else if (input.Key == ConsoleKey.Enter)
-            {
-                int selectedHero = Maths.ConvertTo1Dim(m_iPosX, m_iPosY, 21);
-                switch (selectedHero)
-                {
-                    case 25:
-                        hero = "Salameche";
-                        m_state = FightState.fight;
-                        Console.Clear();
-                        break;
-                    case 46:
-                        hero = "Caparuce";
-                        m_state = FightState.fight;
-                        Console.Clear();
-                        break;
-                    case 67:
-                        hero = "Bulbizarre";
-                        m_state = FightState.fight;
-                        Console.Clear();
-                        break;
-                }
-            }
-        }*/
-
         public void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
             if (h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
