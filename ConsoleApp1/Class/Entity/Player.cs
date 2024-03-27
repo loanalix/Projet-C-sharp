@@ -48,6 +48,12 @@ namespace Game.Class
                     Console.WriteLine("Oh un combat");
                     return true;
                 }
+                else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'q')
+                {
+                    GameManager.StartDialog();
+                    
+                    return true;
+                }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
                     oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));

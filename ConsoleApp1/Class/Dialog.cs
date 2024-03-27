@@ -14,6 +14,9 @@ namespace Main.Class
         List<string> m_lText;
         List<int> m_lTimeToRead;
         int m_iSizeBox;
+        int m_iWidthBox;
+        int m_iHeightBox;
+        bool m_bEndText;
         #endregion
         #region Constructor
         public Dialog()
@@ -21,8 +24,53 @@ namespace Main.Class
             m_lText = new List<string>();
             m_lTimeToRead = new List<int>();
             m_iSizeBox = 20;
+            m_iWidthBox = 46;
+            m_iHeightBox = 6;
+            m_bEndText = false;
         }
         #endregion
+
+        public void FillBlack(int x, int y, int width, int height)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            for (int k = y + 1; k < y + height - 1; k++)
+            {
+                for (int i = x + 1; i < x + width - 1; i++)
+                {
+                    Console.SetCursorPosition(i, k);
+                    Console.Write(' ');
+                }
+            }
+        }
+        public void DrawRectangle(int x, int y, int width, int height)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write("╔");
+            Console.SetCursorPosition(x + width - 1, y);
+            Console.Write("╗");
+            Console.SetCursorPosition(x, y + height - 1);
+            Console.Write("╚");
+            Console.SetCursorPosition(x + width - 1, y + height - 1);
+            Console.Write("╝");
+
+            for (int i = x + 1;  i < x + width - 1; i++) 
+            {
+                Console.SetCursorPosition(i, y);
+                Console.Write("═");
+                Console.SetCursorPosition(i, y + height - 1);
+                Console.Write("═");
+            }
+            FillBlack(x, y, width, height);
+
+
+            for (int i = y + 1; i < y + height - 1; i++)
+            {
+                Console.SetCursorPosition(x, i);
+                Console.Write("║");
+                Console.SetCursorPosition(x + width - 1, i);
+                Console.Write("║");
+            }
+        }
         public void AddText(string text)
         {
             m_lText.Add(text);
@@ -38,49 +86,65 @@ namespace Main.Class
                 {
                     if (world[j] == ' ')
                     {
-                        Time += 500;
+                        Time += 50;
                     }
                 }
                 m_lTimeToRead.Add(Time);
             }
         }
-        public void EffacerChaine(int longueurChaine)
+
+        public void DrawDialog(string sSpeaker)
         {
-            // Retourner le curseur en arrière
-            Console.SetCursorPosition(Console.CursorLeft - longueurChaine, Console.WindowHeight - 6);
-            Console.Write(new string(' ', longueurChaine));
-            Console.SetCursorPosition(Console.CursorLeft - longueurChaine, Console.WindowHeight - 6);
-        }
-        public void DrawDialog()
-        {
-            for(int i = 0; i< m_lText.Count; i++)
+            DrawRectangle(Console.WindowWidth / 2 - m_iWidthBox/2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+            int iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+            int iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
+            int iRightBoxPos = Console.WindowWidth / 2 - m_iWidthBox / 2 + m_iWidthBox - 2;
+            //Console.WriteLine($"[{sSpeaker}]:");
+            for (int i = 0; i < m_lText.Count; i++)
             {
-                int iSize = m_iSizeBox;
-                iSize -= m_lText[i].Length;
+                int index = 0;
+                Console.SetCursorPosition(iTextPosX, iTextPosY);
 
-                Console.SetCursorPosition(Console.WindowWidth/2, Console.WindowHeight - 6);
-                Console.Write(m_lText[i]);
-                for(int j = 0; j< iSize; j++)
+                foreach (char letter in m_lText[i])
                 {
-                    Console.Write(' ');
-                    if(j== iSize - 1)
+                    bool currentCharacterIsSpace = (letter == ' ');
+
+                    if(iTextPosY == Console.WindowHeight - 9 + m_iHeightBox - 1)
                     {
-                        Console.WriteLine();
+                        FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+                        iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+                        iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
+                        Console.SetCursorPosition(iTextPosX, iTextPosY);
                     }
+                    Console.Write(letter);
+
+                    if (currentCharacterIsSpace && iTextPosX + index > iRightBoxPos)
+                    {
+                        iTextPosY++;
+                        Console.WriteLine();
+                        iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+                        Console.SetCursorPosition(iTextPosX, iTextPosY);
+                        index = 0;
+                        continue;
+                    }
+
+                    Thread.Sleep(40);
+                    iTextPosX++;
+                    index++;
                 }
-                string dessin = new string(' ', m_iSizeBox); // Répéter le caractère 20 fois
-
-                Console.WriteLine(dessin);
-                Console.WriteLine(dessin);
-                Console.WriteLine(dessin);
-
-
 
                 TimeToRead();
                 Thread.Sleep(m_lTimeToRead[i]);
-                EffacerChaine(m_lText[i].Length);
-
+                FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+                iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
+                iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
             }
+            SetTextEnd();
+
+        }
+        public bool SetTextEnd()
+        {
+            return !m_bEndText;
         }
     }
 }

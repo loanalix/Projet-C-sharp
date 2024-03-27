@@ -2,6 +2,7 @@
 using Game.Enum;
 using Drawing;
 using Main.Class;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace Game.Class
 {
@@ -23,10 +24,10 @@ namespace Game.Class
 
         string[] m_sMenuOptions;
         public enum GameState { start = 0, run = 1 };
-        public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3 }
+        public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3, dialog = 4 }
 
         GameState m_eCurrentGameState;
-        DrawState m_eCurrentDrawState;
+        static DrawState m_eCurrentDrawState;
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
 
         bool m_bIsRunning;
@@ -67,10 +68,12 @@ namespace Game.Class
                     m_oMenu = new Menu(m_oInventory);
                     m_oMob = new Mob("ennemi", 100, 10, 5.0f, 20.0f, 10, Types.Fire);
                     m_oDialog = new Dialog();
-                    m_oDialog.AddText("test");
-                    m_oDialog.AddText("bar");
-                    m_oDialog.AddText("gros pot de sucre");
+                    m_oDialog.AddText("Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement cringe faisant fuir les gens ou les corrompant à la williamite aïgue");
+                    m_oDialog.AddText("Romain est aveugle il parle en bib bib et n'entend pas très bien");
+                    m_oDialog.AddText("Nattan ne sait pas faire un transform qui marche");
                     m_oDialog.AddText("apagnan");
+                    m_oDialog.AddText("Turbine de Saint Moret");
+
 
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
@@ -116,6 +119,17 @@ namespace Game.Class
                     };
                     m_oInputManager.AddState(DrawState.inventory, stateInventory);
 
+                    Dictionary<string, Action> stateDialog = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oMenu.SelectOptionUp()},
+                        {"DownArrow", ()=> m_oMenu.SelectOptionDown()},
+                        {"Enter", ()=> m_oMenu.SelectOptionEnter(this) },
+                        //{"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap.GetMap) },
+                        {"Escape", ()=> ToggleMenu() },
+
+                    };
+                    m_oInputManager.AddState(DrawState.dialog, stateDialog);
+
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
 
@@ -136,11 +150,18 @@ namespace Game.Class
             {
                 case DrawState.game:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
-                    m_oDialog.DrawDialog();
                     break;
                 case DrawState.menu:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
                     m_oMenu.DrawMenu();
+                    break;
+                case DrawState.dialog:
+                    m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
+                    m_oDialog.DrawDialog("Loan");
+                    if (m_oDialog.SetTextEnd())
+                    {
+                        m_eCurrentDrawState = DrawState.game;
+                    }
                     break;
                 case DrawState.inventory:
                     Console.Clear();
@@ -152,6 +173,7 @@ namespace Game.Class
             }
 
         }
+        
         public void ToggleMenu()
         {
             switch (m_eCurrentDrawState)
@@ -168,6 +190,10 @@ namespace Game.Class
             }
         }
 
+        public static void StartDialog()
+        {
+            m_eCurrentDrawState = DrawState.dialog;
+        }
         public void AddMaps(string sFileName, string sMapName)
         {
             Map map = new Map(sMapName);
