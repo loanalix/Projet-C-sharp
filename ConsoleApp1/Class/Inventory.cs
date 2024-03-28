@@ -22,7 +22,7 @@ namespace Game.Class
             items.Add(item);
 
             Dialog.SetDialog($"'{item.Name}' a été ajouté à votre inventaire.");
-            Dialog.DrawDialog(" ");
+            Dialog.DrawDialog();
             Console.Clear();
         }
         #endregion
@@ -74,13 +74,14 @@ namespace Game.Class
         }
         #endregion
 
-
+        #region //--------DataSave---------//
         public InventoryData GetInventoryData()
         {
             InventoryData data = new InventoryData();
             data.m_lItems = items;
             return data;
         }
+        #endregion
         #endregion
     }
 }

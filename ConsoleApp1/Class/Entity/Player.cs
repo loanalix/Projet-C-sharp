@@ -39,7 +39,7 @@ namespace Game.Class
         public bool CheckCollide(int iWidth, int iNextPosX, int iNextPosY, Map oMap)
         {
            if (iNextPosY > 0 )
-           {
+           {    //Ici c'est les collisions avec les murs, bordures, maison, et chemin interdits d'accès
                 if (oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'w'
                 || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'v'
                 || oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'd'
@@ -47,12 +47,14 @@ namespace Game.Class
                 {
                     return false;
                 }
+                //ici c'est ce qui permet de déclencher un combat
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
                     GameManager.StartFight();
                     return true;
                     
                 }
+                //ici c'est ce qui permet de déclencher un dialog
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'q')
                 {
                     GameManager.StartDialog();

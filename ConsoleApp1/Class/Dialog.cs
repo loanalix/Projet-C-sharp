@@ -13,7 +13,6 @@ namespace Main.Class
         #region Field
         static int m_iTimeToRead;
         static string m_sText;
-        static int m_iSizeBox;
         static int m_iWidthBox;
         static int m_iHeightBox;
         static bool m_bEndText;
@@ -22,7 +21,6 @@ namespace Main.Class
         public Dialog()
         {
             m_iTimeToRead = 0;
-            m_iSizeBox = 20;
             m_iWidthBox = 46;
             m_iHeightBox = 6;
             m_bEndText = false;
@@ -90,13 +88,14 @@ namespace Main.Class
         {
             m_sText = sText;
         }
-        public static void DrawDialog(string sSpeaker)
+        public static void DrawDialog()
         {
+
             DrawRectangle(Console.WindowWidth / 2 - m_iWidthBox/2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
+            
             int iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
             int iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
             int iRightBoxPos = Console.WindowWidth / 2 - m_iWidthBox / 2 + m_iWidthBox - 2;
-            //Console.WriteLine($"[{sSpeaker}]:");
             
             int index = 0;
             Console.SetCursorPosition(iTextPosX, iTextPosY);
@@ -133,9 +132,6 @@ namespace Main.Class
             TimeToRead();
             Thread.Sleep(m_iTimeToRead);
             FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
-            iTextPosX = Console.WindowWidth / 2 - m_iWidthBox / 2 + 1;
-            iTextPosY = Console.WindowHeight - m_iHeightBox - 2;
-            
             SetTextEnd();
 
         }

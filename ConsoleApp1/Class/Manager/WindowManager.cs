@@ -23,6 +23,8 @@ namespace Game.Class
         }
         public void Draw(Player oPlayer, Map oMap)
         {
+            SetCursor(0, 0);
+
             m_oDraw.DrawMap(oPlayer, oMap);
         }
 

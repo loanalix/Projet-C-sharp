@@ -4,12 +4,15 @@ using Drawing;
 using Main.Class;
 using System.Runtime.InteropServices.ObjectiveC;
 using Main.Class.Save;
+using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Game.Class
 {
     
     public class GameManager
     {
+        #region Fields
         WindowManager m_oWindowManager;
         Player m_oPlayer;
         InputManager m_oInputManager;
@@ -24,52 +27,46 @@ namespace Game.Class
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
-        public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 };
-        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6 }
-
+        Dictionary<string, string> m_dMapsInfo;
         GameState m_eCurrentGameState;
         static DrawState m_eCurrentDrawState;
-        public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
-        public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
         bool m_bIsRunning;
         bool m_bToggleMiniMap;
-        int m_iSelectedOption;
+        #endregion;
+
+        #region Property
+        public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 }
+        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6 }
+
+        public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
+        public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
+        #endregion
+
+        #region Constructor
         public GameManager()
         {
             m_eCurrentGameState = GameState.startMenu;
             m_eCurrentDrawState = DrawState.game;
-            m_oFightManager = new FightManager();
-            m_lMaps = new List<Map>();
         }
+        #endregion
 
-        public void GameLoop()
-        {
-            while (m_bIsRunning)
-            {
-                m_oWindowManager.SetCursor(0, 0);
-                m_oInputManager.GetInput(m_eCurrentDrawState);
-                string sCurrentMap = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
-                m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
-                DrawScene();
-            }
-
-        }
-
+        #region Methods
         public void Game()
         {
+            //Ici on gère en fonction de l'état de la partie si il faut initier des variables ou les utiliser
             switch (m_eCurrentGameState)
             {
                 case GameState.startMenu:
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
+                    m_oWindowManager = new WindowManager();
 
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
-
                     LoadInputState();
 
                     m_eCurrentGameState = GameState.menu;
-                    Console.CursorVisible = false;
+                    m_oWindowManager.SetCursorVisibility(false);
                     Game();
                     break;
                 case GameState.menu:
@@ -82,33 +79,41 @@ namespace Game.Class
 
                     Game();
                     break;
+
                 case GameState.start:
 
                     Console.Clear();
-                    m_oWindowManager = new WindowManager();
                     m_oItemsManager = new ItemsManager();
                     m_oInventory = new Inventory();
                     m_oPlayer = new Player(m_oItemsManager, m_oInventory);
-                    
+                    m_oFightManager = new FightManager();
+                    m_lMaps = new List<Map>();
                     m_oFightManager = new FightManager();
                     m_oOption = new Option(m_oInventory);
                     m_oDialog = new Dialog();
                     m_oSave = new SaveManager();
-                    m_oMinimap = new Map("minimap");
+                    m_dMapsInfo = new Dictionary<string, string>()
+                    {
+                        {"../../../txt/map.txt", "map"},
+                        {"../../../txt/rootBeginer.txt", "map1" },
+                        {"../../../txt/choseHero.txt", "fightMenu"},
+                        {"../../../txt/FightUI.txt", "fightUI" }
+                    };
                     
-                    AddMaps("../../../txt/map.txt", "map");
-                    AddMaps("../../../txt/rootBeginer.txt", "map1");
-                    AddMaps("../../../txt/choseHero.txt", "fightMenu");
-                    AddMaps("../../../txt/FightUI.txt", "fightUI");
-                    m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
-                    m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+                    m_oMinimap = new Map("minimap");
 
-                    m_oMinimap.LoadMap("../../../txt/minimap.txt");
+                    string test = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement" +
+                        " cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
+                    Dialog.SetDialog(test);
+
+                    CreateMaps();
+
+                    LoadAllMap();
 
                     char[] spawnable = new char[] { 'p' };
-                    m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
+                    m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable,4);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
-                    m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable);
+                    m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable, 4);
 
                     m_bToggleMiniMap = false;
 
@@ -122,14 +127,24 @@ namespace Game.Class
                     break;
 
                 case GameState.run:
-                    DrawScene();
                     GameLoop();
                     break;
             }
         }
+        public void GameLoop()
+        {
+            while (m_bIsRunning)
+            {
+                DrawScene();
+                m_oInputManager.GetInput(m_eCurrentDrawState);
+                string sCurrentMap = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
+                m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
+            }
 
+        }
         public void DrawScene()
         {
+            //Ici on gère en fonction des différents états ce qu'il faut render à l'écran
             switch (m_eCurrentDrawState)
             {
                 case DrawState.menu:
@@ -144,13 +159,11 @@ namespace Game.Class
                     break;
                 case DrawState.dialog:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
-                    string test = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
-                    Dialog.SetDialog(test);
-                    Dialog.DrawDialog("Loan");
+                    Dialog.DrawDialog();
                     if (Dialog.SetTextEnd()) m_eCurrentDrawState = DrawState.game;
                     break;
                 case DrawState.miniMap:
-                    DrawMiniMap();
+                    m_oMinimap.DrawMiniMap(m_oMinimap);
                     break;
                 case DrawState.inventory:
                     Console.Clear();
@@ -184,12 +197,31 @@ namespace Game.Class
 
         public static void StartFight()
         {
+            //Permet de déclencher les fights
             m_eCurrentDrawState = DrawState.fight;
         }
 
         public static void StartDialog()
         {
+            //Permet de déclencher les dialogues
             m_eCurrentDrawState = DrawState.dialog;
+        }
+        public void LoadAllMap()
+        {
+            //On load les affichages des fights
+            m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
+            m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+
+            //On load l'affichage de la minimap
+            m_oMinimap.LoadMap("../../../txt/minimap.txt");
+        }
+        public void CreateMaps()
+        {
+            //Pour chaque element du dictionnaire on appel addMaps pour toute les maps
+            foreach (KeyValuePair<string, string> entry in m_dMapsInfo)
+            {
+                AddMaps(entry.Key, entry.Value);
+            }
         }
         public void AddMaps(string sFileName, string sMapName)
         {
@@ -198,32 +230,17 @@ namespace Game.Class
             m_lMaps.Add(map);
         }
 
-        public void Save()
-        {
-            List<MapData> mapData = new List<MapData>();
-            foreach(Map map in m_lMaps)
-            {
-                mapData.Add(map.GetMapData());
-            };
-
-            GameData gameData = new GameData(m_oPlayer.GetPlayerData(), mapData, m_eCurrentGameState,m_eCurrentDrawState);
-            
-        }
         public void ToggleMiniMap()
         {
+            //On vérifie si la minimap peut être ouverte ou non
             m_bToggleMiniMap = !m_bToggleMiniMap;
             if (m_bToggleMiniMap) m_eCurrentDrawState = DrawState.miniMap;
             else m_eCurrentDrawState = DrawState.game;
         }
-        public void DrawMiniMap()
-        {
-            Console.Clear();
-            Console.SetCursorPosition(0,0);
-            m_oMinimap.DrawMiniMap(m_oMinimap);
-        }
 
         public void LoadInputState()
         {
+            //On creer un dictionnaire par state pour l'input manager
             Dictionary<string, Action> stateMenu = new Dictionary<string, Action>()
                     {
                         {"UpArrow", ()=> m_oMenu.SelectOptionUp()},
@@ -287,6 +304,20 @@ namespace Game.Class
 
             m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
         }
+        public void Save()
+        {
+            List<MapData> mapData = new List<MapData>();
+            foreach (Map map in m_lMaps)
+            {
+                mapData.Add(map.GetMapData());
+            };
+
+            GameData gameData = new GameData(m_oPlayer.GetPlayerData(), mapData, m_eCurrentGameState, m_eCurrentDrawState);
+
+        }
+
+
+        #endregion
     }
 
 }

@@ -76,21 +76,8 @@ namespace Main.Class
             m_iHeight = fileHeight;
         }
 
-        //public void ColorWhite()
-        //{
-        //    for(int i=0; i < Console.WindowWidth; i++)
-        //    {
-        //        for(int j=0;j<Console.WindowHeight; j++)
-        //        {
-        //            Console.BackgroundColor = ConsoleColor.White;
-        //            Console.Write(' ');
-
-        //        }
-        //    }
-        //}
         public void DrawMenu()
         {
-            //ColorWhite();
             int PosY = 0;
             for (int i = 0; i < m_lMenu.Count; i++)
             {

@@ -50,7 +50,7 @@ namespace Game.Class
         #region Method
         public string ChangeMap(Player oPlayer, List<Map> sMap, string sName)
         {
-
+            //Ici on gère le changement de map
             switch (sMap.Find(x=>x.m_sName == sName).GetName)
             {
                 case "map":
@@ -129,20 +129,6 @@ namespace Game.Class
             }
             return objects;
         }
-
-        public MapData GetMapData()
-        {
-            MapData mapData = new MapData();
-            mapData.m_lMap = m_lMap;
-            mapData.m_lSpawn = m_lSpawn;
-            mapData.m_sName = m_sName;
-            mapData.m_iObjects = m_iObjects;
-            mapData.m_iWidth = m_iWidth;
-            mapData.m_iHeight = m_iHeight;
-
-            return mapData;
-        }
-
         public void spawnEnnemies(Map oMap)
         {
             oMap.GetGrass();
@@ -160,6 +146,8 @@ namespace Game.Class
         }
         public void DrawMiniMap(Map oMap)
         {
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
             List<char> lMap = oMap.GetMap;
             for (int i = 0; i < lMap.Count; i++)
             {
@@ -200,6 +188,18 @@ namespace Game.Class
                 }
 
             }
+        }
+        public MapData GetMapData()
+        {
+            MapData mapData = new MapData();
+            mapData.m_lMap = m_lMap;
+            mapData.m_lSpawn = m_lSpawn;
+            mapData.m_sName = m_sName;
+            mapData.m_iObjects = m_iObjects;
+            mapData.m_iWidth = m_iWidth;
+            mapData.m_iHeight = m_iHeight;
+
+            return mapData;
         }
 
     }
