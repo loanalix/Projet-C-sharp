@@ -72,8 +72,10 @@ namespace Game.Class
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     AddMaps("../../../txt/choseHero.txt", "fightMenu");
                     AddMaps("../../../txt/FightUI.txt", "fightUI");
+                    AddMaps("../../../txt/attackUI.txt", "attackUI");
                     m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
                     m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+                    m_oFightManager.LoadMaps(m_lMaps, "attackUI");
 
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
@@ -191,7 +193,6 @@ namespace Game.Class
                     break;
             }
         }
-
         public static void StartFight()
         {
             m_eCurrentDrawState = DrawState.fight;

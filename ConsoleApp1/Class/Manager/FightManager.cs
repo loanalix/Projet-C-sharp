@@ -10,19 +10,24 @@ namespace Game.Class
         private Game.Class.Type type;
         private List<char> m_lMap = new List<char>();
         private List<char> m_lMapFight = new List<char>();
+        private List<char> m_lMapAttack = new List<char>();
         private List<Attack> m_lAttack = new List<Attack>();
+        private List<Attack> normals = new List<Attack>();
+        private List<Attack> spells = new List<Attack>();
+        private List<Attack> special = new List<Attack>();
+        private List<Attack> stuns = new List<Attack>();
         private List<Mob> allMobs = new List<Mob>();
         private Ennemy ennemy;
         private Heroes hero;
         private int m_iPosX;
         private int m_iPosY;
         private bool pokemonLoaded;
-        //private int m_iWidth;
         private ConsoleKeyInfo input;
         private Random random;
 
-        private enum FightState { menu = 0, fight = 1 }
+        private enum FightState { menu = 0, fight = 1, waitting = 2, attack = 3 }
         private FightState m_state = 0;
+        private FightState m_inFightState = FightState.waitting;
 
         public List<Mob> GetAllMobs { get => allMobs; }
 
@@ -48,6 +53,7 @@ namespace Game.Class
 
         public void LoadMaps(List<Map> map, string sMapName)
         {
+            if (map == null || sMapName == null) throw new ArgumentException("map or sMapName is null or undefined");
             switch (map.Find(x => x.GetName == sMapName).GetName)
             {
                 case "fightMenu":
@@ -55,66 +61,65 @@ namespace Game.Class
                     m_lMap = menu;
                     break;
                 case "fightUI":
-                    List<char> ui = map[3].GetMap;
-                    m_lMapFight = ui;
+                    List<char> fUI = map[3].GetMap;
+                    m_lMapFight = fUI;
+                    break;
+                case "attackUI":
+                    List<char> aUI = map[4].GetMap;
+                    m_lMapAttack = aUI;
                     break;
                 default:
                     break;
             }
         }
-
-        public void CreateAttacks(List<Mob> mob)
+        public void InitializeAttacks(List<Mob> mob)
+        {
+            if (mob == null) throw new ArgumentException("List<Mob> mob is null or undefined");
+            foreach (Attack attack in m_lAttack)
             {
-                // Non damage abilities
-                m_lAttack.Add(new Attack("Aqua ring", Types.Flying, 0f, 0f, 15f, 30, 20, Attack.AttackType.Spell));
-                m_lAttack.Add(new Attack("Stun Spore", Types.Grass, 0f, 0f, 0f, 15, 50, Attack.AttackType.Stun));
-                m_lAttack.Add(new Attack("Withdraw", Types.Water, 0f, 15f, 0f, 30, 40, Attack.AttackType.Spell));
-                m_lAttack.Add(new Attack("Dragon Dance", Types.Dragon, 15f, 0f, 0f, 30, 20, Attack.AttackType.Spell));
-                m_lAttack.Add(new Attack("Fire shield", Types.Fire, 0f, 15f, 0f, 30, 20, Attack.AttackType.Spell));
-
-                // Dragon
-                m_lAttack.Add(new Attack("Breaking Swipe", Types.Dragon, 60f, 0f, 0f, 30, 40, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Dragon Hammer", Types.Dragon, 90f, 0f, 0f, 40, 70, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Dragon Claw", Types.Dragon, 80f, 0f, 0f, 35, 55, Attack.AttackType.Attack));
-
-                m_lAttack.Add(new Attack("Dynamax Cannon", Types.Dragon, 100f, 0f, 0f, 100, 125, Attack.AttackType.Attack));
-
-                // Grass
-                m_lAttack.Add(new Attack("Trop Kick", Types.Grass, 70f, 0f, 0f, 30, 40, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Grav Apple", Types.Grass, 40f, 7f, 0f, 30, 55, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Power Whip", Types.Grass, 120f, 0f, 0f, 60, 90, Attack.AttackType.Attack));
-
-                m_lAttack.Add(new Attack("Chronoblast", Types.Fire, 150f, 0f, 0f, 95, 125, Attack.AttackType.Special));
-
-                // Fire
-                m_lAttack.Add(new Attack("Flare Blitz", Types.Fire, 25f, 0f, 0f, 30, 30, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Fire Lash", Types.Fire, 40f, 0f, 0f, 35, 45, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Flame Charge", Types.Fire, 70f, 0f, 0f, 55, 65, Attack.AttackType.Attack));
-
-                m_lAttack.Add(new Attack("Armor Cannon", Types.Fire, 120f, 15f, 0f, 100, 100, Attack.AttackType.Special));
-
-                // Flying
-                m_lAttack.Add(new Attack("Aerial Ace", Types.Flying, 20f, 0f, 0f, 100, 30, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Wing Attack", Types.Flying, 45f, 0f, 0f, 100, 35, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Dragon Ascent", Types.Flying, 80f, 15f, 0f, 100, 85, Attack.AttackType.Attack));
-
-                m_lAttack.Add(new Attack("Air Slash", Types.Flying, 75f, 0f, 0f, 95, 85, Attack.AttackType.Special));
-
-                // Water
-                m_lAttack.Add(new Attack("Liquidation", Types.Water, 15f, 3f, 0f, 85, 25, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Aqua tail", Types.Water, 90f, 0f, 0f, 70, 75, Attack.AttackType.Attack));
-                m_lAttack.Add(new Attack("Triple Dive", Types.Water, 30f, 0f, 0f, 20, 95, Attack.AttackType.Attack));
-
-                m_lAttack.Add(new Attack("Chilling Water", Types.Water, 50, 0f, 0f, 100, 45, Attack.AttackType.Special));
-
-                for(int i = 0; i < m_lAttack.Count; i++)
+                switch(attack.GetAttackClass)
                 {
-                    for(int j = 0; j < mob.Count; j++)
-                    {
-                        mob[j].AddAttacks(m_lAttack[i].GetAttackName);
-                    }
+                    case Attack.AttackClass.Attack:
+                        normals.Add(attack);
+                        break;
+                    case Attack.AttackClass.Special:
+                        special.Add(attack);
+                        break;
+                    case Attack.AttackClass.Stun:
+                        stuns.Add(attack);
+                        break;
+                    case Attack.AttackClass.Spell:
+                        spells.Add(attack);
+                        break;
+                    default:
+                        break;
                 }
             }
+
+            random = new Random();
+            var mobIndex = mob.Select(m => m.GetEntityType).ToList();
+            List<Attack> filteredNormalAttacks = normals.Where(attack => mobIndex.Contains(attack.GetAttackType)).ToList();
+            List<Attack> filteredsSpellAttacks = spells.Where(attack => mobIndex.Contains(attack.GetAttackType)).ToList();
+            List<Attack> filteredStunAttacks = stuns.Where(attack => mobIndex.Contains(attack.GetAttackType)).ToList();
+            List<Attack> filteredSpecialAttacks = special.Where(attack => mobIndex.Contains(attack.GetAttackType)).ToList();
+
+            Attack selectedNormalAttackOne = filteredNormalAttacks[random.Next(filteredNormalAttacks.Count)];
+            Attack selectedNormalSpecial = filteredSpecialAttacks[random.Next(filteredSpecialAttacks.Count)];
+            Attack selectedSpell = filteredsSpellAttacks[random.Next(filteredsSpellAttacks.Count)];
+            Attack selectedStun = filteredStunAttacks[random.Next(filteredStunAttacks.Count)];
+
+            foreach (Mob m in mob)
+            {
+                if (m is Ennemy)
+                {
+                    m.AddAttacks(selectedNormalAttackOne.GetAttackName);
+                    m.AddAttacks(selectedNormalSpecial.GetAttackName);
+                    m.AddAttacks(selectedSpell.GetAttackName);
+                    m.AddAttacks(selectedStun.GetAttackName);
+                }
+                else return;
+            }
+        }
         public void TakeAnEnnemy()
         {
             List<Ennemy> ennemies = allMobs.OfType<Ennemy>().ToList();
@@ -123,13 +128,14 @@ namespace Game.Class
         }
         public Heroes chosenHero(int i)
         {
+            if (i == null) throw new ArgumentException("i is null");
             List<Heroes> hero = allMobs.OfType<Heroes>().ToList();
             return hero[i];
         }
         public string replaceString(List<char> mRef)
         {
             string line = new string(mRef.ToArray());
-            if(mRef == m_lMapFight)
+            if (mRef == m_lMapFight)
             {
                 line = line.Replace("{heroName}", hero.Name);
                 line = line.Replace("{CurrentHP}", hero.HP.ToString());
@@ -144,23 +150,35 @@ namespace Game.Class
                 line = line.Replace("{MaxManaO}", ennemy.MaxMana.ToString());
                 line = line.Replace("{CurrentManaO}", ennemy.Mana.ToString());
                 line = line.Replace("{levelO}", ennemy.Level.ToString());
-            } else if(mRef.Any())
+            }
+            else if (mRef == m_lMapAttack)
             {
-                throw new ArgumentException("List<char> list is null or undefine");
+                line = line.Replace("{Spell}", hero.GetHeroSpellAttack.GetAttackName);
+                line = line.Replace("{Stun}", hero.GetHeroStunAttack.GetAttackName);
+                line = line.Replace("{Attack}", hero.GetHeroNormalAttack.GetAttackName);
+                line = line.Replace("{Special}", hero.GetHeroSpecialAttack.GetAttackName);
+            }
+            else if(mRef.Any())
+            {
+                throw new ArgumentException("List<char> list is null or undefined");
             }
 
             return line;
         }
         public void InitFightStuff(List<Mob> mob)
         {
+            if (mob == null) throw new ArgumentException("Mob is null");
+            Attack.CreateAttacks();
+            m_lAttack = Attack.AttackList();
             Ennemy.CreateEnnemies();
             Heroes.CreateHeroes();
-            CreateAttacks(mob);
+            InitializeAttacks(mob);
             pokemonLoaded = true;
         }
 
         private void NewPokemon(string sName)
         {
+            if (sName == null) throw new ArgumentException("sName can't be null");
             Mob poke = GetAllMobs.Find(heros => heros.Name == sName);
             poke.LoadMob("../../../txt/pokemon/" + sName + ".txt");
         }
@@ -223,27 +241,88 @@ namespace Game.Class
 
         public void Fight()
         {
-
-            DrawMob();
-            foreach (char c in replaceString(m_lMapFight))
+            void Draw(List<char> map)
             {
-                switch (c)
+                if (map == null) throw new ArgumentException("map is null or undefined");
+                foreach (char c in replaceString(map))
                 {
-                    case 'X':
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write(' ');
-                        break;
-                    case '/':
-                        Console.ResetColor();
-                        Console.WriteLine();
-                        break;
-                    default:
-                        Console.Write(c);
-                        break;
+                    switch (c)
+                    {
+                        case '/':
+                            Console.ResetColor();
+                            Console.WriteLine();
+                            break;
+                        default:
+                            Console.Write(c);
+                            break;
+                    }
                 }
             }
-        }
 
+            Console.Clear();
+            DrawMob();
+            if(m_inFightState == FightState.waitting)
+            {
+                Draw(m_lMapFight);
+            }
+            else if(m_inFightState == FightState.attack)
+            {
+                Draw(m_lMapAttack);
+            }
+            FightInputs();
+        }
+        public void FightInputs()
+        {
+            input = Console.ReadKey(true);
+            if (input.Key == ConsoleKey.D1)
+            {
+                if(m_inFightState == FightState.waitting)
+                {
+                    m_inFightState = FightState.attack;
+                }
+                else
+                {
+                    hero.PerformAttackTo(ennemy, hero.GetHeroSpellAttack.GetAttackName);
+                    m_inFightState = FightState.waitting;
+                }
+            }
+            else if (input.Key == ConsoleKey.D2)
+            {
+                if (m_inFightState == FightState.waitting)
+                {
+                    Console.WriteLine("selected Inventaire");
+                }
+                else
+                {
+                    hero.PerformAttackTo(ennemy, hero.GetHeroStunAttack.GetAttackName);
+                    m_inFightState = FightState.waitting;
+                }
+            }
+            else if (input.Key == ConsoleKey.D3)
+            {
+                if (m_inFightState == FightState.waitting)
+                {
+                    Console.WriteLine("selected Fuite");
+                }
+                else
+                {
+                    hero.PerformAttackTo(ennemy, hero.GetHeroNormalAttack.GetAttackName);
+                    m_inFightState = FightState.waitting;
+                }
+            }
+            else if(input.Key == ConsoleKey.D4)
+            {
+                if (m_inFightState == FightState.waitting) return;
+                //Console.WriteLine("Selected Attack: " + hero.GetHeroSpecialAttack.GetAttackName);
+                hero.PerformAttackTo(ennemy, hero.GetHeroSpecialAttack.GetAttackName);
+            }
+            else if(input.Key == ConsoleKey.Escape)
+            {
+                if (m_inFightState == FightState.waitting) return;
+                m_inFightState = FightState.waitting;
+            }
+            else return;
+        }
         public void MoveUpward()
         {
             if(m_iPosY - 1 == 0)
@@ -299,6 +378,7 @@ namespace Game.Class
                     break;
             }
         }
+
         public void CalculateWhoIsStarting(Mob h1, Mob h2)
         {
             if (h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
@@ -318,19 +398,8 @@ namespace Game.Class
         }
         public void AttackOpponent(Mob h1, Mob h2)
         {
-            float fDamage = type.AttackDamage(h1, h2);
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Opponent Health before Attack: " + h2.HP);
-            Console.WriteLine("Your Hero's Mana before Attack: " + h1.Mana + "\n");
-
-            h2.HP -= (2 * fDamage - h2.Resistance) * 0.5f;
-            h1.Mana -= h1.GetHeroAttackMana;
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Opponent Health: " + h2.HP);
-            Console.WriteLine("Your Hero's Mana: " + h1.Mana);
-            Console.ForegroundColor = ConsoleColor.White;
+            if (h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
+            type.UseAttack(h1, h2);
         }
 
         #endregion

@@ -27,8 +27,8 @@ namespace Game.Class
         public Player(ItemsManager oItemsManager, Inventory oInventory)
         {
             m_sName = "player0";
-            PosX = 4; //35  //5 | 35
-            PosY = 13; //1 //14 | 1
+            PosX = 52;  // 4 | 52
+            PosY = 1; // 13 | 1
             m_oInventory = oInventory;
             m_oItemManager = oItemsManager;
         }
