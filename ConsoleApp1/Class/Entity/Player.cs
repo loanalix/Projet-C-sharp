@@ -32,6 +32,15 @@ namespace Game.Class
             m_oInventory = oInventory;
             m_oItemManager = oItemsManager;
         }
+
+        public Player(PlayerData player, Inventory oInventory)
+        {
+            m_sName = player.m_sName;
+            PosX = player.m_iposX;
+            PosY = player.m_iposY;
+            m_oInventory = oInventory;
+            
+        }
         #endregion
 
         #region Method
@@ -116,7 +125,7 @@ namespace Game.Class
 
         public PlayerData GetPlayerData()
         {
-            PlayerData player = new PlayerData(PosX, PosY, null, m_oInventory.GetInventoryData());
+            PlayerData player = new PlayerData(m_sName,PosX, PosY, m_oInventory.GetInventoryData());
 
             return player;
         }        

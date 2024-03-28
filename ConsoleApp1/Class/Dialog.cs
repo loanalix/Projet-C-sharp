@@ -17,9 +17,14 @@ namespace Main.Class
         static int m_iHeightBox;
         static bool m_bEndText;
         #endregion
+
+        #region Property 
+        public string GetText { get { return m_sText; } }
+        #endregion
         #region Constructor
-        public Dialog()
+        public Dialog(string sDialog)
         {
+            m_sText = sDialog;
             m_iTimeToRead = 0;
             m_iWidthBox = 46;
             m_iHeightBox = 6;
@@ -83,12 +88,7 @@ namespace Main.Class
             }
             m_iTimeToRead = Time;
         }
-
-        public static void SetDialog(string sText)
-        {
-            m_sText = sText;
-        }
-        public static void DrawDialog()
+        public void DrawDialog(Dialog oDialog)
         {
 
             DrawRectangle(Console.WindowWidth / 2 - m_iWidthBox/2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
@@ -100,7 +100,7 @@ namespace Main.Class
             int index = 0;
             Console.SetCursorPosition(iTextPosX, iTextPosY);
 
-            foreach (char letter in m_sText)
+            foreach (char letter in oDialog.GetText)
             {
                 bool currentCharacterIsSpace = (letter == ' ');
 
@@ -135,7 +135,7 @@ namespace Main.Class
             SetTextEnd();
 
         }
-        public static bool SetTextEnd()
+        public bool SetTextEnd()
         {
             return !m_bEndText;
         }

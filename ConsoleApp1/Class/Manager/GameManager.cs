@@ -6,6 +6,8 @@ using System.Runtime.InteropServices.ObjectiveC;
 using Main.Class.Save;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Serialization;
 
 namespace Game.Class
 {
@@ -28,10 +30,12 @@ namespace Game.Class
         Dialog m_oDialog;
         SaveManager m_oSave;
         Dictionary<string, string> m_dMapsInfo;
+        List<Dialog> m_loDialogs;
         GameState m_eCurrentGameState;
         static DrawState m_eCurrentDrawState;
         bool m_bIsRunning;
         bool m_bToggleMiniMap;
+        bool m_bLoad;
         #endregion;
 
         #region Property
@@ -45,6 +49,8 @@ namespace Game.Class
         #region Constructor
         public GameManager()
         {
+            m_bLoad = false;
+            m_oCurrentMap = null;
             m_eCurrentGameState = GameState.startMenu;
             m_eCurrentDrawState = DrawState.game;
         }
@@ -60,6 +66,7 @@ namespace Game.Class
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
                     m_oWindowManager = new WindowManager();
+                    m_lMaps = new List<Map>();
 
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
@@ -83,42 +90,24 @@ namespace Game.Class
                 case GameState.start:
 
                     Console.Clear();
-                    m_oItemsManager = new ItemsManager();
-                    m_oInventory = new Inventory();
-                    m_oPlayer = new Player(m_oItemsManager, m_oInventory);
-                    m_oFightManager = new FightManager();
-                    m_lMaps = new List<Map>();
-                    m_oFightManager = new FightManager();
-                    m_oOption = new Option(m_oInventory);
-                    m_oDialog = new Dialog();
-                    m_oSave = new SaveManager();
-                    m_dMapsInfo = new Dictionary<string, string>()
+                    if (m_bLoad)
                     {
-                        {"../../../txt/map.txt", "map"},
-                        {"../../../txt/rootBeginer.txt", "map1" },
-                        {"../../../txt/choseHero.txt", "fightMenu"},
-                        {"../../../txt/FightUI.txt", "fightUI" },
-                        {"../../../txt/attackUI.txt", "attackUI" },
-                    };
-                    
-                    m_oMinimap = new Map("minimap");
-
-                    string test = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement" +
-                        " cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
-                    Dialog.SetDialog(test);
-
-                    CreateMaps();
-
-                    LoadAllMap();
-
-                    char[] spawnable = new char[] { 'p' };
-                    m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable,4);
-                    char[] map1Spawnable = new char[] { 'p', 'g' };
-                    m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable, 4);
+                        InitInstancesLoad();
+                    }
+                    else
+                    {
+                        InitInstances();
+                        CreateMaps();
+                        LoadAllMap();
+                        char[] spawnable = new char[] { 'p' };
+                        m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable, 4);
+                        char[] map1Spawnable = new char[] { 'p', 'g' };
+                        m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable, 4);
+                        SetCurrentMap();
+                    }
 
                     m_bToggleMiniMap = false;
 
-                    m_oCurrentMap = m_lMaps[0];
 
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
@@ -159,9 +148,10 @@ namespace Game.Class
                     m_oOption.DrawOption();
                     break;
                 case DrawState.dialog:
+                    NewDialogs();
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
-                    Dialog.DrawDialog();
-                    if (Dialog.SetTextEnd()) m_eCurrentDrawState = DrawState.game;
+                    m_loDialogs[0].DrawDialog(m_loDialogs[0]);
+                    if (m_loDialogs[0].SetTextEnd()) m_eCurrentDrawState = DrawState.game;
                     break;
                 case DrawState.miniMap:
                     m_oMinimap.DrawMiniMap(m_oMinimap);
@@ -178,23 +168,52 @@ namespace Game.Class
             }
 
         }
-        
-        public void ToggleMenu()
+
+        #region Init's Function
+        public void InitInstances()
         {
-            switch (m_eCurrentDrawState)
-            {
-                case DrawState.game:
-                //case DrawState.fight:
-                    m_eCurrentDrawState = DrawState.option;
-                    break;
-                case DrawState.option:
-                    m_eCurrentDrawState = DrawState.inventory;
-                    break;
-                case DrawState.inventory:
-                    m_eCurrentDrawState = DrawState.game;
-                    break;
-            }
+            m_oItemsManager = new ItemsManager();
+            m_oInventory = new Inventory();
+            m_oPlayer = new Player(m_oItemsManager, m_oInventory);
+            m_oFightManager = new FightManager();
+            m_oFightManager = new FightManager();
+            m_oOption = new Option(m_oInventory);
+            m_oSave = new SaveManager();
+            m_loDialogs = new List<Dialog>();
+            m_dMapsInfo = new Dictionary<string, string>()
+                    {
+                        {"../../../txt/map.txt", "map"},
+                        {"../../../txt/rootBeginer.txt", "map1" },
+                        {"../../../txt/choseHero.txt", "fightMenu"},
+                        {"../../../txt/FightUI.txt", "fightUI" },
+                        {"../../../txt/attackUI.txt", "attackUI" },
+                    };
+
+            m_oMinimap = new Map("minimap");
         }
+
+        public void InitInstancesLoad()
+        {
+            m_oItemsManager = new ItemsManager();
+            m_oFightManager = new FightManager();
+            m_oFightManager = new FightManager();
+            m_oOption = new Option(m_oInventory);
+            m_oSave = new SaveManager();
+            m_loDialogs = new List<Dialog>();
+            m_dMapsInfo = new Dictionary<string, string>()
+                    {
+                        {"../../../txt/map.txt", "map"},
+                        {"../../../txt/rootBeginer.txt", "map1" },
+                        {"../../../txt/choseHero.txt", "fightMenu"},
+                        {"../../../txt/FightUI.txt", "fightUI" },
+                        {"../../../txt/attackUI.txt", "attackUI" },
+                    };
+
+            m_oMinimap = new Map("minimap");
+        }
+        #endregion
+
+        #region start's Function
         public static void StartFight()
         {
             //Permet de déclencher les fights
@@ -206,13 +225,24 @@ namespace Game.Class
             //Permet de déclencher les dialogues
             m_eCurrentDrawState = DrawState.dialog;
         }
+        #endregion
+
+        #region Map's Function
+
+        public void SetCurrentMap()
+        {
+            m_oCurrentMap = m_lMaps[0];
+        }
+        public void SetCurrentMap(MapData oCurrentMap)
+        {
+            m_oCurrentMap = m_lMaps.Find(map => map.GetName == oCurrentMap.m_sName);
+        }
         public void LoadAllMap()
         {
             //On load les affichages des fights
             m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
             m_oFightManager.LoadMaps(m_lMaps, "fightUI");
             m_oFightManager.LoadMaps(m_lMaps, "attackUI");
-
 
             //On load l'affichage de la minimap
             m_oMinimap.LoadMap("../../../txt/minimap.txt");
@@ -225,13 +255,51 @@ namespace Game.Class
                 AddMaps(entry.Key, entry.Value);
             }
         }
+
         public void AddMaps(string sFileName, string sMapName)
         {
             Map map = new Map(sMapName);
             map.LoadMap(sFileName);
             m_lMaps.Add(map);
         }
+        public void AddMaps(MapData oMap)
+        {
+            Map map = new Map(oMap);
+            m_lMaps.Add(map);   
+        }
+        #endregion
 
+        #region Dialog's Function
+        public void NewDialogs()
+        {
+            string sPnj = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement" +
+                       " cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
+            AddDialogs(sPnj);
+        }
+        public void AddDialogs(string sText)
+        {
+            Dialog dialog = new Dialog(sText);
+            m_loDialogs.Add(dialog);
+        }
+        #endregion
+
+        #region Toggles State Function
+        public void ToggleMenu()
+        {
+            switch (m_eCurrentDrawState)
+            {
+                case DrawState.game:
+                    //case DrawState.fight:
+                    m_eCurrentDrawState = DrawState.option;
+                    break;
+                case DrawState.option:
+                    m_eCurrentDrawState = DrawState.inventory;
+                    break;
+                case DrawState.inventory:
+                    m_eCurrentDrawState = DrawState.game;
+                    break;
+            }
+        }
         public void ToggleMiniMap()
         {
             //On vérifie si la minimap peut être ouverte ou non
@@ -239,7 +307,9 @@ namespace Game.Class
             if (m_bToggleMiniMap) m_eCurrentDrawState = DrawState.miniMap;
             else m_eCurrentDrawState = DrawState.game;
         }
+        #endregion
 
+        #region Input's Function
         public void LoadInputState()
         {
             //On creer un dictionnaire par state pour l'input manager
@@ -306,18 +376,38 @@ namespace Game.Class
 
             m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
         }
+        #endregion
+
+        #region Save's Function 
         public void Save()
         {
+            MapData m_oCurrentMapData = new MapData() ;
+            m_oCurrentMapData = m_oCurrentMap.GetMapData();
             List<MapData> mapData = new List<MapData>();
             foreach (Map map in m_lMaps)
             {
                 mapData.Add(map.GetMapData());
             };
 
-            GameData gameData = new GameData(m_oPlayer.GetPlayerData(), mapData, m_eCurrentGameState, m_eCurrentDrawState);
+            GameData gameData = new GameData(m_oPlayer.GetPlayerData(),  mapData, m_oCurrentMapData, m_eCurrentGameState, m_eCurrentDrawState);
 
+            SaveManager.Save(gameData, "save.json");
         }
-
+        public void LoadSave()
+        {
+            m_bLoad = true;
+            GameData loadData = SaveManager.Load("save.json");
+            m_oInventory = new Inventory(loadData.m_splayer.m_inventory);
+            m_oPlayer = new Player(loadData.m_splayer, m_oInventory);
+            //m_lMaps = loadData.m_lMapsData;
+            for(int i = 0; i < loadData.m_lMapsData.Count; i++)
+            {
+                AddMaps(loadData.m_lMapsData[i]);
+            }
+            m_oCurrentMap = new Map(loadData.m_oCurrentMapData);
+            m_eCurrentGameState = GameState.start;
+        }
+        #endregion
 
         #endregion
     }

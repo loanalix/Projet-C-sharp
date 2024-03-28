@@ -1,6 +1,7 @@
 ﻿using Game.Class;
 using Main.Class;
 using Main.Class.Save;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Game.Class
 {
@@ -16,13 +17,16 @@ namespace Game.Class
         {
             items = new List<GameObject>();
         }
+        public Inventory(InventoryData inventory)
+        {
+            items = inventory.m_lItems;
+        }
         #region //-----------AddItem-----------//
         public void AddItem(GameObject item)
         {
             items.Add(item);
-
-            Dialog.SetDialog($"'{item.Name}' a été ajouté à votre inventaire.");
-            Dialog.DrawDialog();
+            Dialog oDialog = new Dialog($"'{item.Name}' a été ajouté à votre inventaire.");
+            oDialog.DrawDialog(oDialog);
             Console.Clear();
         }
         #endregion

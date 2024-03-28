@@ -2,6 +2,7 @@
 using Drawing;
 using System.Transactions;
 using Main.Class.Save;
+using System.Xml.Linq;
 
 namespace Game.Class
 {
@@ -45,7 +46,18 @@ namespace Game.Class
             rand = new Random();
 
         }
-        #endregion  
+        public Map(MapData data)
+        {
+            m_lMap = data.m_lMap;
+            m_lSpawn = data.m_lSpawn;
+            m_iWidth = data.m_iWidth;
+            m_iHeight = data.m_iHeight;
+            m_sName = data.m_sName;
+            m_iObjects = data.m_iObjects;
+            rand = new Random();
+
+        }
+        #endregion
 
         #region Method
         public string ChangeMap(Player oPlayer, List<Map> sMap, string sName)

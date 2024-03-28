@@ -15,7 +15,10 @@ namespace Game.Class
         {
            heroes.Add(this);
         }
-
+        //public Heroes(HeroesData heros)
+        //{
+        //    //foreach (Hero in heros.heroes) ;
+        //}
         public static void CreateHeroes()
         {
             Heroes dialga = new Heroes("Dialga", 1200, 200, 75f, 70f, 70, Types.Dragon);

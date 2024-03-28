@@ -50,6 +50,7 @@ namespace Main.Class
                     oManager.GetSetGameState = GameState.start;
                     break;
                 case 1:
+                    oManager.LoadSave();
                     break;
                 case 2:
                     Environment.Exit(0);

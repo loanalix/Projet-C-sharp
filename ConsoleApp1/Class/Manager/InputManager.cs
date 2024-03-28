@@ -29,6 +29,11 @@ namespace Game.Class
         #region Method
         public void GetInput(DrawState CurrentState)
         {
+            while(Console.KeyAvailable)
+            { 
+                Console.ReadKey(false);
+            }
+
             input = Console.ReadKey(true);
 
             if (input.Key == ConsoleKey.UpArrow) ProcessInput(CurrentState, "UpArrow");
@@ -44,7 +49,7 @@ namespace Game.Class
             else if (input.Key == ConsoleKey.Escape) ProcessInput(CurrentState, "Escape");
             
             else if (input.Key == ConsoleKey.Enter) ProcessInput(CurrentState, "Enter");
-            
+
 
         }
         public void AddState(DrawState stateName, Dictionary<string, Action> keyMappings)

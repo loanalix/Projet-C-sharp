@@ -11,23 +11,19 @@ namespace Main.Class.Save
     [Serializable]
     public struct PlayerData
     {
+        [JsonInclude] public string m_sName;
         [JsonInclude] public int m_iposX;
-        [JsonInclude] int m_iposY;
-        [JsonInclude] public List<Heroes> m_lPlayerHeroes;
+        [JsonInclude] public int m_iposY;
         [JsonInclude] public InventoryData m_inventory;
 
-        public PlayerData(int posX, int posY, List<Heroes> lPlayerHeroes, InventoryData inventory)
+        public PlayerData(string name, int posX, int posY, InventoryData inventory)
         {
+            m_sName = name;
             m_iposX = posX;
             m_iposY = posY;
-            m_lPlayerHeroes = lPlayerHeroes;
             m_inventory = inventory;
         }
-        public PlayerData GetData()
-        {
-            PlayerData player = new PlayerData();
-            return player;
-        }
+
     }
 
 }
