@@ -117,7 +117,7 @@ namespace Game.Class
         public AttackData GetAttackData()
         {
             AttackData attack = new AttackData();
-            attack.m_lAttacks = Attacks;
+            attack.m_lAttacks = m_lAttack;
             attack.m_iAttackMana = GetAttackMana;
             attack.m_fAttackDamage = GetAttackDamage;
             attack.m_cAttackTypes = GetAttackType;
@@ -125,7 +125,7 @@ namespace Game.Class
             attack.m_iSpeed = GetAttackSpeed;
             attack.m_fResistance = GetAttackResistance;
             attack.m_fHp = GetAttackHP;
-            attack.m_attackType = GetAttackClass;
+            attack.m_attackClass = GetAttackClass;
             return attack;
 
         }

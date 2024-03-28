@@ -97,7 +97,8 @@ namespace Game.Class
                         {"../../../txt/map.txt", "map"},
                         {"../../../txt/rootBeginer.txt", "map1" },
                         {"../../../txt/choseHero.txt", "fightMenu"},
-                        {"../../../txt/FightUI.txt", "fightUI" }
+                        {"../../../txt/FightUI.txt", "fightUI" },
+                        {"../../../txt/attackUI.txt", "attackUI" },
                     };
                     
                     m_oMinimap = new Map("minimap");
@@ -210,6 +211,8 @@ namespace Game.Class
             //On load les affichages des fights
             m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
             m_oFightManager.LoadMaps(m_lMaps, "fightUI");
+            m_oFightManager.LoadMaps(m_lMaps, "attackUI");
+
 
             //On load l'affichage de la minimap
             m_oMinimap.LoadMap("../../../txt/minimap.txt");

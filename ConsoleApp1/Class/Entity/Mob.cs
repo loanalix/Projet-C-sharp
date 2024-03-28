@@ -191,20 +191,20 @@ namespace Game.Class
         public MobData GetMobData(string sFileName)
         {
             MobData mobData = new MobData();
-            mobData.m_sName = Name;
-            mobData.m_iMaxHp = HPMax;
-            mobData.m_iHp = HP;
-            mobData.m_iMana = Mana;
-            mobData.m_fDamage = Damage;
-            mobData.m_fResistance = Resistance;
-            mobData.m_iSpeed = Speed;
-            mobData.m_iIVSpeed = IVSpeed;
-            mobData.m_iFinalSpeed = FinalSpeed ;
-            mobData.m_fPrecision = Precision;
-            mobData.m_fExp = Exp;
-            mobData. m_iLevel = Level ;
-            mobData.m_cTypes = GetEntityType;
-            mobData.m_bIsStun = GetStunState;
+            //mobData.m_sName = Name;
+            //mobData.m_iMaxHp = HPMax;
+            //mobData.m_iHp = HP;
+            //mobData.m_iMana = Mana;
+            //mobData.m_fDamage = Damage;
+            //mobData.m_fResistance = Resistance;
+            //mobData.m_iSpeed = Speed;
+            //mobData.m_iIVSpeed = IVSpeed;
+            //mobData.m_iFinalSpeed = FinalSpeed ;
+            //mobData.m_fPrecision = Precision;
+            //mobData.m_fExp = Exp;
+            //mobData. m_iLevel = Level ;
+            //mobData.m_cTypes = GetEntityType;
+            //mobData.m_bIsStun = GetStunState;
 
             //mobData.m_sAttackName = GetHeroAttackName;
             //mobData.m_cAttackType = GetHeroAttackType;
@@ -442,6 +442,8 @@ namespace Game.Class
             return mobData;
 
         }
+
+        #endregion
 
         #endregion
     }
