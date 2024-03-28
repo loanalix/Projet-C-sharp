@@ -37,10 +37,14 @@ namespace Main.Class
         public void SelectOptionUp()
         {
             m_iSelectedOption = Math.Max(0, m_iSelectedOption - 1);
+            //Thread musicThread = new Thread(() => Music.ShortMusic("../../../Music/Button.wav"));
+            //musicThread.Start();
         }
         public void SelectOptionDown()
         {
             m_iSelectedOption = Math.Min(m_sChoices.Length - 1, m_iSelectedOption + 1);
+            //hread musicThread = new Thread(() => Music.ShortMusic("../../../Music/Button.wav"));
+            //musicThread.Start();
         }
         public void SelectOptionEnter(GameManager oManager)
         {

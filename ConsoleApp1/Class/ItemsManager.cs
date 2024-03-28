@@ -1,4 +1,5 @@
 ﻿using Game.Class;
+using Main.Class;
 
 namespace Game.Class
 {
@@ -44,7 +45,9 @@ namespace Game.Class
 
         public GameObject FindItem(int iPos)
         {
+            
             return m_lItems.Find(x => x.Pos1D == iPos);
+            
         }
         public int[] RemoveObject(int[] iObject, int iPos)
         {

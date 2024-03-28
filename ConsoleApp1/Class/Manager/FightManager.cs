@@ -1,4 +1,5 @@
 ﻿using Game.Enum;
+using Main.Class;
 
 namespace Game.Class
 {
@@ -194,7 +195,8 @@ namespace Game.Class
 
         public void FightSteps()
         {
-            if(pokemonLoaded == false) InitFightStuff(allMobs);
+            
+            if (pokemonLoaded == false) InitFightStuff(allMobs);
             switch (m_state)
             {
                 case FightState.menu:

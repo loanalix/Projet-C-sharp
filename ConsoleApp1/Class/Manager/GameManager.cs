@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.ObjectiveC;
 using Main.Class.Save;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using System.Globalization;
 
 namespace Game.Class
 {
@@ -24,6 +25,7 @@ namespace Game.Class
         Map m_oMinimap;
         Map m_oCurrentMap;
         Mob m_oMob;
+        Music m_oMusic;
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
@@ -57,6 +59,9 @@ namespace Game.Class
             switch (m_eCurrentGameState)
             {
                 case GameState.startMenu:
+                    Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Titre.wav"));
+                    musicThread.Start();
+
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
                     m_oWindowManager = new WindowManager();
@@ -87,6 +92,7 @@ namespace Game.Class
                     m_oInventory = new Inventory();
                     m_oPlayer = new Player(m_oItemsManager, m_oInventory);
                     m_oFightManager = new FightManager();
+                    m_oMusic = new Music(); 
                     m_lMaps = new List<Map>();
                     m_oFightManager = new FightManager();
                     m_oOption = new Option(m_oInventory);
@@ -134,14 +140,18 @@ namespace Game.Class
         }
         public void GameLoop()
         {
+            Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Route1.wav"));
+            musicThread.Start();
+
             while (m_bIsRunning)
             {
                 DrawScene();
                 m_oInputManager.GetInput(m_eCurrentDrawState);
                 string sCurrentMap = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
+                
             }
-
+            Music.StopMusic();
         }
         public void DrawScene()
         {
@@ -199,6 +209,8 @@ namespace Game.Class
         {
             //Permet de déclencher les fights
             m_eCurrentDrawState = DrawState.fight;
+            Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Combat.wav"));
+            musicThread.Start();
         }
 
         public static void StartDialog()

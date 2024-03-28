@@ -1,4 +1,5 @@
 using Game.Class;
+using Main.Class;
 using Main.Class.Save;
 namespace Game.Class
 {
@@ -62,6 +63,8 @@ namespace Game.Class
                     return true;
                 }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
+                    Thread musicThread = new Thread(() => Music.ShortMusic("../../../Music/Item.wav"));
+                    musicThread.Start();
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
                     //on refait une liste d'objet sans l'objet qui vient d'etre ajouter a l'inventaire
                     oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));
