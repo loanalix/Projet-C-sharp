@@ -15,27 +15,28 @@ namespace Game.Class
         InputManager m_oInputManager;
         FightManager m_oFightManager;
         Inventory m_oInventory;
-        Menu m_oMenu;
+        Option m_oOption;
         List<Map> m_lMaps;
+        Menu m_oMenu;
         Map m_oMinimap;
         Map m_oCurrentMap;
         Mob m_oMob;
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
-        public enum GameState { start = 0, run = 1 };
-        public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3, dialog = 4, miniMap = 5 }
+        public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 };
+        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6 }
 
         GameState m_eCurrentGameState;
         static DrawState m_eCurrentDrawState;
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
-
+        public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
         bool m_bIsRunning;
         bool m_bToggleMiniMap;
         int m_iSelectedOption;
         public GameManager()
         {
-            m_eCurrentGameState = GameState.start;
+            m_eCurrentGameState = GameState.startMenu;
             m_eCurrentDrawState = DrawState.game;
             m_oFightManager = new FightManager();
             m_lMaps = new List<Map>();
@@ -47,8 +48,8 @@ namespace Game.Class
             {
                 m_oWindowManager.SetCursor(0, 0);
                 m_oInputManager.GetInput(m_eCurrentDrawState);
-                string test = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
-                m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == test);
+                string sCurrentMap = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
+                m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
                 DrawScene();
             }
 
@@ -58,15 +59,39 @@ namespace Game.Class
         {
             switch (m_eCurrentGameState)
             {
+                case GameState.startMenu:
+                    m_oMenu = new Menu();
+                    m_oInputManager = new InputManager();
+
+                    m_oMenu.LoadMenu("../../../txt/Menu.txt");
+                    
+
+                    LoadInputState();
+
+                    m_eCurrentGameState = GameState.menu;
+                    Console.CursorVisible = false;
+                    Game();
+                    break;
+                case GameState.menu:
+                    m_eCurrentDrawState = DrawState.menu;
+                    while(m_eCurrentGameState == GameState.menu)
+                    {
+                        DrawScene();
+                        m_oInputManager.GetInput(m_eCurrentDrawState);
+                    }
+
+                    Game();
+                    break;
                 case GameState.start:
 
+                    Console.Clear();
                     m_oWindowManager = new WindowManager();
                     m_oItemsManager = new ItemsManager();
                     m_oInventory = new Inventory();
                     m_oPlayer = new Player(m_oItemsManager, m_oInventory);
-                    m_oInputManager = new InputManager();
+                    
                     m_oFightManager = new FightManager();
-                    m_oMenu = new Menu(m_oInventory);
+                    m_oOption = new Option(m_oInventory);
                     m_oDialog = new Dialog();
                     m_oSave = new SaveManager();
                     m_oMinimap = new Map("minimap");
@@ -89,60 +114,6 @@ namespace Game.Class
 
                     m_oCurrentMap = m_lMaps[0];
 
-                    Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
-                    {
-                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oCurrentMap.GetWidth, m_oCurrentMap)},
-                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap) },
-                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap) },
-                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap) },
-                        {"m",()=> ToggleMiniMap()},
-                        {"Escape", ()=> ToggleMenu() },
-                    };
-
-                    m_oInputManager.AddState(DrawState.game, stateGame);
-
-                    Dictionary<string, Action> stateMenu = new Dictionary<string, Action>()
-                    {
-                        {"UpArrow", ()=> m_oMenu.SelectOptionUp()},
-                        {"DownArrow", ()=> m_oMenu.SelectOptionDown()},
-                        {"Enter", ()=> m_oMenu.SelectOptionEnter(this) },
-                        {"Escape", ()=> ToggleMenu() },
-
-                    };
-                    m_oInputManager.AddState(DrawState.menu, stateMenu);
-
-                    Dictionary<string, Action> stateInventory = new Dictionary<string, Action>()
-                    {
-                        {"Escape", ()=> ToggleMenu() },
-
-                    };
-                    m_oInputManager.AddState(DrawState.inventory, stateInventory);
-
-                    Dictionary<string, Action> stateDialog = new Dictionary<string, Action>()
-                    {
-                        {"UpArrow", ()=> m_oMenu.SelectOptionUp()},
-                        {"DownArrow", ()=> m_oMenu.SelectOptionDown()},
-                        {"Enter", ()=> m_oMenu.SelectOptionEnter(this) },
-                        {"Escape", ()=> ToggleMenu() },
-
-                    };
-                    m_oInputManager.AddState(DrawState.dialog, stateDialog);
-
-                    Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
-                    {
-                        {"UpArrow", ()=> m_oFightManager.MoveUpward()},
-                        {"DownArrow", ()=> m_oFightManager.MoveDownward()},
-                        {"Enter", ()=> m_oFightManager.Enter() },
-                        {"Escape", ()=> ToggleMenu() }
-                    };
-                    m_oInputManager.AddState(DrawState.fight, stateFight);
-
-                    Dictionary<string, Action> stateMiniMap = new Dictionary<string, Action>()
-                    {
-                        {"m",()=> ToggleMiniMap()},
-                    };
-                    m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
-
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
 
@@ -161,12 +132,15 @@ namespace Game.Class
         {
             switch (m_eCurrentDrawState)
             {
+                case DrawState.menu:
+                    m_oMenu.DrawMenu();
+                    break;
                 case DrawState.game:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
                     break;
-                case DrawState.menu:
+                case DrawState.option:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
-                    m_oMenu.DrawMenu();
+                    m_oOption.DrawOption();
                     break;
                 case DrawState.dialog:
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
@@ -197,9 +171,9 @@ namespace Game.Class
             {
                 case DrawState.game:
                 //case DrawState.fight:
-                    m_eCurrentDrawState = DrawState.menu;
+                    m_eCurrentDrawState = DrawState.option;
                     break;
-                case DrawState.menu:
+                case DrawState.option:
                     m_eCurrentDrawState = DrawState.inventory;
                     break;
                 case DrawState.inventory:
@@ -246,6 +220,72 @@ namespace Game.Class
             Console.Clear();
             Console.SetCursorPosition(0,0);
             m_oMinimap.DrawMiniMap(m_oMinimap);
+        }
+
+        public void LoadInputState()
+        {
+            Dictionary<string, Action> stateMenu = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oMenu.SelectOptionUp()},
+                        {"DownArrow", ()=> m_oMenu.SelectOptionDown()},
+                        {"Enter", ()=> m_oMenu.SelectOptionEnter(this) },
+                    };
+            m_oInputManager.AddState(DrawState.menu, stateMenu);
+
+            Dictionary<string, Action> stateGame = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oPlayer.MoveUp(m_oCurrentMap.GetWidth, m_oCurrentMap)},
+                        {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap) },
+                        {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap) },
+                        {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap) },
+                        {"m",()=> ToggleMiniMap()},
+                        {"Escape", ()=> ToggleMenu() },
+                    };
+
+            m_oInputManager.AddState(DrawState.game, stateGame);
+
+            Dictionary<string, Action> stateOption = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oOption.SelectOptionUp()},
+                        {"DownArrow", ()=> m_oOption.SelectOptionDown()},
+                        {"Enter", ()=> m_oOption.SelectOptionEnter(this) },
+                        {"Escape", ()=> ToggleMenu() },
+
+                    };
+            m_oInputManager.AddState(DrawState.option, stateOption);
+
+            Dictionary<string, Action> stateInventory = new Dictionary<string, Action>()
+                    {
+                        {"Escape", ()=> ToggleMenu() },
+
+                    };
+            m_oInputManager.AddState(DrawState.inventory, stateInventory);
+
+            Dictionary<string, Action> stateDialog = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oOption.SelectOptionUp()},
+                        {"DownArrow", ()=> m_oOption.SelectOptionDown()},
+                        {"Enter", ()=> m_oOption.SelectOptionEnter(this) },
+                        {"Escape", ()=> ToggleMenu() },
+
+                    };
+            m_oInputManager.AddState(DrawState.dialog, stateDialog);
+
+            Dictionary<string, Action> stateFight = new Dictionary<string, Action>()
+                    {
+                        {"UpArrow", ()=> m_oFightManager.MoveUpward()},
+                        {"DownArrow", ()=> m_oFightManager.MoveDownward()},
+                        {"Enter", ()=> m_oFightManager.Enter() },
+                        {"Escape", ()=> ToggleMenu() }
+                    };
+            m_oInputManager.AddState(DrawState.fight, stateFight);
+
+            Dictionary<string, Action> stateMiniMap = new Dictionary<string, Action>()
+                    {
+                        {"m",()=> ToggleMiniMap()},
+                    };
+
+            m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
         }
     }
 

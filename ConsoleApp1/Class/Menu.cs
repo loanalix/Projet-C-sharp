@@ -1,43 +1,36 @@
 ﻿using Game.Class;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static Game.Class.GameManager;
 
-namespace Game.Class
+namespace Main.Class
 {
-    public class Menu : GameManager
+    public class Menu
     {
         #region Fields
-        private Inventory m_oInventory;
+        List<char> m_lMenu;
+        int m_iWidth;
+        int m_iHeight;
         int m_iSelectedOption;
-        string[] m_sMenuOptions;
+        string[] m_sChoices;
         #endregion
 
         #region Property
-        public Menu (Inventory inventory)
-        {
-            m_iSelectedOption = 0;
-            m_sMenuOptions = new string[4] { "Potion       ","Pokémon      ", "Sauvegarder  ", "Quitter      " };
-            m_oInventory = inventory;
-        }
+        public int GetWidth { get => m_iWidth; }
+        public int GetHeight { get => m_iHeight; }
+
         #endregion
-
-        #region Methode 
-
-        #region //----Affiche---//
-        public void DrawMenu()
+        #region Constructor 
+        public Menu() 
         {
-            Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < m_sMenuOptions.Length; i++)
-            {
-                if (i == m_iSelectedOption)
-                {
-                    Console.Write("> ");
-                }
-                else
-                {
-                    Console.Write("  ");
-                }
-                Console.WriteLine(m_sMenuOptions[i]);
-
-            }
+            m_lMenu = new List<char>();
+            m_iWidth = 0;
+            m_iHeight = 0;
+            m_iSelectedOption = 0;
+            m_sChoices = new string[3] { "Nouvelle Partie       ", "Charger une partie      ", "Quitter      " };
         }
         #endregion
         public void SelectOptionUp()
@@ -46,41 +39,85 @@ namespace Game.Class
         }
         public void SelectOptionDown()
         {
-            m_iSelectedOption = Math.Min(m_sMenuOptions.Length - 1, m_iSelectedOption + 1);
+            m_iSelectedOption = Math.Min(m_sChoices.Length - 1, m_iSelectedOption + 1);
         }
         public void SelectOptionEnter(GameManager oManager)
         {
             switch (m_iSelectedOption)
             {
                 case 0:
-                    oManager.GetSetDrawState = DrawState.inventory;
+                    oManager.GetSetGameState = GameState.start;
                     break;
                 case 1:
-
+                case 2:
                     break;
                 case 3:
                     Environment.Exit(0);
                     break;
             }
-
             Console.WriteLine($"Vous avez sélectionnée {m_iSelectedOption}");
         }
 
-        #region //----AfficherEquipe---//
-        private void AfficherEquipe()
+        public void LoadMenu(string sFileName)
         {
-            Console.WriteLine("Affichage de l'équipe...");
-        }
-        #endregion
+            StreamReader reader = File.OpenText(sFileName);
+            string line;
+            int fileHeight = 0;
 
-        #region //----AfficherOptions---//
-        private void AfficherOptions()
+            while ((line = reader.ReadLine()) != null)
+            {
+                m_iWidth = line.Length;
+                char[] cChar = line.ToCharArray();
+                for (int i = 0; i < cChar.Length; i++)
+                {
+                    m_lMenu.Add(cChar[i]);
+                }
+                fileHeight++;
+            }
+            m_iHeight = fileHeight;
+        }
+
+        public void DrawMenu()
         {
-            Console.WriteLine("Affichage des options...");
-         
-        }
-        #endregion
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < m_lMenu.Count; i++)
+            {
+                switch (m_lMenu[i])
+                {
+                    case 'b':
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        break;
+                    case ' ':
+                        Console.ResetColor();
+                        break;
+                    case '~':
+                        Console.BackgroundColor= ConsoleColor.DarkYellow;
+                        break;
+                    case '/':
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        break;
+                }
+                if (m_lMenu[i] != '/')
+                {
+                    Console.Write(' ');
+                }
+            }
+            Console.SetCursorPosition(Console.WindowWidth/2, Console.WindowHeight-5);
+            for (int i = 0; i < m_sChoices.Length; i++)
+            {
+                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 5 + i);
+                if (i == m_iSelectedOption)
+                {
+                    Console.Write("> ");
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
+                Console.WriteLine(m_sChoices[i]);
 
-        #endregion
+            }
+        }
     }
 }

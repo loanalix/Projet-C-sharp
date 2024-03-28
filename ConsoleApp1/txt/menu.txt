@@ -1,0 +1,18 @@
+                                                     bbb                                            /
+                                                   bbbbbbbb                                         /
+                                     bbbbb       bbb~~~bbbbb                                        /
+        bbbbbbbbbbbbb          bbbbbbbbbbbbbb  bbbb~~~bbbbbbbbbbbbbbbbbbbbb      bbb                /
+   bbbbbbbbbbbbbbbbbbbb     bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb     bbbbbbbbbbbbb       /
+bbbbbbb~~~~~~~~~~~~bbbbb   bbbbbb~~~bbb~~~~bbbbbbb~~~~bbbbbbbb~~~~bb~~~bbbb    bbbbbbbbbbbbbbbbbbbb /
+bbbbb~~~~~~~~~~bbbb~~~bbb   bbbbbb~~~bb~~~~bbbbb~~bbbbb~~bbbbbb~~~~bb~~~~bbbbbbbbbbbbb~~~bbbbbbbbbbb/
+ bbbbbbbb~~~~~bbbbbb~~bbbbbbbbbbbb~~~~~~~bbbbbbb~bbbbbbb~bbbbb~~~~~~~~~~~bbbbbbbbbbbbb~~~bbbb~~~bbbb/
+  bbbbbbbb~~~~~bbbbb~bbbbb~~~~~~bbbb~~~~bbbbbbb~~~~~~~~~bbbbbbb~~~~~~~~~bbbb~~~~~bbbbbb~~~bbb~~~bbb /
+   bbbbbbbb~~~~~bbb~bbbb~~bbbbbb~bbb~~~~~~bbbbbb~bbbbbbbbbbbbbb~~bb~~bb~~b~~bbbbb~~bbbb~~~bb~~~bbb  /
+      bbbbbb~~~~~bbbbbb~~bbbbbbb~bbb~~bbbb~~~~bbb~~~~~~~bbbbbb~~bbbbbbbb~b~~~bbbb~bbbb~bb~~~~~bbb   /
+       bbbbbb~~~~bbbbbb~~~~~~~~~~bbb~~bbbbbbb~~bbbbbbbbbbbbbbbbbbbbbbbbbbbb~~~~~~~bbb~~bb~~~~~bbb   /
+        bbbbbb~~~bbbbbbbb~~~~~bbbbb~~~bbbbbbbbbbbbbbbb   bbbbbbbbbbbbbbbbbbbbbbbbbbbb~bbb~~~~bbb    /
+         bbbbbb~~~bbbbbbbbbbbbbbbbbbbbbbb   bbbbbbbbbb            bbbbbbbbbbbbbbbbbbbbbbb~~~bbb     /
+          bbbbbb~~bbbbbbbbbbbbbbbbbbbbbb         bbbbb              bbbbbbbbbb bbbbbbbbbb~~bbbb     /
+           bbbbbbbbbbb                                                               bbbbbbbbbbb    /
+            bbbbbbbb                                                                  bbbbbbb       /
+
