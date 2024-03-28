@@ -135,7 +135,7 @@ namespace Game.Class
             List<int> spawn = oMap.GetSpawn;
             List<char> Map = oMap.GetMap;
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 35; i++)
             {
                 int randomIndex = rand.Next(0, spawn.Count);
                 int chooseNumber = spawn[randomIndex];

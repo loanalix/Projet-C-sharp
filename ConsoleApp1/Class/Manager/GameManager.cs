@@ -194,7 +194,6 @@ namespace Game.Class
                     break;
             }
         }
-
         public static void StartFight()
         {
             //Permet de déclencher les fights
