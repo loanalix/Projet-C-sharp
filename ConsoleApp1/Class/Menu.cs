@@ -1,6 +1,7 @@
 ﻿using Game.Class;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,13 +50,11 @@ namespace Main.Class
                     oManager.GetSetGameState = GameState.start;
                     break;
                 case 1:
-                case 2:
                     break;
-                case 3:
+                case 2:
                     Environment.Exit(0);
                     break;
             }
-            Console.WriteLine($"Vous avez sélectionnée {m_iSelectedOption}");
         }
 
         public void LoadMenu(string sFileName)
@@ -77,11 +76,25 @@ namespace Main.Class
             m_iHeight = fileHeight;
         }
 
+        //public void ColorWhite()
+        //{
+        //    for(int i=0; i < Console.WindowWidth; i++)
+        //    {
+        //        for(int j=0;j<Console.WindowHeight; j++)
+        //        {
+        //            Console.BackgroundColor = ConsoleColor.White;
+        //            Console.Write(' ');
+
+        //        }
+        //    }
+        //}
         public void DrawMenu()
         {
-            Console.SetCursorPosition(0, 0);
+            //ColorWhite();
+            int PosY = 0;
             for (int i = 0; i < m_lMenu.Count; i++)
             {
+                
                 switch (m_lMenu[i])
                 {
                     case 'b':
@@ -100,13 +113,14 @@ namespace Main.Class
                 }
                 if (m_lMenu[i] != '/')
                 {
+                   
                     Console.Write(' ');
                 }
+                else { PosY++; Console.SetCursorPosition(13, PosY); }
             }
-            Console.SetCursorPosition(Console.WindowWidth/2, Console.WindowHeight-5);
             for (int i = 0; i < m_sChoices.Length; i++)
             {
-                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 5 + i);
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 10, Console.WindowHeight - 5 + i);
                 if (i == m_iSelectedOption)
                 {
                     Console.Write("> ");
@@ -115,6 +129,7 @@ namespace Main.Class
                 {
                     Console.Write("  ");
                 }
+                
                 Console.WriteLine(m_sChoices[i]);
 
             }
