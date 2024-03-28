@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static Game.Class.GameManager;
 
 namespace Main.Class.Save
 {
@@ -13,11 +14,15 @@ namespace Main.Class.Save
     {
         [JsonInclude] public PlayerData m_splayer;
         [JsonInclude] public List<MapData> m_lMapsData;
-        
-        public GameData(PlayerData player, List<MapData> mapsData)
+        [JsonInclude] public GameState m_eCurrentGameState;
+        [JsonInclude] public DrawState m_eCurrentDrawState;
+
+        public GameData(PlayerData player, List<MapData> mapsData, GameState eCurrentGameState, DrawState eCurrentDrawState)
         {
             m_splayer = player;
             m_lMapsData = mapsData;
+            m_eCurrentDrawState = eCurrentDrawState;
+            m_eCurrentGameState = eCurrentGameState;
         }
     }
 }

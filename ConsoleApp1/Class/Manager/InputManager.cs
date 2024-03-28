@@ -30,32 +30,21 @@ namespace Game.Class
         public void GetInput(DrawState CurrentState)
         {
             input = Console.ReadKey(true);
-            if (input.Key == ConsoleKey.UpArrow)
-            {
-                ProcessInput(CurrentState, "UpArrow");
-            }
-            else if (input.Key == ConsoleKey.DownArrow)
-            {
-                ProcessInput(CurrentState, "DownArrow");
 
-            }
-            else if (input.Key == ConsoleKey.RightArrow)
-            {
-                ProcessInput(CurrentState, "RightArrow");
+            if (input.Key == ConsoleKey.UpArrow) ProcessInput(CurrentState, "UpArrow");
 
-            }
-            else if (input.Key == ConsoleKey.LeftArrow)
-            {
-                ProcessInput(CurrentState, "LeftArrow");
-            }
-            else if (input.Key == ConsoleKey.Escape)
-            {
-                ProcessInput(CurrentState, "Escape");
-            }
-            else if (input.Key == ConsoleKey.Enter)
-            {
-                ProcessInput(CurrentState, "Enter");
-            }
+            else if (input.Key == ConsoleKey.DownArrow) ProcessInput(CurrentState, "DownArrow");
+
+            else if (input.Key == ConsoleKey.RightArrow) ProcessInput(CurrentState, "RightArrow");
+
+            else if (input.Key == ConsoleKey.LeftArrow) ProcessInput(CurrentState, "LeftArrow");
+            
+            else if (input.Key == ConsoleKey.M) ProcessInput(CurrentState, "m");
+
+            else if (input.Key == ConsoleKey.Escape) ProcessInput(CurrentState, "Escape");
+            
+            else if (input.Key == ConsoleKey.Enter) ProcessInput(CurrentState, "Enter");
+            
 
         }
         public void AddState(DrawState stateName, Dictionary<string, Action> keyMappings)

@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Main.Class.Save
 {
     [Serializable]
-    public struct EnnemyData
+    public struct HeroesData
     {
-        [JsonInclude] public List<Ennemy> m_lEnnemies;
+        [JsonInclude] public static List<Heroes> heroes = new List<Heroes>();
     }
 }

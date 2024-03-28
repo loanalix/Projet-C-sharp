@@ -1,7 +1,9 @@
 ﻿using Game.Enum;
+using Main.Class.Save;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,6 +63,21 @@ namespace Game.Class
             return Attacks;
         }
 
+        public AttackData GetAttackData()
+        {
+            AttackData attack = new AttackData();
+            attack.m_lAttacks = Attacks;
+            attack.m_iAttackMana = GetAttackMana;
+            attack.m_fAttackDamage = GetAttackDamage;
+            attack.m_cAttackTypes = GetAttackType;
+            attack.m_sAttackName = GetAttackName;
+            attack.m_iSpeed = GetAttackSpeed;
+            attack.m_fResistance = GetAttackResistance;
+            attack.m_fHp = GetAttackHP;
+            attack.m_attackType = GetAttackClass;
+            return attack;
+
+        }
         #endregion
 
     }

@@ -1,5 +1,6 @@
 ﻿using Game.Class;
 using Game.Enum;
+using Main.Class.Save;
 
 namespace Game.Class
 {
@@ -30,5 +31,12 @@ namespace Game.Class
             Ennemy kyogre = new Ennemy("Kyogre", 150, 20, 2f, 0f, 100, Types.Water);
         }
 
+        public static EnnemyData GetEnnemyData()
+        {
+            EnnemyData ennemyData = new EnnemyData();
+            ennemyData.m_lEnnemies = ennemies;
+
+            return ennemyData;
+        }
     }
 }

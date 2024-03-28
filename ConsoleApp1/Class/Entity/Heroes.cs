@@ -1,5 +1,6 @@
 ﻿using Game.Class;
 using Game.Enum;
+using Main.Class.Save;
 
 namespace Game.Class
 {
@@ -22,6 +23,12 @@ namespace Game.Class
             Heroes darkrai = new Heroes("Darkrai", 850, 90, 100f, 45f, 45, Types.Dragon);
 
         }
-
+        
+        public static HeroesData GetHeroesData()
+        {
+            HeroesData hero = new HeroesData();
+            HeroesData.heroes = heroes;
+            return hero;
+        }
     }
 }

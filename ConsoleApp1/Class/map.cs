@@ -158,6 +158,49 @@ namespace Game.Class
             }
 
         }
+        public void DrawMiniMap(Map oMap)
+        {
+            List<char> lMap = oMap.GetMap;
+            for (int i = 0; i < lMap.Count; i++)
+            {
+                switch (lMap[i])
+                {
+                    case 'v':
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        break;
+                    case 'g':
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        break;
+                    case 'b':
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                        break;
+                    case 'w':
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        break;
+                    case 'h':
+                        Console.BackgroundColor = ConsoleColor.White;
+                        break;
+                    case 'p':
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        break;
+                    case 'o':
+                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                        break;
+                    case ' ':
+                        Console.ResetColor();
+                        break;
+                    case '/':
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        break;
+                }
+                if (lMap[i] != '/')
+                {
+                    Console.Write(' ');
+                }
+
+            }
+        }
 
     }
 }

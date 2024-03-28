@@ -17,19 +17,21 @@ namespace Game.Class
         Inventory m_oInventory;
         Menu m_oMenu;
         List<Map> m_lMaps;
+        Map m_oMinimap;
         Map m_oCurrentMap;
         Mob m_oMob;
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
         public enum GameState { start = 0, run = 1 };
-        public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3, dialog = 4 }
+        public enum DrawState { game = 0, fight = 1, menu = 2, inventory = 3, dialog = 4, miniMap = 5 }
 
         GameState m_eCurrentGameState;
         static DrawState m_eCurrentDrawState;
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
 
         bool m_bIsRunning;
+        bool m_bToggleMiniMap;
         int m_iSelectedOption;
         public GameManager()
         {
@@ -67,7 +69,8 @@ namespace Game.Class
                     m_oMenu = new Menu(m_oInventory);
                     m_oDialog = new Dialog();
                     m_oSave = new SaveManager();
-
+                    m_oMinimap = new Map("minimap");
+                    
                     AddMaps("../../../txt/map.txt", "map");
                     AddMaps("../../../txt/rootBeginer.txt", "map1");
                     AddMaps("../../../txt/choseHero.txt", "fightMenu");
@@ -75,10 +78,14 @@ namespace Game.Class
                     m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
                     m_oFightManager.LoadMaps(m_lMaps, "fightUI");
 
+                    m_oMinimap.LoadMap("../../../txt/minimap.txt");
+
                     char[] spawnable = new char[] { 'p' };
                     m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable);
                     char[] map1Spawnable = new char[] { 'p', 'g' };
                     m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable);
+
+                    m_bToggleMiniMap = false;
 
                     m_oCurrentMap = m_lMaps[0];
 
@@ -88,6 +95,7 @@ namespace Game.Class
                         {"DownArrow", ()=> m_oPlayer.MoveDown(m_oCurrentMap.GetWidth, m_oCurrentMap) },
                         {"RightArrow", ()=> m_oPlayer.MoveRight(m_oCurrentMap.GetWidth , m_oCurrentMap) },
                         {"LeftArrow", ()=> m_oPlayer.MoveLeft(m_oCurrentMap.GetWidth, m_oCurrentMap) },
+                        {"m",()=> ToggleMiniMap()},
                         {"Escape", ()=> ToggleMenu() },
                     };
 
@@ -129,6 +137,12 @@ namespace Game.Class
                     };
                     m_oInputManager.AddState(DrawState.fight, stateFight);
 
+                    Dictionary<string, Action> stateMiniMap = new Dictionary<string, Action>()
+                    {
+                        {"m",()=> ToggleMiniMap()},
+                    };
+                    m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
+
                     m_oWindowManager.SetCursorVisibility(false);
                     m_bIsRunning = true;
 
@@ -160,7 +174,9 @@ namespace Game.Class
                     Dialog.SetDialog(test);
                     Dialog.DrawDialog("Loan");
                     if (Dialog.SetTextEnd()) m_eCurrentDrawState = DrawState.game;
-                    
+                    break;
+                case DrawState.miniMap:
+                    DrawMiniMap();
                     break;
                 case DrawState.inventory:
                     Console.Clear();
@@ -197,13 +213,6 @@ namespace Game.Class
             m_eCurrentDrawState = DrawState.fight;
         }
 
-        public void NewPokemon (string sName )
-        { 
-
-            
-
-        }
-
         public static void StartDialog()
         {
             m_eCurrentDrawState = DrawState.dialog;
@@ -223,8 +232,20 @@ namespace Game.Class
                 mapData.Add(map.GetMapData());
             };
 
-            GameData gameData = new GameData(m_oPlayer.GetPlayerData(), mapData);
+            GameData gameData = new GameData(m_oPlayer.GetPlayerData(), mapData, m_eCurrentGameState,m_eCurrentDrawState);
             
+        }
+        public void ToggleMiniMap()
+        {
+            m_bToggleMiniMap = !m_bToggleMiniMap;
+            if (m_bToggleMiniMap) m_eCurrentDrawState = DrawState.miniMap;
+            else m_eCurrentDrawState = DrawState.game;
+        }
+        public void DrawMiniMap()
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0,0);
+            m_oMinimap.DrawMiniMap(m_oMinimap);
         }
     }
 
