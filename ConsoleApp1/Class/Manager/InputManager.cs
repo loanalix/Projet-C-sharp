@@ -29,6 +29,10 @@ namespace Game.Class
         #region Method
         public void GetInput(DrawState CurrentState)
         {
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(false);
+            }
             input = Console.ReadKey(true);
 
             if (input.Key == ConsoleKey.UpArrow) ProcessInput(CurrentState, "UpArrow");

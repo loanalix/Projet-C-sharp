@@ -1,15 +1,15 @@
-﻿using Game.Class;
-using Game.Enum;
+﻿using Game.Enum;
 using Drawing;
 using Main.Class;
 using System.Runtime.InteropServices.ObjectiveC;
 using Main.Class.Save;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using Main.Class.Manager;
 
 namespace Game.Class
 {
-    
+
     public class GameManager
     {
         #region Fields

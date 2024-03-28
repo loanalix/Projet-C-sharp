@@ -21,6 +21,7 @@ namespace Game.Class
         private Heroes hero;
         private int m_iPosX;
         private int m_iPosY;
+        private int leaveTries;
         private bool pokemonLoaded;
         private ConsoleKeyInfo input;
         private Random random;
@@ -175,14 +176,23 @@ namespace Game.Class
             InitializeAttacks(mob);
             pokemonLoaded = true;
         }
-
         private void NewPokemon(string sName)
         {
             if (sName == null) throw new ArgumentException("sName can't be null");
             Mob poke = GetAllMobs.Find(heros => heros.Name == sName);
             poke.LoadMob("../../../txt/pokemon/" + sName + ".txt");
         }
-
+        private float CalculateFlee(Mob h1, Mob opponent, int tries)
+        {
+            return ((h1.Speed * 128 / opponent.Speed) + 30 * tries) % 256;
+        }
+        private bool attemptToFlee()
+        {
+            float leave = CalculateFlee(hero, ennemy, leaveTries);
+            float leaveProbability = leave * 100 / 255;
+            int randomChance = random.Next(0, 100);
+            return randomChance < leaveProbability;
+        }
         public void DrawMob()
         {
 
@@ -302,7 +312,16 @@ namespace Game.Class
             {
                 if (m_inFightState == FightState.waitting)
                 {
-                    Console.WriteLine("selected Fuite");
+                    if (attemptToFlee())
+                    {
+                        Console.WriteLine("Flee success");
+                        pokemonLoaded = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Flee failed");
+                        return;
+                    }
                 }
                 else
                 {
@@ -313,7 +332,6 @@ namespace Game.Class
             else if(input.Key == ConsoleKey.D4)
             {
                 if (m_inFightState == FightState.waitting) return;
-                //Console.WriteLine("Selected Attack: " + hero.GetHeroSpecialAttack.GetAttackName);
                 hero.PerformAttackTo(ennemy, hero.GetHeroSpecialAttack.GetAttackName);
                 m_inFightState = FightState.waitting;
             }
@@ -380,10 +398,12 @@ namespace Game.Class
             }
         }
 
-        public void CalculateWhoIsStarting(Mob h1, Mob h2)
+        public void CalculateWhoIsStarting(Mob h1, Mob opponent)
         {
-            if (h1 == null || h2 == null || h1 == h2) { throw new ArgumentException("Entity is null or Entities are the same"); }
-            int iSpeedDiff = Math.Abs(h1.FinalSpeed - h2.FinalSpeed);
+            if (h1 == null || opponent == null || h1 == opponent) { throw new ArgumentException("Entity is null or Entities are the same"); }
+            h1.GenerateIVSpeed();
+            opponent.GenerateIVSpeed();
+            int iSpeedDiff = Math.Abs(h1.FinalSpeed - opponent.FinalSpeed);
 
             double dAttackProbabilityH1 = (double)iSpeedDiff / 100;
             double dAttackProbabilityH2 = 1 - dAttackProbabilityH1;
@@ -395,7 +415,7 @@ namespace Game.Class
             //Console.WriteLine("dAttackerProbability => " + dAttackerProbability);
             //Console.WriteLine("h1 => " + dAttackProbabilityH1);
             //Console.WriteLine("h2 => " + dAttackProbabilityH2);
-            Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : h2.Name));
+            Console.WriteLine("Combat Starter: " + (dAttackerProbability < dAttackProbabilityH1 ? h1.Name : opponent.Name));
         }
         public void AttackOpponent(Mob h1, Mob h2)
         {
