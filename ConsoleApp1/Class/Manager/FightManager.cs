@@ -169,10 +169,8 @@ namespace Game.Class
         public void InitFightStuff(List<Mob> mob)
         {
             if (mob == null) throw new ArgumentException("Mob is null");
-            Attack.CreateAttacks();
             m_lAttack = Attack.AttackList();
             Ennemy.CreateEnnemies();
-            Heroes.CreateHeroes();
             InitializeAttacks(mob);
             pokemonLoaded = true;
         }
@@ -191,6 +189,7 @@ namespace Game.Class
             float leave = CalculateFlee(hero, ennemy, leaveTries);
             float leaveProbability = leave * 100 / 255;
             int randomChance = random.Next(0, 100);
+            leaveTries++;
             return randomChance < leaveProbability;
         }
         public void DrawMob()
@@ -212,6 +211,7 @@ namespace Game.Class
                     FightMenu();
                     break;
                 case FightState.fight:
+                    GameManager.StartFight();
                     Fight();
                     break;
             }
@@ -279,7 +279,7 @@ namespace Game.Class
             {
                 Draw(m_lMapAttack);
             }
-            FightInputs();
+            //FightInputs();
         }
         public void FightInputs()
         {
@@ -341,6 +341,71 @@ namespace Game.Class
                 m_inFightState = FightState.waitting;
             }
             else return;
+        }
+        public void ChoseMenuElement(int element)
+        {
+            switch(element)
+            {
+                case 1:
+                    if (m_inFightState == FightState.waitting)
+                    {
+                        m_inFightState = FightState.attack;
+                        Fight();
+                    }
+                    else
+                    {
+                        hero.PerformAttackTo(ennemy, hero.GetHeroSpellAttack.GetAttackName);
+                        m_inFightState = FightState.waitting;
+                        Fight();
+                    }
+                    break;
+                case 2:
+                    if (m_inFightState == FightState.waitting)
+                    {
+                        Console.WriteLine("selected Inventaire");
+                    }
+                    else
+                    {
+                        hero.PerformAttackTo(ennemy, hero.GetHeroStunAttack.GetAttackName);
+                        m_inFightState = FightState.waitting;
+                        Fight();
+                    }
+                    break;
+                case 3:
+                    if (m_inFightState == FightState.waitting)
+                    {
+                        if (attemptToFlee())
+                        {
+                            Console.WriteLine("Flee success");
+                            pokemonLoaded = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Flee failed");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        hero.PerformAttackTo(ennemy, hero.GetHeroNormalAttack.GetAttackName);
+                        m_inFightState = FightState.waitting;
+                        Fight();
+                    }
+                    break;
+                case 4:
+                    if (m_inFightState == FightState.waitting) return;
+                    hero.PerformAttackTo(ennemy, hero.GetHeroSpecialAttack.GetAttackName);
+                    m_inFightState = FightState.waitting;
+                    Fight();
+                    break;
+                case 5:
+                    if (m_inFightState == FightState.waitting) return;
+                    m_inFightState = FightState.waitting;
+                    Fight();
+                    break;
+                default:
+                    break;
+            }
         }
         public void MoveUpward()
         {

@@ -36,7 +36,7 @@ namespace Game.Class
 
         #region Property
         public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 }
-        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6 }
+        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6, inFight = 7 }
 
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
         public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
@@ -103,6 +103,8 @@ namespace Game.Class
                     
                     m_oMinimap = new Map("minimap");
 
+                    Attack.CreateAttacks();
+                    Heroes.CreateHeroes();
                     string test = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement" +
                         " cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
                     Dialog.SetDialog(test);
@@ -198,7 +200,14 @@ namespace Game.Class
         public static void StartFight()
         {
             //Permet de déclencher les fights
-            m_eCurrentDrawState = DrawState.fight;
+            if(m_eCurrentDrawState == DrawState.game)
+            {
+                m_eCurrentDrawState = DrawState.fight;
+            } 
+            else
+            {
+                m_eCurrentDrawState = DrawState.inFight;
+            }
         }
 
         public static void StartDialog()
@@ -305,6 +314,16 @@ namespace Game.Class
                     };
 
             m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
+
+            Dictionary<string, Action> stateInFight = new Dictionary<string, Action>()
+            {
+                { "D1", ()=> m_oFightManager.ChoseMenuElement(1) },
+                { "D2", ()=> m_oFightManager.ChoseMenuElement(2) },
+                { "D3", ()=> m_oFightManager.ChoseMenuElement(3) },
+                { "D4", ()=> m_oFightManager.ChoseMenuElement(4) },
+                { "Escape", ()=> m_oFightManager.ChoseMenuElement(5) },
+            };
+            m_oInputManager.AddState(DrawState.inFight, stateInFight);
         }
         public void Save()
         {

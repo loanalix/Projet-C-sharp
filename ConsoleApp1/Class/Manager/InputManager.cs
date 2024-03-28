@@ -48,12 +48,20 @@ namespace Game.Class
             else if (input.Key == ConsoleKey.Escape) ProcessInput(CurrentState, "Escape");
             
             else if (input.Key == ConsoleKey.Enter) ProcessInput(CurrentState, "Enter");
+
+            else if (input.Key == ConsoleKey.D1) ProcessInput(CurrentState, "D1");
+
+            else if (input.Key == ConsoleKey.D2) ProcessInput(CurrentState, "D2");
+
+            else if (input.Key == ConsoleKey.D3) ProcessInput(CurrentState, "D3");
+
+            else if (input.Key == ConsoleKey.D4) ProcessInput(CurrentState, "D4");
             
 
         }
-        public void AddState(DrawState stateName, Dictionary<string, Action> keyMappings)
+        public void AddState(DrawState state, Dictionary<string, Action> keyMappings)
         {
-            stateMappings[stateName] = keyMappings;
+            stateMappings[state] = keyMappings;
         }
 
         public void ProcessInput(DrawState stateName, string key)
