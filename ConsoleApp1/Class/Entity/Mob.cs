@@ -98,7 +98,19 @@ namespace Game.Class
         public List<string> Line { get { return mapLine; } }
         public int GetWidth { get => m_iWidth; }
         public int GetHeight { get => m_iHeight; }
-        public static List<Mob> GetAllMobs { get => m_lAllMobs; } 
+        public static List<Mob> GetAllMobs { get => m_lAllMobs; }
+        public static Ennemy GetEnnemyByName(string sMobName)
+        {
+            if (sMobName == null || sMobName == "") throw new ArgumentException("sMobName can't be null or empty");
+            Ennemy mob = Ennemy.GetEnnemies.Find(x => x.Name == sMobName);
+            return mob;
+        }
+        public static Heroes GetHeroByName(string sMobName)
+        {
+            if (sMobName == null || sMobName == "") throw new ArgumentException("sMobName can't be null or empty");
+            Heroes mob = Heroes.GetHeroes.Find(x => x.Name == sMobName);
+            return mob;
+        }
         #endregion
 
         #region Events
