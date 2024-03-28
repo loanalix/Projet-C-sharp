@@ -59,8 +59,7 @@ namespace Game.Class
             switch (m_eCurrentGameState)
             {
                 case GameState.startMenu:
-                    Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Titre.wav"));
-                    musicThread.Start();
+                    Music.BackGroundMusic("../../../Music/Titre.wav");
 
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
@@ -140,9 +139,7 @@ namespace Game.Class
         }
         public void GameLoop()
         {
-            Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Route1.wav"));
-            musicThread.Start();
-
+            Music.BackGroundMusic("../../../Music/Route1.wav");
             while (m_bIsRunning)
             {
                 DrawScene();
@@ -151,7 +148,6 @@ namespace Game.Class
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
                 
             }
-            Music.StopMusic();
         }
         public void DrawScene()
         {
@@ -209,14 +205,15 @@ namespace Game.Class
         {
             //Permet de déclencher les fights
             m_eCurrentDrawState = DrawState.fight;
-            Thread musicThread = new Thread(() => Music.PlayMusic("../../../Music/Combat.wav"));
-            musicThread.Start();
+            Music.BackGroundMusic("../../../Music/Combat.wav");
         }
 
         public static void StartDialog()
         {
             //Permet de déclencher les dialogues
+           
             m_eCurrentDrawState = DrawState.dialog;
+           // Music.BackGroundMusic("../../../Music/Route1.wav");
         }
         public void LoadAllMap()
         {

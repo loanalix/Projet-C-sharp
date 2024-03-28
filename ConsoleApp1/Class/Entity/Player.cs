@@ -28,8 +28,8 @@ namespace Game.Class
         public Player(ItemsManager oItemsManager, Inventory oInventory)
         {
             m_sName = "player0";
-            PosX = 52;  // 4 | 52
-            PosY = 1; // 13 | 1
+            PosX = 4;  // 4 | 52
+            PosY = 13; // 13 | 1
             m_oInventory = oInventory;
             m_oItemManager = oItemsManager;
         }
@@ -58,16 +58,19 @@ namespace Game.Class
                 //ici c'est ce qui permet de déclencher un dialog
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'q')
                 {
-                    GameManager.StartDialog();
                     
+                    GameManager.StartDialog();
+                    //Music.PlayMusic("../../../Music/Button.wav");
+                    
+
                     return true;
                 }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
-                    Thread musicThread = new Thread(() => Music.ShortMusic("../../../Music/Item.wav"));
-                    musicThread.Start();
+                     Music.PlayMusic("../../../Music/Item.wav");
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
                     //on refait une liste d'objet sans l'objet qui vient d'etre ajouter a l'inventaire
                     oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));
+                    Music.BackGroundMusic("../../../Music/Route1.wav");
                     return true;
                 }
             }

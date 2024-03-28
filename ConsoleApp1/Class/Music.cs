@@ -9,29 +9,24 @@ namespace Main.Class
 {
     public class Music
     {
-        private static SoundPlayer musicPlayer;
+        private static SoundPlayer backgroundMusicPlayer; 
+        private static SoundPlayer MusicPlayer;    
 
+        // Méthode pour jouer la musique de fond
+        public static void BackGroundMusic(string filepath)
+        {
+            backgroundMusicPlayer = new SoundPlayer(filepath);
+            backgroundMusicPlayer.PlayLooping(); 
+        }
+
+        // Méthode pour jouer une musique spécifique
         public static void PlayMusic(string filepath)
         {
-            musicPlayer = new SoundPlayer();
-            musicPlayer.SoundLocation = filepath;
-            musicPlayer.PlayLooping();
-        }
+            MusicPlayer = new SoundPlayer(filepath);
+            MusicPlayer.Play();
 
-        public static void ShortMusic(string filepath) 
-        {
-            musicPlayer = new SoundPlayer();
-            musicPlayer.SoundLocation = filepath;
-            musicPlayer.Play();
-        }
 
-        public static void StopMusic()
-        {
-            if (musicPlayer != null)
-            {
-                musicPlayer.Stop();
-                musicPlayer.Dispose();
-            }
+
         }
     }
 }
