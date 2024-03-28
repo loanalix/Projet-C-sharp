@@ -35,11 +35,12 @@ namespace Game.Class
             new Tuple<Types, Types, float>(Types.Dragon, Types.Dragon, 2f),
         };
 
-        private void StunAttack(Mob opponent)
+        private void StunAttack(Mob h1, Mob opponent)
         {
             if (opponent.GetStunState == false)
             {
                 opponent.Stun();
+
             }
             else
             {
@@ -56,7 +57,7 @@ namespace Game.Class
             float fDamageDealt = (2 * fDamage - opponent.Resistance) * 0.5f;
             int iManaCost = h1.GetHeroAttack.GetAttackMana;
             opponent.TakeDamage(fDamageDealt);
-            h1.UpdateMana(iManaCost);
+            h1.UpdateMana(-iManaCost);
         }
 
         private void SpellEffects(Mob h1, Mob opponent)
@@ -81,7 +82,7 @@ namespace Game.Class
             }
             else if(h1.GetHeroAttackClass == Attack.AttackClass.Stun)
             {
-                StunAttack(opponent);
+                StunAttack(h1, opponent);
             }
             else if(h1.GetHeroAttackClass == Attack.AttackClass.Spell)
             {

@@ -315,6 +315,7 @@ namespace Game.Class
                 if (m_inFightState == FightState.waitting) return;
                 //Console.WriteLine("Selected Attack: " + hero.GetHeroSpecialAttack.GetAttackName);
                 hero.PerformAttackTo(ennemy, hero.GetHeroSpecialAttack.GetAttackName);
+                m_inFightState = FightState.waitting;
             }
             else if(input.Key == ConsoleKey.Escape)
             {

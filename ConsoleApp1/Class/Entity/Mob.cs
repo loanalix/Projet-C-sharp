@@ -234,7 +234,7 @@ namespace Game.Class
             float total = m_iMana + iMana;
             if(iMana < 0)
             {
-                if(total > m_iMana)
+                if(total <= 0)
                 {
                     m_iMana = 0;
                 }
