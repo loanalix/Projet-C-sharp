@@ -1,9 +1,8 @@
-using Game.Class;
-using Main.Class;
+using Main.Class.Manager;
 using Main.Class.Save;
 namespace Game.Class
 {
-    
+
     public class Player
     {
         #region Fields

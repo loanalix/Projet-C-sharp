@@ -1,6 +1,6 @@
 ﻿using Game.Class;
 
-namespace Game.Class
+namespace Main.Class.Manager
 {
     public class ItemsManager
     {
@@ -9,13 +9,13 @@ namespace Game.Class
         public ItemsManager()
         {
             rand = new Random();
-            m_lItems= new List<GameObject>();
+            m_lItems = new List<GameObject>();
         }
         public int[] SpawnObject(Map oMap, char[] spawnChar, int iNumberObject)
         {
             //On fait spawn des objets aléatoirement parmis une list de string
             int[] iObject = new int[iNumberObject];
-            string[] itemsName = new string[6] { "Potion de soin", "Potion de vitesse" , "Potion d'attaque" , "Hyper Potion" , "Potion de défense", "Potion de mana"};
+            string[] itemsName = new string[6] { "Potion de soin", "Potion de vitesse", "Potion d'attaque", "Hyper Potion", "Potion de défense", "Potion de mana" };
 
             //La list dessous renvoie les cases sur lesquelles un objet peu spawn;
             List<int> spawnObject = oMap.SpawnableObject(oMap, spawnChar);
@@ -57,7 +57,7 @@ namespace Game.Class
                 Array.Copy(iObject, 0, newObjects, 0, indexToDelete);
                 Array.Copy(iObject, indexToDelete + 1, newObjects, indexToDelete, iObject.Length - indexToDelete - 1);
             }
-                
+
             return newObjects;
         }
     }

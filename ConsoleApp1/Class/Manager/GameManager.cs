@@ -1,18 +1,15 @@
-﻿using Game.Class;
-using Game.Enum;
+﻿using Game.Enum;
 using Drawing;
 using Main.Class;
 using System.Runtime.InteropServices.ObjectiveC;
 using Main.Class.Save;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Serialization;
-using System.Security.Cryptography.X509Certificates;
+using Main.Class.Manager;
 
 namespace Game.Class
 {
-    
+
     public class GameManager
     {
         #region Fields
@@ -41,7 +38,7 @@ namespace Game.Class
 
         #region Property
         public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 }
-        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6 }
+        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6, inFight = 7 }
 
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
         public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
@@ -107,6 +104,8 @@ namespace Game.Class
                         char[] map1Spawnable = new char[] { 'p', 'g' };
                         m_lMaps[1].Object = m_oItemsManager.SpawnObject(m_lMaps[1], map1Spawnable, 4);
                         SetCurrentMap();
+                        Attack.CreateAttacks();
+                        Heroes.CreateHeroes();
                     }
 
                     m_bToggleMiniMap = false;
@@ -229,9 +228,16 @@ namespace Game.Class
         #region start's Function
         public static void StartFight()
         {
-            //Permet de déclencher les fights
             Music.BackGroundMusic("../../../Music/Combat.wav");
-            m_eCurrentDrawState = DrawState.fight;
+            //Permet de déclencher les fights
+            if (m_eCurrentDrawState == DrawState.game)
+            {
+                m_eCurrentDrawState = DrawState.fight;
+            } 
+            else
+            {
+                m_eCurrentDrawState = DrawState.inFight;
+            }
         }
 
         public static void StartDialog()
@@ -389,6 +395,16 @@ namespace Game.Class
                     };
 
             m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
+
+            Dictionary<string, Action> stateInFight = new Dictionary<string, Action>()
+            {
+                { "D1", ()=> m_oFightManager.ChoseMenuElement(1) },
+                { "D2", ()=> m_oFightManager.ChoseMenuElement(2) },
+                { "D3", ()=> m_oFightManager.ChoseMenuElement(3) },
+                { "D4", ()=> m_oFightManager.ChoseMenuElement(4) },
+                { "Escape", ()=> m_oFightManager.ChoseMenuElement(5) },
+            };
+            m_oInputManager.AddState(DrawState.inFight, stateInFight);
         }
         #endregion
 

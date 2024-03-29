@@ -75,18 +75,25 @@ namespace Game.Class
 
         public void UseAttack(Mob h1, Mob opponent)
         {
-            if(h1.GetHeroAttackClass == Attack.AttackClass.Attack || h1.GetHeroAttackClass == Attack.AttackClass.Special)
+            if(h1.Mana > h1.GetHeroAttackMana)
             {
-                float fDamage = DamageOpponent(h1, opponent);
-                CalculateDamage(fDamage, h1, opponent);
-            }
-            else if(h1.GetHeroAttackClass == Attack.AttackClass.Stun)
+                if(h1.GetHeroAttackClass == Attack.AttackClass.Attack || h1.GetHeroAttackClass == Attack.AttackClass.Special)
+                {
+                    float fDamage = DamageOpponent(h1, opponent);
+                    CalculateDamage(fDamage, h1, opponent);
+                }
+                else if(h1.GetHeroAttackClass == Attack.AttackClass.Stun)
+                {
+                    StunAttack(h1, opponent);
+                }
+                else if(h1.GetHeroAttackClass == Attack.AttackClass.Spell)
+                {
+                    SpellEffects(h1, opponent);
+                }
+            } else
             {
-                StunAttack(h1, opponent);
-            }
-            else if(h1.GetHeroAttackClass == Attack.AttackClass.Spell)
-            {
-                SpellEffects(h1, opponent);
+                Console.WriteLine("You doesn't have enough mana to use this attack!");
+                return;
             }
         }
 
