@@ -59,6 +59,7 @@ namespace Game.Class
         public void AfficherInventaire()
         {
             Console.SetCursorPosition(0,0);
+
             if (items.Count == 0)
             {
                 Console.WriteLine("L'inventaire est vide.");

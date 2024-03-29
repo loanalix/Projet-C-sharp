@@ -2,6 +2,7 @@
 using Game.Class;
 using Main.Class.Save;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace Game.Class
 {
@@ -80,14 +81,14 @@ namespace Game.Class
         #endregion
 
         #region Mob attack stats Properties
-        public Attack GetHeroAttack { get => m_cAttack; }
-        public string GetHeroAttackName { get => m_sAttackName; }
-        public Types GetHeroAttackType { get => m_cAttackType; }
-        public float GetHeroAttackDamage { get => m_fAttackDamage; }
-        public int GetHeroAttackMana { get => m_iAttackMana; }
-        public float GetHeroAttackResistance { get => m_fAttackResistance; }
-        public int GetHeroAttackSpeed { get => m_iAttackSpeed; }
-        public float GetHeroAttackHP { get => m_fAttackHP; }
+        public Attack GetHeroAttack { get => m_cAttack; set => m_cAttack = value;  }
+        public string GetHeroAttackName { get => m_sAttackName; set => m_sAttackName = value; }
+        public Types GetHeroAttackType { get => m_cAttackType; set => m_cAttackType = value; }
+        public float GetHeroAttackDamage { get => m_fAttackDamage; set => m_fAttackDamage = value; }
+        public int GetHeroAttackMana { get => m_iAttackMana; set => m_iAttackMana = value; }
+        public float GetHeroAttackResistance { get => m_fAttackResistance; set => m_fAttackResistance = value; }
+        public int GetHeroAttackSpeed { get => m_iAttackSpeed; set => m_iAttackSpeed = value; }
+        public float GetHeroAttackHP { get => m_fAttackHP; set => m_fAttackHP = value; }
         public Attack.AttackClass GetHeroAttackClass { get => m_eAttackClass; }
         public Attack GetHeroNormalAttack { get => m_lNormalAttacks[0]; }
         public Attack GetHeroSpellAttack { get => m_lSpellAttacks[0]; }
@@ -152,6 +153,22 @@ namespace Game.Class
             }
         }
 
+        public void AddNormalAttack(Attack oAttack)
+        {
+            m_lNormalAttacks.Add(oAttack);
+        }
+        public void AddSpellAttack(Attack oAttack)
+        {
+            m_lSpellAttacks.Add(oAttack);
+        }
+        public void AddStunAttack(Attack oAttack)
+        {
+            m_lStunAttacks.Add(oAttack);
+        }
+        public void AddSpecialAttack(Attack oAttack)
+        {
+            m_lSpecialAttacks.Add(oAttack);
+        }
         public void GenerateIVSpeed()
         {
             int randomIVSpeed = random.Next(1, 101);
@@ -191,25 +208,7 @@ namespace Game.Class
         public MobData GetMobData(string sFileName)
         {
             MobData mobData = new MobData();
-            //mobData.m_sName = Name;
-            //mobData.m_iMaxHp = HPMax;
-            //mobData.m_iHp = HP;
-            //mobData.m_iMana = Mana;
-            //mobData.m_fDamage = Damage;
-            //mobData.m_fResistance = Resistance;
-            //mobData.m_iSpeed = Speed;
-            //mobData.m_iIVSpeed = IVSpeed;
-            //mobData.m_iFinalSpeed = FinalSpeed ;
-            //mobData.m_fPrecision = Precision;
-            //mobData.m_fExp = Exp;
-            //mobData. m_iLevel = Level ;
-            //mobData.m_cTypes = GetEntityType;
-            //mobData.m_bIsStun = GetStunState;
 
-            //mobData.m_sAttackName = GetHeroAttackName;
-            //mobData.m_cAttackType = GetHeroAttackType;
-            //mobData.m_fAttackDamage = GetHeroAttackDamage;
-            //mobData.m_iAttackMana = GetHeroAttackMana;
             return mobData;
 
         }
@@ -438,7 +437,6 @@ namespace Game.Class
             //mobData.m_iAttackMana = GetHeroAttackMana;
             mobData.m_lAllMobs = m_lAllMobs;
             mobData.ennemy = Ennemy.GetEnnemyData();
-            mobData.heroes = Heroes.GetHeroesData();
             return mobData;
 
         }

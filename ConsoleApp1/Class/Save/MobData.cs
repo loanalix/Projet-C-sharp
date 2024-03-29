@@ -34,7 +34,6 @@ namespace Main.Class.Save
         [JsonInclude] public List<Mob> m_lAllMobs;
 
         [JsonInclude] public EnnemyData ennemy;
-        [JsonInclude] public HeroesData heroes;
         [JsonInclude] public AttackData attack;
     }
 }

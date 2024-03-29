@@ -39,11 +39,16 @@ namespace Game.Class
         public int GetAttackSpeed { get => m_iSpeed; }
         public float GetAttackHP { get => m_fHp; }
         public AttackClass GetAttackClass { get => m_attackType; }
+        
+        public static List<Attack> AttackList { get => m_lAttack; }
 
         #endregion
 
         #region Methode
+        public Attack()
+        {
 
+        }
         public Attack(string sAttackName, Types cType, float fDamage, float fResistance, float fHp, int iSpeed, int iMana, AttackClass attackType)
         {
             m_sAttackName = sAttackName;
@@ -57,10 +62,18 @@ namespace Game.Class
 
             m_lAttack.Add(this);
         }
-
-        public static List<Attack> AttackList()
+        public Attack(AttackData hero)
         {
-            return m_lAttack;
+            m_sAttackName = hero.m_sAttackName;
+            m_cAttackTypes = hero.m_cAttackTypes;
+            m_fAttackDamage = hero.m_fAttackDamage;
+            m_fResistance = hero.m_fResistance;
+            m_fHp = hero.m_fHp;
+            m_iSpeed = hero.m_iSpeed;
+            m_iAttackMana = hero.m_iAttackMana;
+            m_attackType = hero.m_attackClass;
+
+            m_lAttack.Add(this);
         }
 
         public static void CreateAttacks()
@@ -117,7 +130,6 @@ namespace Game.Class
         public AttackData GetAttackData()
         {
             AttackData attack = new AttackData();
-            attack.m_lAttacks = m_lAttack;
             attack.m_iAttackMana = GetAttackMana;
             attack.m_fAttackDamage = GetAttackDamage;
             attack.m_cAttackTypes = GetAttackType;

@@ -118,7 +118,8 @@ namespace Game.Class
                     m.AddAttacks(selectedSpell.GetAttackName);
                     m.AddAttacks(selectedStun.GetAttackName);
                 }
-                else return;
+                //else return;
+                
             }
         }
         public void TakeAnEnnemy()
@@ -169,7 +170,7 @@ namespace Game.Class
         public void InitFightStuff(List<Mob> mob)
         {
             if (mob == null) throw new ArgumentException("Mob is null");
-            m_lAttack = Attack.AttackList();
+            m_lAttack = Attack.AttackList;
             Ennemy.CreateEnnemies();
             InitializeAttacks(mob);
             pokemonLoaded = true;

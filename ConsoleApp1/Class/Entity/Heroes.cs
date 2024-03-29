@@ -1,6 +1,9 @@
 ﻿using Game.Class;
 using Game.Enum;
 using Main.Class.Save;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using System;
 
 namespace Game.Class
 {
@@ -14,6 +17,22 @@ namespace Game.Class
         public Heroes(string sName, int iHp, int iMana, float fDamage, float fResistance, int iSpeed, Types cTypes) : base(sName, iHp, iMana, fDamage, fResistance, iSpeed, cTypes)
         {
            heroes.Add(this);
+        }
+        public Heroes(HeroesData hero) : base(hero.m_sName, (int)hero.m_iHp, hero.m_iMana, hero.m_fDamage, hero.m_fResistance, hero.m_iSpeed, hero.m_cType)
+        {
+            Heroes heros = new Heroes(hero.m_sName,(int)hero.m_iHp, hero.m_iMana,hero.m_fDamage, hero.m_fResistance, hero.m_iSpeed, hero.m_cType);
+            AddNormalAttack(hero.m_NormalAttacks);
+            AddSpecialAttack(hero.m_SpecialAttacks);
+            AddSpellAttack(hero.m_SpellAttacks);
+            AddStunAttack(hero.m_StunAttacks);
+            GetHeroAttack = hero.m_cAttack;
+            GetHeroAttackName = hero.m_sAtackName;
+            GetHeroAttackType = hero.m_cAttackType;
+            GetHeroAttackDamage = hero.m_fAttackDamage;
+            GetHeroAttackMana = hero.m_iAttackMana;
+            GetHeroAttackResistance = hero.m_fAttackResistance;
+            GetHeroAttackHP = hero.m_fAttackHP;
+            heroes.Add(heros);
         }
         //public Heroes(HeroesData heros)
         //{
@@ -41,10 +60,29 @@ namespace Game.Class
             darkrai.AddAttacks("Windstorm");
         }
         
-        public static HeroesData GetHeroesData()
+        public HeroesData GetHeroesData()
         {
             HeroesData hero = new HeroesData();
-            HeroesData.heroes = heroes;
+            hero.m_cAttack = GetHeroAttack;
+            hero.m_sAtackName = GetHeroAttackName;
+            hero.m_cAttackType = GetHeroAttackType;
+            hero.m_fAttackDamage = GetHeroAttackDamage;
+            hero.m_iAttackMana = GetHeroAttackMana;
+            hero.m_fAttackResistance = GetHeroAttackResistance;
+            hero.m_iAttackSpeed = GetHeroAttackSpeed;
+            hero.m_fAttackHP = GetHeroAttackHP;
+            hero.GetHeroAttackClass = GetHeroAttackClass;
+            hero.m_StunAttacks = GetHeroStunAttack;
+            hero.m_SpellAttacks = GetHeroSpellAttack;
+            hero.m_SpecialAttacks = GetHeroSpecialAttack;
+            hero.m_NormalAttacks = GetHeroNormalAttack;
+            hero.m_sName = Name;
+            hero.m_iHp = HP;
+            hero.m_fDamage = Damage;
+            hero.m_fResistance =  Resistance;
+            hero.m_iMana = Mana;
+            hero.m_cType = GetEntityType;
+            hero.m_iSpeed = Speed;
             return hero;
         }
     }

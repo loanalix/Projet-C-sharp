@@ -22,7 +22,6 @@ namespace Main.Class.Save
         [JsonInclude] public float m_fHp;
         [JsonInclude] public AttackClass m_attackClass;
         [JsonInclude] public int m_iAttackMana;
-        [JsonInclude] public List<Attack> m_lAttacks;
 
     }
 }

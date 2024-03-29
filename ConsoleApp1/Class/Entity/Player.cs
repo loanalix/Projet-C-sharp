@@ -1,3 +1,4 @@
+using Main.Class;
 using Main.Class.Manager;
 using Main.Class.Save;
 namespace Game.Class

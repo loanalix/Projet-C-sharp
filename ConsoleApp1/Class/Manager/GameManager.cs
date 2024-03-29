@@ -38,7 +38,7 @@ namespace Game.Class
 
         #region Property
         public enum GameState {startMenu = 0, menu = 1, start = 2, run = 3 }
-        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, dialog = 5, miniMap = 6, inFight = 7 }
+        public enum DrawState {menu = 0, game = 1, fight = 2, option = 3, inventory = 4, pokemon = 5, dialog = 6, miniMap = 7, inFight = 8 }
 
         public DrawState GetSetDrawState { get => m_eCurrentDrawState; set => m_eCurrentDrawState = value; }
         public GameState GetSetGameState { get => m_eCurrentGameState; set => m_eCurrentGameState = value; }
@@ -66,7 +66,7 @@ namespace Game.Class
                     m_oWindowManager = new WindowManager();
                     m_lMaps = new List<Map>();
 
-                    Music.BackGroundMusic("../../../Music/Titre.wav");
+                    //Music.BackGroundMusic("../../../Music/Titre.wav");
 
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
@@ -98,7 +98,7 @@ namespace Game.Class
                     {
                         InitInstances();
                         CreateMaps();
-                        LoadAllMap();
+                        
                         char[] spawnable = new char[] { 'p' };
                         m_lMaps[0].Object = m_oItemsManager.SpawnObject(m_lMaps[0], spawnable, 4);
                         char[] map1Spawnable = new char[] { 'p', 'g' };
@@ -107,7 +107,7 @@ namespace Game.Class
                         Attack.CreateAttacks();
                         Heroes.CreateHeroes();
                     }
-
+                    LoadAllMap();
                     m_bToggleMiniMap = false;
 
 
@@ -125,7 +125,7 @@ namespace Game.Class
         }
         public void GameLoop()
         {
-            Music.BackGroundMusic("../../../Music/Route1.wav");
+            //Music.BackGroundMusic("../../../Music/Route1.wav");
             while (m_bIsRunning)
             {
                 DrawScene();
@@ -165,6 +165,11 @@ namespace Game.Class
                     m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
                     m_oInventory.AfficherInventaire();
                     break;
+                case DrawState.pokemon:
+                    Console.Clear();
+                    m_oWindowManager.Draw(m_oPlayer, m_oCurrentMap);
+                    DrawPokemonOption();
+                    break;
                 case DrawState.fight:
                     
                     Console.Clear();
@@ -175,8 +180,13 @@ namespace Game.Class
         }
 
         #region Option
-        public void DrawOption()
+        public void DrawPokemonOption()
         {
+            Console.SetCursorPosition(0, 0);
+            foreach (Heroes heros in Heroes.GetHeroes)
+            {
+                Console.WriteLine($"- {heros.Name}");
+            }
 
         }
         #endregion
@@ -228,7 +238,7 @@ namespace Game.Class
         #region start's Function
         public static void StartFight()
         {
-            Music.BackGroundMusic("../../../Music/Combat.wav");
+            //Music.BackGroundMusic("../../../Music/Combat.wav");
             //Permet de déclencher les fights
             if (m_eCurrentDrawState == DrawState.game)
             {
@@ -259,6 +269,7 @@ namespace Game.Class
         }
         public void LoadAllMap()
         {
+            
             //On load les affichages des fights
             m_oFightManager.LoadMaps(m_lMaps, "fightMenu");
             m_oFightManager.LoadMaps(m_lMaps, "fightUI");
@@ -318,6 +329,9 @@ namespace Game.Class
                 case DrawState.inventory:
                     m_eCurrentDrawState = DrawState.game;
                     break;
+                case DrawState.pokemon:
+                    m_eCurrentDrawState = DrawState.game;
+                    break;
             }
         }
         public void ToggleMiniMap()
@@ -370,6 +384,13 @@ namespace Game.Class
                     };
             m_oInputManager.AddState(DrawState.inventory, stateInventory);
 
+            Dictionary<ConsoleKey, Action> statePokemon = new Dictionary<ConsoleKey, Action>()
+                    {
+                        {ConsoleKey.Escape, ()=> ToggleMenu() },
+
+                    };
+            m_oInputManager.AddState(DrawState.pokemon, statePokemon);
+
             Dictionary<ConsoleKey, Action> stateDialog = new Dictionary<ConsoleKey, Action>()
                     {
                         {ConsoleKey.UpArrow, ()=> m_oOption.SelectOptionUp()},
@@ -396,15 +417,26 @@ namespace Game.Class
 
             m_oInputManager.AddState(DrawState.miniMap, stateMiniMap);
 
-            Dictionary<string, Action> stateInFight = new Dictionary<string, Action>()
+            Dictionary<ConsoleKey, Action> stateInFight = new Dictionary<ConsoleKey, Action>()
             {
-                { "D1", ()=> m_oFightManager.ChoseMenuElement(1) },
-                { "D2", ()=> m_oFightManager.ChoseMenuElement(2) },
-                { "D3", ()=> m_oFightManager.ChoseMenuElement(3) },
-                { "D4", ()=> m_oFightManager.ChoseMenuElement(4) },
-                { "Escape", ()=> m_oFightManager.ChoseMenuElement(5) },
+                { ConsoleKey.D1, ()=> m_oFightManager.ChoseMenuElement(1) },
+                { ConsoleKey.D2, ()=> m_oFightManager.ChoseMenuElement(2) },
+                { ConsoleKey.D3, ()=> m_oFightManager.ChoseMenuElement(3) },
+                { ConsoleKey.D4, ()=> m_oFightManager.ChoseMenuElement(4) },
+                { ConsoleKey.Escape, ()=> m_oFightManager.ChoseMenuElement(5) },
             };
             m_oInputManager.AddState(DrawState.inFight, stateInFight);
+        }
+        #endregion
+
+        #region Pokemon / Attack
+        public void AddPokemon(HeroesData oHero)
+        {
+            Heroes hero = new Heroes(oHero);
+        }
+        public void AddAttack(AttackData oAttack)
+        {
+            Attack attack = new Attack(oAttack);
         }
         #endregion
 
@@ -414,12 +446,23 @@ namespace Game.Class
             MapData m_oCurrentMapData = new MapData() ;
             m_oCurrentMapData = m_oCurrentMap.GetMapData();
             List<MapData> mapData = new List<MapData>();
+            List<HeroesData> heroesDatas = new List<HeroesData>();
+            List<AttackData> attackDatas = new List<AttackData>();
+            foreach (Attack attack in Attack.AttackList)
+            {
+                attackDatas.Add(attack.GetAttackData());
+
+            }
+            foreach (Heroes hero in Heroes.GetHeroes)
+            {
+                heroesDatas.Add(hero.GetHeroesData());
+            }
             foreach (Map map in m_lMaps)
             {
                 mapData.Add(map.GetMapData());
             };
 
-            GameData gameData = new GameData(m_oPlayer.GetPlayerData(),  mapData, m_oCurrentMapData, m_eCurrentGameState, m_eCurrentDrawState);
+            GameData gameData = new GameData(m_oPlayer.GetPlayerData(),  mapData, heroesDatas,attackDatas, m_oCurrentMapData, m_eCurrentGameState, m_eCurrentDrawState);
 
             SaveManager.Save(gameData, "save.json");
         }
@@ -429,7 +472,14 @@ namespace Game.Class
             GameData loadData = SaveManager.Load("save.json");
             m_oInventory = new Inventory(loadData.m_splayer.m_inventory);
             m_oPlayer = new Player(loadData.m_splayer, m_oInventory);
-            //m_lMaps = loadData.m_lMapsData;
+            for(int i = 0; i < loadData.m_lAttackData.Count; i++)
+            {
+                AddAttack(loadData.m_lAttackData[i]);
+            }
+            for(int i = 0; i < loadData.m_lHeroesData.Count; i++) 
+            {
+                AddPokemon(loadData.m_lHeroesData[i]);
+            }
             for(int i = 0; i < loadData.m_lMapsData.Count; i++)
             {
                 AddMaps(loadData.m_lMapsData[i]);

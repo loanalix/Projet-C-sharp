@@ -56,6 +56,7 @@ namespace Game.Class
                     oManager.GetSetDrawState = DrawState.inventory;
                     break;
                 case 1:
+                    oManager.GetSetDrawState = DrawState.pokemon;
                     break;
                 case 2:
                     oManager.Save();
