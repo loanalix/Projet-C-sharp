@@ -63,13 +63,12 @@ namespace Game.Class
             {
                 case GameState.startMenu:
                     Music.BackGroundMusic("../../../Music/Titre.wav");
-
+                    Console.Title = "Pokemon";
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
                     m_oWindowManager = new WindowManager();
                     m_lMaps = new List<Map>();
 
-                    Music.BackGroundMusic("../../../Music/Titre.wav");
 
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
@@ -130,6 +129,7 @@ namespace Game.Class
         public void GameLoop()
         {
             Music.BackGroundMusic("../../../Music/Route1.wav");
+
             while (m_bIsRunning)
             {
                 DrawScene();
@@ -258,6 +258,7 @@ namespace Game.Class
             }
             else
             {
+                Music.BackGroundMusic("../../../Music/Route1.wav");
                 m_eCurrentDrawState = DrawState.game;
             }
         }
