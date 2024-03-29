@@ -68,6 +68,9 @@ namespace Game.Class
                     m_oInputManager = new InputManager();
                     m_oWindowManager = new WindowManager();
                     m_lMaps = new List<Map>();
+
+                    Music.BackGroundMusic("../../../Music/Titre.wav");
+
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
                     LoadInputState();
@@ -123,6 +126,7 @@ namespace Game.Class
         }
         public void GameLoop()
         {
+            Music.BackGroundMusic("../../../Music/Route1.wav");
             while (m_bIsRunning)
             {
                 DrawScene();
@@ -163,12 +167,20 @@ namespace Game.Class
                     m_oInventory.AfficherInventaire();
                     break;
                 case DrawState.fight:
+                    
                     Console.Clear();
                     m_oFightManager.FightSteps();
                     break;
             }
 
         }
+
+        #region Option
+        public void DrawOption()
+        {
+
+        }
+        #endregion
 
         #region Init's Function
         public void InitInstances()
@@ -218,6 +230,7 @@ namespace Game.Class
         public static void StartFight()
         {
             //Permet de déclencher les fights
+            Music.BackGroundMusic("../../../Music/Combat.wav");
             m_eCurrentDrawState = DrawState.fight;
         }
 
