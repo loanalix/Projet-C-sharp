@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using Game.Enum;
+using Main.Class;
 
 namespace Game.Class
 {

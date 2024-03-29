@@ -133,7 +133,7 @@ namespace Main.Class
             Thread.Sleep(m_iTimeToRead);
             FillBlack(Console.WindowWidth / 2 - m_iWidthBox / 2, Console.WindowHeight - 9, m_iWidthBox, m_iHeightBox);
             SetTextEnd();
-
+            //Music.BackGroundMusic("../../../Music/Route1.wav");
         }
         public bool SetTextEnd()
         {

@@ -37,10 +37,14 @@ namespace Main.Class
         public void SelectOptionUp()
         {
             m_iSelectedOption = Math.Max(0, m_iSelectedOption - 1);
+             //Music.PlayMusic("../../../Music/Button.wav"));
+           
         }
         public void SelectOptionDown()
         {
             m_iSelectedOption = Math.Min(m_sChoices.Length - 1, m_iSelectedOption + 1);
+            //Music.PlayMusic("../../../Music/Button.wav"));
+
         }
         public void SelectOptionEnter(GameManager oManager)
         {
@@ -53,6 +57,7 @@ namespace Main.Class
                     oManager.LoadSave();
                     break;
                 case 2:
+                    Music.PlayMusic("../../../Music/Button.wav");
                     Environment.Exit(0);
                     break;
             }

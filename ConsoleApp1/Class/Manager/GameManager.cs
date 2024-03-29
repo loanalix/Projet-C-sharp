@@ -24,6 +24,7 @@ namespace Game.Class
         Map m_oMinimap;
         Map m_oCurrentMap;
         Mob m_oMob;
+        Music m_oMusic;
         ItemsManager m_oItemsManager;
         Dialog m_oDialog;
         SaveManager m_oSave;
@@ -61,6 +62,8 @@ namespace Game.Class
             switch (m_eCurrentGameState)
             {
                 case GameState.startMenu:
+                    Music.BackGroundMusic("../../../Music/Titre.wav");
+
                     m_oMenu = new Menu();
                     m_oInputManager = new InputManager();
                     m_oWindowManager = new WindowManager();
@@ -134,8 +137,8 @@ namespace Game.Class
                 //m_oInputManager.GetInput(m_eCurrentDrawState);
                 string sCurrentMap = m_oCurrentMap.ChangeMap(m_oPlayer, m_lMaps, m_oCurrentMap.GetName);
                 m_oCurrentMap = m_lMaps.Find(obj => obj.GetName == sCurrentMap);
+                
             }
-
         }
         public void DrawScene()
         {
@@ -262,7 +265,9 @@ namespace Game.Class
         public static void StartDialog()
         {
             //Permet de déclencher les dialogues
+           
             m_eCurrentDrawState = DrawState.dialog;
+           // Music.BackGroundMusic("../../../Music/Route1.wav");
         }
         #endregion
 

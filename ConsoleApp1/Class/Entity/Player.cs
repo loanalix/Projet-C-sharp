@@ -67,8 +67,11 @@ namespace Game.Class
                 //ici c'est ce qui permet de déclencher un dialog
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 'q')
                 {
-                    GameManager.StartDialog();
                     
+                    GameManager.StartDialog();
+                    //Music.PlayMusic("../../../Music/Button.wav");
+                    
+
                     return true;
                 }
                 else if (Array.Exists(oMap.Object, element => element == Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth))){
@@ -76,6 +79,7 @@ namespace Game.Class
                     m_oInventory.AddItem(m_oItemManager.FindItem(Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)));
                     //on refait une liste d'objet sans l'objet qui vient d'etre ajouter a l'inventaire
                     oMap.Object = m_oItemManager.RemoveObject(oMap.Object, Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth));
+                    Music.BackGroundMusic("../../../Music/Route1.wav");
                     return true;
                 }
             }
