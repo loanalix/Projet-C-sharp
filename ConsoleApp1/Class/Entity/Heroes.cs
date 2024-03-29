@@ -18,9 +18,9 @@ namespace Game.Class
 
         public static void CreateHeroes()
         {
-            Heroes dialga = new Heroes("Dialga", 1200, 200, 75f, 70f, 70, Types.Dragon);
-            Heroes zekrom = new Heroes("Zekrom", 1300, 210, 80f, 76f, 45, Types.Dragon);
-            Heroes darkrai = new Heroes("Darkrai", 850, 90, 100f, 45f, 45, Types.Flying);
+            Heroes dialga = new Heroes("Dialga", 1, 200, 75f, 70f, 70, Types.Dragon); // 1200
+            Heroes zekrom = new Heroes("Zekrom", 1, 210, 80f, 76f, 45, Types.Dragon); // 1300
+            Heroes darkrai = new Heroes("Darkrai", 1, 90, 100f, 45f, 45, Types.Flying); // 850
 
             dialga.AddAttacks("Dragon Claw");
             dialga.AddAttacks("Dynamax Cannon");

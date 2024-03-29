@@ -32,6 +32,7 @@ namespace Game.Class
         static DrawState m_eCurrentDrawState;
         bool m_bIsRunning;
         bool m_bToggleMiniMap;
+        public bool test;
         #endregion;
 
         #region Property
@@ -105,6 +106,7 @@ namespace Game.Class
 
                     Attack.CreateAttacks();
                     Heroes.CreateHeroes();
+                    Ennemy.CreateEnnemies();
                     string test = "Connaissez-vous william le yordle ? Faites attention à lui, il a une capacité à être extrêmement" +
                         " cringe faisant fuir les gens ou les corrompant à la williamite aïgue";
                     Dialog.SetDialog(test);
@@ -181,14 +183,14 @@ namespace Game.Class
 
         }
         
-        public void ToggleMenu()
+        public static void ToggleMenu()
         {
             switch (m_eCurrentDrawState)
             {
                 case DrawState.game:
-                //case DrawState.fight:
                     m_eCurrentDrawState = DrawState.option;
                     break;
+                case DrawState.inFight:
                 case DrawState.option:
                     m_eCurrentDrawState = DrawState.inventory;
                     break;
@@ -197,16 +199,24 @@ namespace Game.Class
                     break;
             }
         }
-        public static void StartFight()
+        public static void StartFight(bool bIsPokeDead)
         {
             //Permet de déclencher les fights
-            if(m_eCurrentDrawState == DrawState.game)
+            if (bIsPokeDead == true)
+            {
+                m_eCurrentDrawState = DrawState.fight;
+            }
+            else if (m_eCurrentDrawState == DrawState.game)
             {
                 m_eCurrentDrawState = DrawState.fight;
             } 
-            else
+            else if(m_eCurrentDrawState == DrawState.fight)
             {
                 m_eCurrentDrawState = DrawState.inFight;
+            }
+            else
+            {
+                m_eCurrentDrawState = DrawState.game;
             }
         }
 

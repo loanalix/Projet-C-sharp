@@ -39,6 +39,7 @@ namespace Game.Class
         public int GetAttackSpeed { get => m_iSpeed; }
         public float GetAttackHP { get => m_fHp; }
         public AttackClass GetAttackClass { get => m_attackType; }
+        public static List<Attack> AttackList { get => m_lAttack; }
 
         #endregion
 
@@ -56,11 +57,6 @@ namespace Game.Class
             m_attackType = attackType;
 
             m_lAttack.Add(this);
-        }
-
-        public static List<Attack> AttackList()
-        {
-            return m_lAttack;
         }
 
         public static void CreateAttacks()
