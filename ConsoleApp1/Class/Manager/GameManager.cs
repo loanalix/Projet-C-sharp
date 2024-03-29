@@ -66,7 +66,7 @@ namespace Game.Class
                     m_oWindowManager = new WindowManager();
                     m_lMaps = new List<Map>();
 
-                    //Music.BackGroundMusic("../../../Music/Titre.wav");
+                    Music.BackGroundMusic("../../../Music/Titre.wav");
 
                     m_oMenu.LoadMenu("../../../txt/Menu.txt");
                     
@@ -126,7 +126,7 @@ namespace Game.Class
         }
         public void GameLoop()
         {
-            //Music.BackGroundMusic("../../../Music/Route1.wav");
+            Music.BackGroundMusic("../../../Music/Route1.wav");
             while (m_bIsRunning)
             {
                 DrawScene();
@@ -237,10 +237,9 @@ namespace Game.Class
         #endregion
 
         #region start's Function
-        public static void StartFight()
         public static void StartFight(bool bIsPokeDead)
         {
-            //Music.BackGroundMusic("../../../Music/Combat.wav");
+            Music.BackGroundMusic("../../../Music/Combat.wav");
             //Permet de déclencher les fights
             if (bIsPokeDead == true)
             {

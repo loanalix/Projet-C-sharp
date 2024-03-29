@@ -45,7 +45,7 @@ namespace Drawing
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         break;
                     case 's':
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.BackgroundColor = ConsoleColor.Green;
                         break;
                     case 'q':
                         Console.BackgroundColor = ConsoleColor.Magenta;

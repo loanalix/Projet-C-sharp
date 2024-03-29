@@ -75,8 +75,6 @@ namespace Game.Class
             m_lAttack.Add(this);
         }
 
-        }
-
         public static void CreateAttacks()
         {
             // Non damage abilities
