@@ -39,7 +39,6 @@ namespace Game.Class
         public int GetAttackSpeed { get => m_iSpeed; }
         public float GetAttackHP { get => m_fHp; }
         public AttackClass GetAttackClass { get => m_attackType; }
-        
         public static List<Attack> AttackList { get => m_lAttack; }
 
         #endregion
@@ -74,6 +73,8 @@ namespace Game.Class
             m_attackType = hero.m_attackClass;
 
             m_lAttack.Add(this);
+        }
+
         }
 
         public static void CreateAttacks()

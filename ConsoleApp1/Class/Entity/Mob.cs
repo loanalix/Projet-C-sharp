@@ -186,7 +186,12 @@ namespace Game.Class
             }
 
         }
-
+        public void ResetStats(bool bIncrementLevel)
+        {
+            m_iMana = m_iMaxMana;
+            m_iHp = m_iMaxHp;
+            if(bIncrementLevel == true) m_iLevel++;
+        }
         public void LoadMob(string sFileName)
         {
             if (sFileName == null || sFileName == "") throw new ArgumentException("sFileName is null or empty");
@@ -252,7 +257,6 @@ namespace Game.Class
                 }
             }
             else return;
-            Console.WriteLine("New Mana: " + m_iMana);
             onChangedMana?.Invoke();
         }
         public void UpdateHP(float fHP)

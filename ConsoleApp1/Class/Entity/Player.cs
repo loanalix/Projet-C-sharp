@@ -60,7 +60,7 @@ namespace Game.Class
                 //ici c'est ce qui permet de déclencher un combat
                 else if(oMap.GetMap[Maths.ConvertTo1Dim(iNextPosX, iNextPosY, iWidth)] == 's')
                 {
-                    GameManager.StartFight();
+                    GameManager.StartFight(false);
                     return true;
                     
                 }

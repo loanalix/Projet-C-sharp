@@ -106,6 +106,7 @@ namespace Game.Class
                         SetCurrentMap();
                         Attack.CreateAttacks();
                         Heroes.CreateHeroes();
+                        Ennemy.CreateEnnemies();
                     }
                     LoadAllMap();
                     m_bToggleMiniMap = false;
@@ -237,16 +238,25 @@ namespace Game.Class
 
         #region start's Function
         public static void StartFight()
+        public static void StartFight(bool bIsPokeDead)
         {
             //Music.BackGroundMusic("../../../Music/Combat.wav");
             //Permet de déclencher les fights
-            if (m_eCurrentDrawState == DrawState.game)
+            if (bIsPokeDead == true)
+            {
+                m_eCurrentDrawState = DrawState.fight;
+            }
+            else if (m_eCurrentDrawState == DrawState.game)
             {
                 m_eCurrentDrawState = DrawState.fight;
             } 
-            else
+            else if(m_eCurrentDrawState == DrawState.fight)
             {
                 m_eCurrentDrawState = DrawState.inFight;
+            }
+            else
+            {
+                m_eCurrentDrawState = DrawState.game;
             }
         }
 
